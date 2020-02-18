@@ -41,19 +41,12 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Gradle](https://maven.apache.org/) - Dependency Management
+* [Gradle](https://gradle.org//) - Dependency Management
 
 ## Features
-
-The android app lets you:
-- Connect to your self-hosted wallabag instance or connect to your [wallabag.it](https://wallabag.it) or [Framabag](https://framabag.org) account.
-- Supports wallabag 2.0 and higher.
-- Completely ad-free.
-- Increase and decrease the size of the font and also switch between a serif or sans-serif font for a more comfortable reading experience.
-- Switch between numerous themes.
-- Possibility to cache images locally for offline reading.
-- Get articles read via Text-to-Speech feature.
-- Needs no special permissions on Android 6.0+.
+- Login 
+- View menu of multiple office buildings you've got acces to
+- Acces to multiple office buildings 
 
 ## Screenshots
 
@@ -68,9 +61,7 @@ width="200"
 
 On Android versions prior to Android 6.0, wallabag requires the following permissions:
 - Full Network Access.
-- View Network Connections.
-- Run at startup.
-- NFC
+- sending messages via NFC
 
 ## Authors
 
