@@ -3,6 +3,7 @@ package com.example.flexsame.di
 import android.content.Context
 import android.net.ConnectivityManager
 import com.example.flexsame.network.KeyService
+import com.example.flexsame.ui.account.AccountViewModel
 import com.example.flexsame.ui.home.HomeViewModel
 import com.example.flexsame.ui.testNFC.TestNFCViewModel
 import com.google.gson.GsonBuilder
@@ -61,6 +62,7 @@ val myModule : Module = module {
     //viewmodels
     viewModel { HomeViewModel() }
     viewModel { TestNFCViewModel()}
+    viewModel { AccountViewModel() }
 
 }
 
