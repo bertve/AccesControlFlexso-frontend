@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.flexsame.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/home_fragment" />
+    <fragment
+        android:id="@+id/testNFCFragment"
+        android:name="com.example.flexsame.ui.testNFC.TestNFCFragment"
+        android:label="TestNFC"
+        tools:layout="@layout/test_nfc_fragment" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.flexsame.ui.account.AccountFragment"
+        android:label="Account"
+        tools:layout="@layout/account_fragment" />
+</navigation>
