@@ -23,7 +23,7 @@ class TestNFCFragment : Fragment(), NfcActivity{
     private var nfcAdapter: NfcAdapter? = null
     private var isNfcSupported : Boolean = false
     private lateinit var outcomingNfcCallback: OutcomingNfcManager
-
+    private var outComingMessage:String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +40,6 @@ class TestNFCFragment : Fragment(), NfcActivity{
     private fun setupNFC(){
         this.nfcAdapter = NfcAdapter.getDefaultAdapter(activity)
         this.isNfcSupported = this.nfcAdapter != null
-        Log.i("nfc",nfcAdapter.toString())
         this.outcomingNfcCallback = OutcomingNfcManager(this)
         this.nfcAdapter?.setOnNdefPushCompleteCallback(outcomingNfcCallback, activity)
         this.nfcAdapter?.setNdefPushMessageCallback(outcomingNfcCallback, activity)
@@ -58,16 +57,18 @@ class TestNFCFragment : Fragment(), NfcActivity{
             ).show()
 
         } else {
-
             Log.i("nfc","message send")
+            setOutGoingMessage()
         }
         binding.messageInput.setText("")
         (activity as MainActivity).hideKeyboard(this.view!!)
     }
 
-    override fun getOutcomingMessage(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun setOutGoingMessage() {
+        this.outComingMessage = binding.messageInput.text.toString()
     }
+
+    override fun getOutcomingMessage(): String = this.outComingMessage
 
     override fun signalResult() {
         activity!!.runOnUiThread {
