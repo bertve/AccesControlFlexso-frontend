@@ -3,5 +3,8 @@
     <string name="home">Home</string>
     <string name="account">Account</string>
     <string name="testNFC">TestNFC</string>
-
+    <string name="test_instruction">Put message here:</string>
+    <string name="send">Send</string>
+    <string name="message">Message</string>
+    <string name="message_beaming_complete">Beaming complete</string>
 </resources>
