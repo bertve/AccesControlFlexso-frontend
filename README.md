@@ -59,9 +59,8 @@ width="200"
 
 ## Permissions
 
-On Android versions prior to Android 6.0, wallabag requires the following permissions:
 - Full Network Access.
-- sending messages via NFC
+- NFC
 
 ## Authors
 
@@ -73,4 +72,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
+* [nfc-kotlin](https://github.com/jetruby/nfc-kotlin-example)
