@@ -23,4 +23,8 @@
         android:id="@+id/reciever"
         android:name="com.example.flexsame.ui.testNFC.RecieverActivity"
         android:label="Reciever" />
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="com.example.flexsame.ui.wallet.WalletFragment"
+        android:label="Wallet" />
 </navigation>

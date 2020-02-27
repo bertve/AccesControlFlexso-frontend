@@ -5,6 +5,12 @@
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home_24px"
         android:title="@string/home" />
+
+    <item
+        android:id="@+id/walletFragment"
+        android:icon="@drawable/wallet"
+        android:title="@string/wallet" />
+
     <item
         android:id="@+id/testNFCFragment"
         android:icon="@drawable/ic_nfc_24px"

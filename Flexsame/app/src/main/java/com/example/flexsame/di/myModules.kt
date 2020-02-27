@@ -6,6 +6,7 @@ import com.example.flexsame.network.KeyService
 import com.example.flexsame.ui.account.AccountViewModel
 import com.example.flexsame.ui.home.HomeViewModel
 import com.example.flexsame.ui.testNFC.TestNFCViewModel
+import com.example.flexsame.ui.wallet.WalletViewModel
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import org.koin.android.ext.koin.androidContext
@@ -63,6 +64,7 @@ val myModule : Module = module {
     viewModel { HomeViewModel() }
     viewModel { TestNFCViewModel()}
     viewModel { AccountViewModel() }
+    viewModel { WalletViewModel() }
 
 }
 
