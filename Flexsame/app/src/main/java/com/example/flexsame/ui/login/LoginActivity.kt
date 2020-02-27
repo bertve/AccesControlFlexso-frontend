@@ -1,6 +1,7 @@
 package com.example.flexsame.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.example.flexsame.MainActivity
 
 import com.example.flexsame.R
 
@@ -57,8 +59,11 @@ class LoginActivity : AppCompatActivity() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
+                var mainIntent : Intent = Intent(this, MainActivity::class.java)
+                mainIntent.putExtra("userId",loginResult.success.userId)
+                mainIntent.putExtra("userName",loginResult.success.displayName)
+                startActivity(mainIntent)
             }
-            setResult(Activity.RESULT_OK)
 
             //Complete and destroy login activity once successful
             finish()

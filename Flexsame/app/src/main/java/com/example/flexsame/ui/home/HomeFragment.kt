@@ -1,11 +1,13 @@
 package com.example.flexsame.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.example.flexsame.MainActivity
 import com.example.flexsame.R
 import com.example.flexsame.databinding.HomeFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,8 +25,14 @@ class HomeFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.home_fragment,container,false)
         binding.lifecycleOwner = this
         binding.homeViewModel = this.viewModel
-
+        setupUI()
         return binding.root
+    }
+
+    private fun setupUI() {
+        this.binding.useridTxtview.text = (activity as MainActivity).getUserId().toString()
+        this.binding.usernameTxtview.text = (activity as MainActivity).getUserName()
+        Log.i("login",(activity as MainActivity).getUserName())
     }
 
 

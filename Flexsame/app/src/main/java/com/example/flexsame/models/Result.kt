@@ -1,4 +1,4 @@
-package com.example.flexsame.data
+package com.example.flexsame.models
 
 /**
  * A generic class that holds a value with its loading status.

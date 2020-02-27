@@ -27,12 +27,21 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+    private var userId : Long = 0
+    private var userName : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         navController = this.findNavController(R.id.myNavHostFragment)
         setupNavigation()
+        setLoggedInUserInfo()
+    }
+
+    private fun setLoggedInUserInfo() {
+        val intent : Intent = intent
+        this.userId = intent.getLongExtra("userId",0L)
+        this.userName = intent.getStringExtra("userName").orEmpty()
     }
 
     private fun setupNavigation(){
@@ -104,10 +113,8 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        Log.i("nfc",item.toString())
         when(item.itemId){
             R.id.reciever ->{
-                Log.i("nfc","adjit")
                 startRecieverActivity()
             }
         }
@@ -115,5 +122,12 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         return true
     }
 
+    fun getUserName() : String{
+        return this.userName
+    }
+
+    fun getUserId() : Long{
+        return this.userId
+    }
 
 }
