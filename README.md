@@ -31,7 +31,7 @@ width="200"
 
 ## Authors
 
-* **Bert Van Eeckhoutte** 
+* [Bert Van Eeckhoutte](https://github.com/bertve)
 
 ## License
 
