@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.example.flexsame.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -23,12 +24,16 @@ class WalletFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.wallet_fragment,container,false)
-        binding.lifecycleOwner = this
-        binding.walletViewModel = viewModel
 
+        setupViewModel()
         return binding.root
     }
 
+    private fun setupViewModel() {
+        binding.lifecycleOwner = this
+        binding.walletViewModel = viewModel
+        viewModel.setUserId((activity as MainActivity).getUserId())
+    }
 
 
 }

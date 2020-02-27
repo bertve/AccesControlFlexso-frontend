@@ -3,6 +3,7 @@ package com.example.flexsame.di
 import android.content.Context
 import android.net.ConnectivityManager
 import com.example.flexsame.network.KeyService
+import com.example.flexsame.repos.KeyRepository
 import com.example.flexsame.ui.account.AccountViewModel
 import com.example.flexsame.ui.home.HomeViewModel
 import com.example.flexsame.ui.testNFC.TestNFCViewModel
@@ -44,7 +45,7 @@ val myModule : Module = module {
 
     //api services
     single {
-        provideSpotApiService(get())
+        provideKeyService(get())
     }
     //database
    // single {
@@ -55,20 +56,20 @@ val myModule : Module = module {
     single { androidContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
 
     //repos
-   // single {
-    //    SpotRepository(get(),get(),get(),get())
-   // }
+    single {
+        KeyRepository(get())
+    }
 
 
     //viewmodels
     viewModel { HomeViewModel() }
     viewModel { TestNFCViewModel()}
     viewModel { AccountViewModel() }
-    viewModel { WalletViewModel() }
+    viewModel { WalletViewModel(get()) }
 
 }
 
-private fun provideSpotApiService(retrofit: Retrofit): KeyService {
+private fun provideKeyService(retrofit: Retrofit): KeyService {
     return retrofit.create(KeyService::class.java)
 }
 

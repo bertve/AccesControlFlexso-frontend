@@ -1,3 +1,3 @@
 package com.example.flexsame.utils
 
-val BASE_URL = "http://192.168.0.169:5000/api/"
+val BASE_URL = "http://10.0.2.2:8080/api/"

@@ -1,4 +1,8 @@
-package com.example.flexsame.models
+package com.example.flexsame.repos
+
+import com.example.flexsame.models.LoggedInUser
+import com.example.flexsame.models.LoginDataSource
+import com.example.flexsame.models.Result
 
 /**
  * Class that requests authentication and user information from the remote data source and

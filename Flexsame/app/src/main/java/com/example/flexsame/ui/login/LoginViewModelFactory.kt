@@ -3,7 +3,7 @@ package com.example.flexsame.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.flexsame.models.LoginDataSource
-import com.example.flexsame.models.LoginRepository
+import com.example.flexsame.repos.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
