@@ -1,5 +1,6 @@
 package com.example.flexsame.ui.testNFC
 
+import android.content.Intent
 import android.nfc.NfcAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.os.Bundle
@@ -18,12 +19,16 @@ import com.example.flexsame.utils.OutcomingNfcManager.NfcActivity
 
 
 class TestNFCFragment : Fragment(), NfcActivity{
+
     val viewModel : TestNFCViewModel by viewModel()
+
     private lateinit var binding : TestNfcFragmentBinding
+
     private var nfcAdapter: NfcAdapter? = null
     private var isNfcSupported : Boolean = false
     private lateinit var outcomingNfcCallback: OutcomingNfcManager
-    private var outComingMessage:String = ""
+
+    private var message :String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,40 +45,53 @@ class TestNFCFragment : Fragment(), NfcActivity{
     private fun setupNFC(){
         this.nfcAdapter = NfcAdapter.getDefaultAdapter(activity)
         this.isNfcSupported = this.nfcAdapter != null
+        checkNFC()
         this.outcomingNfcCallback = OutcomingNfcManager(this)
         this.nfcAdapter?.setOnNdefPushCompleteCallback(outcomingNfcCallback, activity)
         this.nfcAdapter?.setNdefPushMessageCallback(outcomingNfcCallback, activity)
 
     }
 
-    private fun sendMessage() {
+    override fun onResume() {
+        super.onResume()
+        checkNFC()
+    }
+
+    private fun checkNFC() {
         if (!isNfcSupported) {
             Toast.makeText(activity, "Nfc is not supported on this device", Toast.LENGTH_SHORT).show()
+            binding.sendButton.isEnabled = false
         } else if (!nfcAdapter!!.isEnabled) {
             Toast.makeText(
                 activity,
                 "NFC disabled on this device. Turn on to proceed",
                 Toast.LENGTH_SHORT
             ).show()
-
+            binding.sendButton.isEnabled = false
         } else {
-            Log.i("nfc","message send")
-            setOutGoingMessage()
+            binding.sendButton.isEnabled = true
         }
+    }
+
+    private fun sendMessage() {
+        this.message = binding.messageInput.text.toString()
+        Log.i("nfc","sender sendMessage "+ message)
         binding.messageInput.setText("")
         (activity as MainActivity).hideKeyboard(this.view!!)
     }
 
-    private fun setOutGoingMessage() {
-        this.outComingMessage = binding.messageInput.text.toString()
+    override fun getOutcomingMessage(): String {
+        Log.i("nfc","sender 84 getOutComingMessage "+message)
+        return this.message
     }
-
-    override fun getOutcomingMessage(): String = this.outComingMessage
 
     override fun signalResult() {
         activity!!.runOnUiThread {
             Toast.makeText(activity, R.string.message_beaming_complete, Toast.LENGTH_SHORT).show()
-        }    }
+        }
+    }
+
+
 
 
 }

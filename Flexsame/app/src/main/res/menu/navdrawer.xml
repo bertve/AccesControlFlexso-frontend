@@ -10,7 +10,12 @@
         android:icon="@drawable/ic_nfc_24px"
         android:title="@string/testNFC" />
     <item
+        android:id="@+id/reciever"
+        android:icon="@drawable/ic_nfc_24px"
+        android:title="@string/reciever" />
+    <item
         android:id="@+id/accountFragment"
         android:icon="@drawable/ic_person_24px"
         android:title="@string/account" />
+
 </menu>

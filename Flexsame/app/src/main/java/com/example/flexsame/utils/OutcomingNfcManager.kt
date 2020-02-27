@@ -4,6 +4,7 @@ import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.nfc.NfcEvent
+import android.util.Log
 
 class OutcomingNfcManager(
     private val nfcActivity: NfcActivity
@@ -13,6 +14,7 @@ class OutcomingNfcManager(
 
     override fun createNdefMessage(event: NfcEvent): NdefMessage {
         val outString = nfcActivity.getOutcomingMessage()
+        Log.i("nfc","manager 17 createNdefMes "+ outString)
 
         with(outString) {
             val outBytes = this.toByteArray()
@@ -22,8 +24,7 @@ class OutcomingNfcManager(
     }
 
     override fun onNdefPushComplete(event: NfcEvent) {
-        // onNdefPushComplete() is called on the Binder thread, so remember to explicitly notify
-        // your view on the UI thread
+        Log.i("nfc","mangager 27 ondefpushcomp")
         nfcActivity.signalResult()
     }
 

@@ -19,4 +19,8 @@
         android:name="com.example.flexsame.ui.account.AccountFragment"
         android:label="Account"
         tools:layout="@layout/account_fragment" />
+    <activity
+        android:id="@+id/reciever"
+        android:name="com.example.flexsame.ui.testNFC.RecieverActivity"
+        android:label="Reciever" />
 </navigation>
