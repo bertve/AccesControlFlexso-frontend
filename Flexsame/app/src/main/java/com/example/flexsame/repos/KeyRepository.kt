@@ -15,7 +15,7 @@ class KeyRepository(private val keyService : KeyService){
         var getPropertiesDeffered = keyService.getOffices(userId)
         try{
             var res = getPropertiesDeffered.await()
-            _offices.value = res
+            _offices.postValue(res)
         }catch (e :Exception){
             Log.i("api",e.message)
         }

@@ -6,4 +6,8 @@ package com.example.flexsame.models
 data class LoggedInUser(
     val userId: Long,
     val displayName: String
-)
+) {
+    override fun toString(): String {
+        return "LoggedInUser(userId=$userId, displayName='$displayName')"
+    }
+}

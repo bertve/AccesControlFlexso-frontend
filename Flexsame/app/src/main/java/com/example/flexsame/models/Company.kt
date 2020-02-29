@@ -9,6 +9,9 @@ class Company {
         this.name = name
     }
 
+    override fun toString(): String {
+        return "Company(companyId=$companyId, name='$name')"
+    }
 
 
 }

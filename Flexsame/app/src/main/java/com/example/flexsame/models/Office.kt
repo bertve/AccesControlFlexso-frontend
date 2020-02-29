@@ -12,4 +12,9 @@ class Office {
         this.address = address
     }
 
+    override fun toString(): String {
+        return "Office(officeId=$officeId, address=$address, company=$company)"
+    }
+
+
 }

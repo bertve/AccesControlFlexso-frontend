@@ -17,5 +17,9 @@ class Address {
         this.country = country
     }
 
+    override fun toString(): String {
+        return "Address(street='$street', houseNumber='$houseNumber', postalCode='$postalCode', town='$town', country='$country')"
+    }
+
 
 }

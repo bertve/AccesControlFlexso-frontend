@@ -26,11 +26,9 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
 
     private suspend fun initOffices() {
         withContext(Dispatchers.IO){
-            keyRepository.getOffices(1)
+            keyRepository.getOffices(userId)
         }
     }
-
-
 
     override fun onCleared() {
         super.onCleared()
@@ -42,6 +40,9 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
     }
 
     fun test(){
+        viewModelScope.launch {
+            initOffices()
+        }
         Log.i("api",offices.value.toString())
     }
 
