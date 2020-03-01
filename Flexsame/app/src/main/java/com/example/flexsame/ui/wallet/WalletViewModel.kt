@@ -16,7 +16,7 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
     private val viewModelScope = CoroutineScope( viewModelJob + Dispatchers.Main)
 
     //spots
-    private var offices : LiveData<List<Office>> = keyRepository.offices
+    var offices : LiveData<List<Office>> = keyRepository.offices
 
     init {
         viewModelScope.launch {
