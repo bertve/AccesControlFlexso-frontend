@@ -1,8 +1,7 @@
 package com.example.flexsame.ui.wallet
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.flexsame.models.Office
 import com.example.flexsame.repos.KeyRepository
 import kotlinx.coroutines.*
@@ -15,14 +14,38 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope( viewModelJob + Dispatchers.Main)
 
-    //spots
+    //offices
     var offices : LiveData<List<Office>> = keyRepository.offices
+    val filteredOffices : MutableLiveData<List<Office>> = MutableLiveData()
+
+
+    fun filterOffices(filter : String?){
+        val sortedList : List<Office> = offices.value!!.sortedWith(
+            compareBy({ it.company.name }
+                ,{ it.address.country}
+                ,{ it.address.town}
+                ,{ it.address.postalCode}
+                ,{ it.address.street }
+                ,{ it.address.houseNumber}
+                ))
+        if( filter == null || filter.trim() == "" || filter.trim() == "All") {
+            this.filteredOffices.value = sortedList
+
+        }else{
+            this.filteredOffices.value = sortedList.filter {
+                it.company.name == filter
+
+            }
+        }
+    }
 
     init {
         viewModelScope.launch {
             initOffices()
         }
+
     }
+
 
     private suspend fun initOffices() {
         withContext(Dispatchers.IO){
@@ -45,5 +68,6 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
         }
         Log.i("api",offices.value.toString())
     }
+
 
 }
