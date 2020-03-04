@@ -1,7 +1,7 @@
 package com.example.flexsame.repos
 
 import com.example.flexsame.models.LoggedInUser
-import com.example.flexsame.models.LoginDataSource
+import com.example.flexsame.ui.login.LoginDataSource
 import com.example.flexsame.models.Result
 
 /**
@@ -29,7 +29,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
         dataSource.logout()
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+     suspend fun login(username: String, password: String): Result<LoggedInUser> {
         // handle login
         val result = dataSource.login(username, password)
 

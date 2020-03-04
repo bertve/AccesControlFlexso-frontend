@@ -2,7 +2,7 @@ package com.example.flexsame.di
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.example.flexsame.models.LoginDataSource
+import com.example.flexsame.ui.login.LoginDataSource
 import com.example.flexsame.network.AuthService
 import com.example.flexsame.network.KeyService
 import com.example.flexsame.repos.KeyRepository

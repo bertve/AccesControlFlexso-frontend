@@ -59,10 +59,10 @@ class LoginActivity : AppCompatActivity() {
                 mainIntent.putExtra("userId",loginResult.success.userId)
                 mainIntent.putExtra("userName",loginResult.success.displayName)
                 startActivity(mainIntent)
+                finish()
             }
 
             //Complete and destroy login activity once successful
-            finish()
         })
 
         username.afterTextChanged {

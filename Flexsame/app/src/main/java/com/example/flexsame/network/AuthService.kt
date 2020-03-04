@@ -10,10 +10,10 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthService {
-    @POST("/auth/signup")
-    fun register(@Body signUpRequest: SignUpRequest) : Call<ApiResponse>
+    @POST("auth/signup")
+    fun register(@Body signUpRequest: SignUpRequest) : Deferred<ApiResponse>
 
-    @POST("/auth/signin")
-    fun login(@Body loginRequest: LoginRequest): Call<JwtAuthenticationResponse>
+    @POST("auth/signin")
+    fun login(@Body loginRequest: LoginRequest): Deferred<JwtAuthenticationResponse>
 
 }
