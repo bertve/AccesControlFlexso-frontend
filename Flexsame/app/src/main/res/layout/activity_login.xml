@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/vertical_margin"
     android:paddingRight="@dimen/horizontal_margin"
     android:paddingBottom="@dimen/vertical_margin"
-    tools:context=".ui.login.LoginActivity">
+    tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/imageView2"

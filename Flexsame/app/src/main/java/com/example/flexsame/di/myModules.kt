@@ -2,10 +2,14 @@ package com.example.flexsame.di
 
 import android.content.Context
 import android.net.ConnectivityManager
+import com.example.flexsame.models.LoginDataSource
+import com.example.flexsame.network.AuthService
 import com.example.flexsame.network.KeyService
 import com.example.flexsame.repos.KeyRepository
+import com.example.flexsame.repos.LoginRepository
 import com.example.flexsame.ui.account.AccountViewModel
 import com.example.flexsame.ui.home.HomeViewModel
+import com.example.flexsame.ui.login.LoginViewModel
 import com.example.flexsame.ui.testNFC.TestNFCViewModel
 import com.example.flexsame.ui.wallet.WalletViewModel
 import com.google.gson.GsonBuilder
@@ -47,6 +51,11 @@ val myModule : Module = module {
     single {
         provideKeyService(get())
     }
+
+    single {
+        provideAuthService(get())
+    }
+
     //database
    // single {
    //     AppDatabase.getInstance(get()).spotDao
@@ -59,6 +68,9 @@ val myModule : Module = module {
     single {
         KeyRepository(get())
     }
+    single {
+        LoginRepository(LoginDataSource(get()))
+    }
 
 
     //viewmodels
@@ -66,10 +78,15 @@ val myModule : Module = module {
     viewModel { TestNFCViewModel()}
     viewModel { AccountViewModel() }
     viewModel { WalletViewModel(get()) }
+    viewModel { LoginViewModel(get()) }
 
 }
 
 private fun provideKeyService(retrofit: Retrofit): KeyService {
     return retrofit.create(KeyService::class.java)
+}
+
+private fun provideAuthService(retrofit: Retrofit): AuthService{
+    return retrofit.create(AuthService::class.java)
 }
 
