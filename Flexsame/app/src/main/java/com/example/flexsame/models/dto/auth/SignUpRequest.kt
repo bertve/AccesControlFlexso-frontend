@@ -1,9 +1,10 @@
 package com.example.flexsame.models.dto.auth
 
-class SignUpRequest {
-    var firstName: String? = null
-    var lastName: String? = null
-    var email: String? = null
-    var password: String? = null
-
+data class SignUpRequest (var firstName: String,
+                         var lastName: String,
+                         var email: String,
+                         var password: String){
+    override fun toString(): String {
+        return "SignUpRequest(firstName='$firstName', lastName='$lastName', email='$email', password='$password')"
+    }
 }

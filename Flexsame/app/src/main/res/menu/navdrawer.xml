@@ -16,9 +16,9 @@
         android:icon="@drawable/ic_nfc_24px"
         android:title="@string/testNFC" />
     <item
-        android:id="@+id/reciever"
+        android:id="@+id/receiver"
         android:icon="@drawable/ic_nfc_24px"
-        android:title="@string/reciever" />
+        android:title="@string/receiver" />
     <item
         android:id="@+id/accountFragment"
         android:icon="@drawable/ic_person_24px"

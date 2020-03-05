@@ -8,11 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.core.text.set
+import androidx.databinding.DataBindingUtil
+import com.example.flexsame.databinding.ActivityLoginBinding
 
 import com.example.flexsame.ui.login.LoggedInUserView
 import com.example.flexsame.ui.login.LoginViewModel
@@ -21,16 +26,19 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LoginActivity : AppCompatActivity() {
 
     val loginViewModel: LoginViewModel by viewModel()
+    lateinit var binding : ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
 
-        setContentView(R.layout.activity_login)
+        setupMessage()
 
-        val username = findViewById<EditText>(R.id.username)
-        val password = findViewById<EditText>(R.id.password)
-        val login = findViewById<Button>(R.id.login)
-        val loading = findViewById<ProgressBar>(R.id.loading)
+        val username = binding.email
+        val password = binding.password
+        val login = binding.login
+        val loading = binding.loading
+        val register = binding.register
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -55,14 +63,13 @@ class LoginActivity : AppCompatActivity() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
-                var mainIntent : Intent = Intent(this, MainActivity::class.java)
+                var mainIntent = Intent(this, MainActivity::class.java)
                 mainIntent.putExtra("userId",loginResult.success.userId)
                 mainIntent.putExtra("userName",loginResult.success.displayName)
                 startActivity(mainIntent)
                 finish()
             }
 
-            //Complete and destroy login activity once successful
         })
 
         username.afterTextChanged {
@@ -95,7 +102,28 @@ class LoginActivity : AppCompatActivity() {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
+
+            register.setOnClickListener{
+                v : View ->
+               val registerIntent  = Intent(v.context,RegisterActivity::class.java)
+                startActivity(registerIntent)
+            }
         }
+    }
+
+    private fun setupMessage() {
+        if(!intent.getStringExtra("email").isNullOrEmpty()){
+            binding.message.text = intent.getStringExtra("message")
+            binding.email.setText(intent.getStringExtra("email"))
+            binding.password.setText(intent.getStringExtra("password"))
+            binding.messageContainter.animation = AnimationUtils.loadAnimation(this,R.anim.appear)
+            binding.messageContainter.visibility = View.VISIBLE
+            binding.message.visibility = View.VISIBLE
+        }else{
+            binding.message.visibility = View.GONE
+            binding.messageContainter.visibility = View.GONE
+        }
+
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {

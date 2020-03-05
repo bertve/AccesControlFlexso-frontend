@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -18,7 +17,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.flexsame.databinding.ActivityMainBinding
-import com.example.flexsame.ui.testNFC.RecieverActivity
+import com.example.flexsame.ui.testNFC.ReceiverActivity
 import com.google.android.material.navigation.NavigationView
 
 
@@ -81,7 +80,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         appBarConfiguration = AppBarConfiguration(navController.graph,drawerLayout)
         NavigationUI.setupWithNavController(binding.navView,navController)
         // prevent nav gesture if not on start destination
-        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, _ ->
             if (nd.id == nc.graph.startDestination) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             } else {
@@ -91,8 +90,8 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     }
 
-    private fun startRecieverActivity() {
-        val intent = Intent(this,RecieverActivity::class.java )
+    private fun startReceiverActivity() {
+        val intent = Intent(this,ReceiverActivity::class.java )
         startActivity(intent)
     }
 
@@ -114,8 +113,8 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.reciever ->{
-                startRecieverActivity()
+            R.id.receiver ->{
+                startReceiverActivity()
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

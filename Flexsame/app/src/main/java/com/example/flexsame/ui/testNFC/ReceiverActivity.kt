@@ -12,16 +12,16 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.flexsame.R
 
-class RecieverActivity : AppCompatActivity() {
+class ReceiverActivity : AppCompatActivity() {
     private var nfcAdapter: NfcAdapter? = null
 
     private var isNfcSupported: Boolean = false
     private var incomingMessage: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i("nfc","reciever activity created")
+        Log.i("nfc","receiver activity created")
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reciever)
+        setContentView(R.layout.activity_receiver)
         setupNFC()
         this.incomingMessage = findViewById(R.id.incoming_message)
     }
@@ -67,7 +67,7 @@ class RecieverActivity : AppCompatActivity() {
     }
 
     private fun receiveMessageFromDevice(intent: Intent) {
-        Log.i("nfc","reciever 68 receiveFromDevice")
+        Log.i("nfc","receiver 68 receiveFromDevice")
         val action = intent.action
         Log.i("nfc","intent: "+intent.action)
         if (NfcAdapter.ACTION_NDEF_DISCOVERED == action) {
@@ -92,7 +92,7 @@ class RecieverActivity : AppCompatActivity() {
             val ndefRecord_0 = inNdefRecords[0]
 
             val inMessage = String(ndefRecord_0.payload)
-            Log.i("nfc","reciever 79 "+ inMessage)
+            Log.i("nfc","receiver 79 "+ inMessage)
 
             incomingMessage?.text = inMessage
         }

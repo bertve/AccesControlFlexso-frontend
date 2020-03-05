@@ -20,11 +20,21 @@
         android:label="Account"
         tools:layout="@layout/account_fragment" />
     <activity
-        android:id="@+id/reciever"
-        android:name="com.example.flexsame.ui.testNFC.RecieverActivity"
-        android:label="Reciever" />
+        android:id="@+id/receiver"
+        android:name="com.example.flexsame.ui.testNFC.ReceiverActivity"
+        android:label="Receiver" />
     <fragment
         android:id="@+id/walletFragment"
         android:name="com.example.flexsame.ui.wallet.WalletFragment"
         android:label="Wallet" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.flexsame.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/registerActivity"
+        android:name="com.example.flexsame.RegisterActivity"
+        android:label="activity_register"
+        tools:layout="@layout/activity_register" />
 </navigation>

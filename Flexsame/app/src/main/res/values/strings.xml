@@ -7,7 +7,7 @@
     <string name="send">Send</string>
     <string name="message">Message</string>
     <string name="message_beaming_complete">Beaming complete</string>
-    <string name="reciever">Reciever</string>
+    <string name="receiver">Receiver</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -19,5 +19,8 @@
     <string name="login_failed">"Login failed"</string>
     <string name="wallet">"Wallet"</string>
     <string name="keys">Keys</string>
-
+    <string name="action_register">Register</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="password_confirmation">Confirm password</string>
 </resources>

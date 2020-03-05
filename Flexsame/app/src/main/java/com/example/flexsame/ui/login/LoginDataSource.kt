@@ -20,9 +20,6 @@ class LoginDataSource(private val authService : AuthService) {
 
    suspend fun login(username: String, password: String): Result<LoggedInUser> {
        try{
-           Log.i("login","datasource")
-           Log.i("login",username)
-           Log.i("login",password)
             val jwtResponse = authService.login(LoginRequest(username,password))
             val data = jwtResponse.await()
             Log.i("login",data.toString())

@@ -7,9 +7,11 @@ import com.example.flexsame.network.AuthService
 import com.example.flexsame.network.KeyService
 import com.example.flexsame.repos.KeyRepository
 import com.example.flexsame.repos.LoginRepository
+import com.example.flexsame.repos.RegisterRepository
 import com.example.flexsame.ui.account.AccountViewModel
 import com.example.flexsame.ui.home.HomeViewModel
 import com.example.flexsame.ui.login.LoginViewModel
+import com.example.flexsame.ui.register.RegisterViewModel
 import com.example.flexsame.ui.testNFC.TestNFCViewModel
 import com.example.flexsame.ui.wallet.WalletViewModel
 import com.google.gson.GsonBuilder
@@ -71,6 +73,9 @@ val myModule : Module = module {
     single {
         LoginRepository(LoginDataSource(get()))
     }
+    single {
+        RegisterRepository(get())
+    }
 
 
     //viewmodels
@@ -79,6 +84,7 @@ val myModule : Module = module {
     viewModel { AccountViewModel() }
     viewModel { WalletViewModel(get()) }
     viewModel { LoginViewModel(get()) }
+    viewModel { RegisterViewModel(get()) }
 
 }
 
