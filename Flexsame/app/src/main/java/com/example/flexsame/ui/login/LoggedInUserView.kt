@@ -5,6 +5,7 @@ package com.example.flexsame.ui.login
  */
 data class LoggedInUserView(
     val displayName: String,
-    val userId : Long
+    val userId : Long,
+    val token : String
     //... other data fields that may be accessible to the UI
 )

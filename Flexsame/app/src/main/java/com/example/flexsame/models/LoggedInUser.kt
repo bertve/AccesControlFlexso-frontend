@@ -5,9 +5,10 @@ package com.example.flexsame.models
  */
 data class LoggedInUser(
     val userId: Long,
-    val displayName: String
+    val displayName: String,
+    val token:String
 ) {
     override fun toString(): String {
-        return "LoggedInUser(userId=$userId, displayName='$displayName')"
+        return "LoggedInUser(userId=$userId, displayName='$displayName', token='$token')"
     }
 }

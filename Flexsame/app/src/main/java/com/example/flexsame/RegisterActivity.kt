@@ -6,39 +6,63 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.EditText
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.flexsame.databinding.ActivityRegisterBinding
 import com.example.flexsame.ui.register.RegisterViewModel
+import com.mobsandgeeks.saripaar.ValidationError
+import com.mobsandgeeks.saripaar.Validator
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword
+import com.mobsandgeeks.saripaar.annotation.Email
+import com.mobsandgeeks.saripaar.annotation.NotEmpty
+import com.mobsandgeeks.saripaar.annotation.Password
 import kotlinx.android.synthetic.main.activity_register.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity(), Validator.ValidationListener {
     val viewModel: RegisterViewModel by viewModel()
 
     private lateinit var binding : ActivityRegisterBinding
+    @NotEmpty(message = "Firstname is required" )
+    private lateinit var firstName : EditText
+    @NotEmpty(message = "Lastname is required" )
+    private lateinit var lastName : EditText
+    @NotEmpty(message = "Email is required" )
+    @Email(message = "Must be an email address")
+    private lateinit var email : EditText
+    @NotEmpty(message = "Password is required")
+    @Password(min= 6,scheme = Password.Scheme.ALPHA)
+    private lateinit var password : EditText
+    @ConfirmPassword
+    private lateinit var password_confirm : EditText
+
+    private lateinit var validator : Validator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_register)
         binding.registerViewModel = viewModel
         binding.lifecycleOwner = this
+        validator = Validator(this)
+        validator.setValidationListener(this)
         setupUI()
         setupListeners()
     }
 
     private fun setupUI() {
-        binding.errorContainer.animation = AnimationUtils.loadAnimation(this,R.anim.appear)
+        firstName = binding.firstName
+        lastName = binding.lastName
+        email = binding.email
+        password = binding.password
+        password_confirm = binding.passwordConfirm
     }
+
 
     private fun setupListeners() {
         binding.register.setOnClickListener {
-            Log.i("register","clicked")
-            viewModel.register(binding.firstName.text.toString(),
-                binding.lastName.text.toString(),
-                binding.email.text.toString(),
-                binding.password.text.toString(),
-                binding.passwordConfirm.text.toString())
+            validator.validate()// validatonSucceded or validationFailed
         }
 
         viewModel.apiResponse.observe(this, Observer {
@@ -52,4 +76,25 @@ class RegisterActivity : AppCompatActivity() {
         })
     }
 
+    override fun onValidationFailed(errors: MutableList<ValidationError>?) {
+        for (error : ValidationError in errors!!.iterator()){
+            var view : View = error.view
+            val message :  String = error.getCollatedErrorMessage(this)
+
+            if (view is EditText ){
+                (view as EditText).setError(message)
+            }else{
+                Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
+    override fun onValidationSucceeded() {
+        viewModel.register(binding.firstName.text.toString(),
+            binding.lastName.text.toString(),
+            binding.email.text.toString(),
+            binding.password.text.toString(),
+            binding.passwordConfirm.text.toString())
+    }
 }

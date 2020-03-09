@@ -89,11 +89,14 @@ class LoginActivity : AppCompatActivity() {
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->
+                    EditorInfo.IME_ACTION_DONE ->{
                         loginViewModel.login(
                             username.text.toString(),
                             password.text.toString()
                         )
+                        messageContainerDissapear()
+                    }
+
                 }
                 false
             }
@@ -101,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
+                messageContainerDissapear()
             }
 
             register.setOnClickListener{
@@ -111,19 +115,39 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun messageContainerDissapear() {
+        if (binding.messageContainter.visibility == View.VISIBLE) {
+            binding.messageContainter.animation =
+                AnimationUtils.loadAnimation(this, R.anim.dissapear)
+            binding.message.animation = AnimationUtils.loadAnimation(this, R.anim.dissapear)
+            binding.messageContainter.animate()
+            binding.message.animate()
+            binding.messageContainter.visibility = View.GONE
+            binding.message.visibility = View.GONE
+        }
+    }
+
     private fun setupMessage() {
+
         if(!intent.getStringExtra("email").isNullOrEmpty()){
             binding.message.text = intent.getStringExtra("message")
             binding.email.setText(intent.getStringExtra("email"))
             binding.password.setText(intent.getStringExtra("password"))
-            binding.messageContainter.animation = AnimationUtils.loadAnimation(this,R.anim.appear)
-            binding.messageContainter.visibility = View.VISIBLE
-            binding.message.visibility = View.VISIBLE
+            messageContainerAppear()
         }else{
             binding.message.visibility = View.GONE
             binding.messageContainter.visibility = View.GONE
         }
 
+    }
+
+    private fun messageContainerAppear() {
+        binding.messageContainter.animation = AnimationUtils.loadAnimation(this,R.anim.appear)
+        binding.message.animation = AnimationUtils.loadAnimation(this,R.anim.appear)
+        binding.messageContainter.visibility = View.VISIBLE
+        binding.message.visibility = View.VISIBLE
+        binding.messageContainter.animate()
+        binding.message.animate()
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {

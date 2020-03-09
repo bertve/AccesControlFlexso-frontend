@@ -30,7 +30,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             Log.i("login",result.toString())
             if (result is Result.Success) {
                 _loginResult.value =
-                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName,userId = result.data.userId))
+                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName,userId = result.data.userId,token = result.data.token))
             } else {
                 _loginResult.value = LoginResult(error = R.string.login_failed)
             }
@@ -51,16 +51,12 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else {
-            username.isNotBlank()
-        }
+           return  Patterns.EMAIL_ADDRESS.matcher(username).matches()
     }
 
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 5
+        return password.length >= 6
     }
 
     override fun onCleared() {
