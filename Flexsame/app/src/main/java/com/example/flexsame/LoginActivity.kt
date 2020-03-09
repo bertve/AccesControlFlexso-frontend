@@ -32,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
 
+        checkIfLoggedIn()
         setupMessage()
 
         val username = binding.email
@@ -63,10 +64,15 @@ class LoginActivity : AppCompatActivity() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
-                var mainIntent = Intent(this, MainActivity::class.java)
-                mainIntent.putExtra("userId",loginResult.success.userId)
-                mainIntent.putExtra("userName",loginResult.success.displayName)
-                startActivity(mainIntent)
+
+                val sharedPreferencesEditor = getSharedPreferences("preferences",0).edit()
+                sharedPreferencesEditor.putString("LOGIN_USERNAME",loginResult.success.displayName)
+                sharedPreferencesEditor.putLong("LOGIN_ID",loginResult.success.userId)
+                sharedPreferencesEditor.putString("LOGIN_TOKEN",loginResult.success.token)
+                sharedPreferencesEditor.commit()
+
+                startMainActivity(loginResult.success)
+
                 finish()
             }
 
@@ -113,13 +119,34 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(registerIntent)
             }
         }
+
     }
+
+    private fun checkIfLoggedIn() {
+        val sharedPreferences = getSharedPreferences("preferences",0)
+        val login_username = sharedPreferences.getString("LOGIN_USERNAME",null)
+        val login_token = sharedPreferences.getString("LOGIN_TOKEN",null)
+        val login_id = sharedPreferences.getLong("LOGIN_ID",0L)
+        if(login_username != null && login_token != null && login_id != 0L){
+            startMainActivity(LoggedInUserView(login_username,login_id,login_token))
+        }
+    }
+
+    private fun startMainActivity(success: LoggedInUserView) {
+        var mainIntent = Intent(this, MainActivity::class.java)
+        mainIntent.putExtra("userId",success.userId)
+        mainIntent.putExtra("userName",success.displayName)
+        mainIntent.putExtra("token",success.token)
+        startActivity(mainIntent)
+    }
+
 
     private fun messageContainerDissapear() {
         if (binding.messageContainter.visibility == View.VISIBLE) {
             binding.messageContainter.animation =
                 AnimationUtils.loadAnimation(this, R.anim.dissapear)
-            binding.message.animation = AnimationUtils.loadAnimation(this, R.anim.dissapear)
+            binding.message.animation =
+                AnimationUtils.loadAnimation(this, R.anim.dissapear)
             binding.messageContainter.animate()
             binding.message.animate()
             binding.messageContainter.visibility = View.GONE
@@ -135,8 +162,14 @@ class LoginActivity : AppCompatActivity() {
             binding.password.setText(intent.getStringExtra("password"))
             messageContainerAppear()
         }else{
-            binding.message.visibility = View.GONE
-            binding.messageContainter.visibility = View.GONE
+            if (!intent.getStringExtra("message").isNullOrEmpty()){
+                binding.message.text = intent.getStringExtra("message")
+
+            }else{
+                binding.message.visibility = View.GONE
+                binding.messageContainter.visibility = View.GONE
+            }
+
         }
 
     }

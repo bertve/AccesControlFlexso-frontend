@@ -23,4 +23,7 @@
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="password_confirmation">Confirm password</string>
+    <string name="logout">Log out</string>
+    <string name="update">Update</string>
+
 </resources>

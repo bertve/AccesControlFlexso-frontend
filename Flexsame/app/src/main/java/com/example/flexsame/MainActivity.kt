@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -24,6 +25,7 @@ import com.google.android.material.navigation.NavigationView
 class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout : DrawerLayout
+    private lateinit var navView: NavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private var userId : Long = 0
@@ -76,6 +78,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     private fun initDrawer() {
         drawerLayout = binding.drawerLayout
+        navView = binding.navView
         NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
         appBarConfiguration = AppBarConfiguration(navController.graph,drawerLayout)
         NavigationUI.setupWithNavController(binding.navView,navController)
@@ -87,7 +90,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
         }
-
+        navView.setNavigationItemSelectedListener(this)
     }
 
     private fun startReceiverActivity() {
@@ -103,7 +106,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     fun hideKeyboard(view : View){
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
-
     }
 
     @SuppressLint("MissingSuperCall")
@@ -113,12 +115,42 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.receiver ->{
+            R.id.nav_receiver ->{
+                Log.i("logout","yeet")
                 startReceiverActivity()
+            }
+            R.id.nav_logout ->{
+                Log.i("logout","clicked")
+                logout()
+            }
+            R.id.walletFragment ->{
+                navController.navigate(R.id.action_homeFragment_to_walletFragment)
+            }
+            R.id.testNFCFragment -> {
+                navController.navigate(R.id.action_homeFragment_to_testNFCFragment)
+
+            }
+            R.id.accountFragment -> {
+                navController.navigate(R.id.action_homeFragment_to_accountFragment)
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun logout() {
+        val sharedPreferences = getSharedPreferences("preferences",0)
+        val login = Intent(this,LoginActivity::class.java)
+        login.putExtra("message","Succesfully logged out")
+
+
+            sharedPreferences.edit().remove("LOGIN_USERNAME")
+            .remove("LOGIN_ID")
+            .remove("LOGIN_TOKEN")
+            .commit()
+
+        startActivity(login)
+
     }
 
     fun getUserName() : String{

@@ -27,6 +27,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
