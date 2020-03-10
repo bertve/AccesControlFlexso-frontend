@@ -20,6 +20,7 @@ import androidx.navigation.ui.NavigationUI
 import com.example.flexsame.databinding.ActivityMainBinding
 import com.example.flexsame.models.User
 import com.example.flexsame.ui.dialogs.LogoutDialog
+import com.example.flexsame.ui.home.HomeFragmentDirections
 import com.example.flexsame.ui.login.LoginActivity
 import com.example.flexsame.ui.testNFC.ReceiverActivity
 import com.google.android.material.navigation.NavigationView
@@ -129,14 +130,14 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                 dialog.show(supportFragmentManager,"Log out")
             }
             R.id.walletFragment ->{
-                navController.navigate(R.id.action_homeFragment_to_walletFragment)
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToWalletFragment(loggedInUserViewModel.user.value!!))
             }
             R.id.testNFCFragment -> {
                 navController.navigate(R.id.action_homeFragment_to_testNFCFragment)
 
             }
             R.id.accountFragment -> {
-                navController.navigate(R.id.action_homeFragment_to_accountFragment)
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToAccountFragment(loggedInUserViewModel.user.value!!))
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

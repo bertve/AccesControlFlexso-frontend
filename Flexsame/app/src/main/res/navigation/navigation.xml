@@ -40,7 +40,11 @@
         android:id="@+id/accountFragment"
         android:name="com.example.flexsame.ui.account.AccountFragment"
         android:label="Account"
-        tools:layout="@layout/account_fragment" />
+        tools:layout="@layout/account_fragment" >
+        <argument
+            android:name="currentUser"
+            app:argType="com.example.flexsame.models.User" />
+    </fragment>
     <activity
         android:id="@+id/receiver"
         android:name="com.example.flexsame.ui.testNFC.ReceiverActivity"
@@ -48,7 +52,10 @@
     <fragment
         android:id="@+id/walletFragment"
         android:name="com.example.flexsame.ui.wallet.WalletFragment"
-        android:label="Wallet" />
+        android:label="Wallet" >
+        <argument android:name="currentUser"
+            app:argType="com.example.flexsame.models.User" />
+    </fragment>
     <activity
         android:id="@+id/loginActivity"
         android:name="com.example.flexsame.ui.login.LoginActivity"

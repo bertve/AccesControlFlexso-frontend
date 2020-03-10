@@ -3,12 +3,13 @@ package com.example.flexsame.ui.wallet
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.flexsame.models.Office
+import com.example.flexsame.models.User
 import com.example.flexsame.repos.KeyRepository
 import kotlinx.coroutines.*
 
 class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
     //user
-    private var userId: Long = 0
+    private lateinit var user: User
 
     //coroutines
     private val viewModelJob = SupervisorJob()
@@ -49,7 +50,7 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
 
     private suspend fun initOffices() {
         withContext(Dispatchers.IO){
-            keyRepository.getOffices(userId)
+            keyRepository.getOffices(user.userId)
         }
     }
 
@@ -58,15 +59,20 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
         viewModelJob.cancel()
     }
 
-    fun setUserId(userId: Long) {
-        this.userId = userId
-    }
 
     fun test(){
         viewModelScope.launch {
             initOffices()
         }
         Log.i("api",offices.value.toString())
+    }
+
+    fun  setUser(current : User) {
+        this.user = current
+        viewModelScope.launch {
+            initOffices()
+        }
+
     }
 
 

@@ -17,6 +17,7 @@ class LoggedInUserRepository(private val keyService: KeyService) {
         var getPropertiesDeffered = keyService.getCurrentUser()
        try{
             var res = getPropertiesDeffered.await()
+           res.token = token
             Log.i("currentUser",res.toString())
             _user.postValue(res)
         }catch (e : Exception){

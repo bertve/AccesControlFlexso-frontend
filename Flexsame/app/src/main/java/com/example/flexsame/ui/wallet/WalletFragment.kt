@@ -88,7 +88,9 @@ class WalletFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.walletViewModel = viewModel
         //TODO
-        viewModel.setUserId(1)//HARDCODED
+        val args = WalletFragmentArgs.fromBundle(arguments!!)
+
+        viewModel.setUser(args.currentUser)//HARDCODED
     }
 
 
