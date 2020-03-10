@@ -18,7 +18,7 @@ class LoginDataSource(private val authService : AuthService) {
             val jwtResponse = authService.login(LoginRequest(username,password))
             val data = jwtResponse.await()
             Log.i("login",data.toString())
-            val token = LoginSucces(data.accessToken,username)
+            val token = LoginSucces(data.accessToken,username,password)
             return Result.Success(token)
         } catch (e: Throwable) {
            Log.i("login",e.message!!)

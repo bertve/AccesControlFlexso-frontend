@@ -68,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
                 val sharedPreferencesEditor = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE).edit()
                 sharedPreferencesEditor.putString("LOGIN_EMAIL",loginResult.success.email)
                 sharedPreferencesEditor.putString("LOGIN_TOKEN",loginResult.success.token)
+                sharedPreferencesEditor.putString("LOGIN_PASSWORD",loginResult.success.password)
                 sharedPreferencesEditor.commit()
 
                 startMainActivity(loginResult.success)
@@ -126,11 +127,13 @@ class LoginActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
         val login_email = sharedPreferences.getString("LOGIN_EMAIL",null)
         val login_token = sharedPreferences.getString("LOGIN_TOKEN",null)
-        if(login_email != null && login_token != null){
+        val login_password = sharedPreferences.getString("LOGIN_PASSWORD",null)
+        if(login_email != null && login_token != null && login_password != null){
             startMainActivity(
                 LoginSucces(
                     login_token,
-                    login_email
+                    login_email,
+                    login_password
                 )
             )
         }
@@ -140,6 +143,7 @@ class LoginActivity : AppCompatActivity() {
         var mainIntent = Intent(this, MainActivity::class.java)
         mainIntent.putExtra("token",success.token)
         mainIntent.putExtra("email",success.email)
+        mainIntent.putExtra("password",success.password)
         startActivity(mainIntent)
     }
 
@@ -171,6 +175,7 @@ class LoginActivity : AppCompatActivity() {
         }else{
             if (!intent.getStringExtra("message").isNullOrEmpty()){
                 binding.message.text = intent.getStringExtra("message")
+
 
             }else{
                 binding.message.visibility = View.GONE

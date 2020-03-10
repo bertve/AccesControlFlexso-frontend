@@ -23,10 +23,26 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.account_fragment, container, false)
-        binding.lifecycleOwner = this
-        binding.accountViewModel = viewModel
+        setupViewModel()
+        setupUI()
         setupListeners()
         return binding.root
+    }
+
+    private fun setupUI() {
+        var user = viewModel.getUser()
+        binding.firstName.setText(user.firstName)
+        binding.lastName.setText(user.lastName)
+        binding.email.setText(user.email)
+        binding.password.setText(user.password)
+        binding.passwordConfirm.setText(user.password)
+    }
+
+    private fun setupViewModel() {
+        binding.lifecycleOwner = this
+        binding.accountViewModel = viewModel
+        val args = AccountFragmentArgs.fromBundle(arguments!!)
+        viewModel.setUser(args.currentUser)
     }
 
     private fun setupListeners() {
@@ -35,6 +51,8 @@ class AccountFragment : Fragment() {
              dialog.show(fragmentManager!!,"Log out")
          }
     }
+
+
 
 
 }

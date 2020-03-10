@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     private var email : String = ""
     private var token : String = ""
+    private var password : String = ""
 
     val loggedInUserViewModel : LoggedInUserViewModel by viewModel()
 
@@ -53,8 +54,9 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         val intent : Intent = intent
         token = intent.getStringExtra("token").orEmpty()
         email = intent.getStringExtra("email").orEmpty()
-        Log.i("currentUser","LOGIN: "+ email + " / " + token )
-        loggedInUserViewModel.setCurrentUser(email,token)
+        password = intent.getStringExtra("password").orEmpty()
+        Log.i("currentUser","LOGIN: "+ email + " / " + token+" / "+password )
+        loggedInUserViewModel.setCurrentUser(email,token,password)
     }
 
     private fun setupNavigation(){
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                     true
                 }
                 R.id.accountFragment-> {
-                    navController.navigate(R.id.accountFragment)
+                    navController.navigate(HomeFragmentDirections.actionHomeFragmentToAccountFragment(loggedInUserViewModel.user.value!!))
                     true
                 }
                 else -> false
@@ -145,13 +147,14 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     }
 
     fun logout() {
-        val sharedPreferences = getSharedPreferences("preferences",0)
+        val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
         val login = Intent(this, LoginActivity::class.java)
         login.putExtra("message","Succesfully logged out")
 
             sharedPreferences.edit()
                 .remove("LOGIN_EMAIL")
                 .remove("LOGIN_TOKEN")
+                .remove("LOGIN_PASSWORD")
                 .commit()
 
         startActivity(login)

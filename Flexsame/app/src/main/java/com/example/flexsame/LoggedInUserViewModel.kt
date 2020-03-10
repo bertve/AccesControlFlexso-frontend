@@ -12,6 +12,7 @@ import kotlinx.coroutines.*
 class LoggedInUserViewModel(private val loggedInUserRepository: LoggedInUserRepository) : ViewModel(){
     var email : String = ""
     var token : String = ""
+    var password : String = ""
 
     //coroutines
     private val viewModelJob = SupervisorJob()
@@ -19,17 +20,18 @@ class LoggedInUserViewModel(private val loggedInUserRepository: LoggedInUserRepo
 
     var user : LiveData<User> = loggedInUserRepository.user
 
-    fun setCurrentUser(email :String ,token :String) {
+    fun setCurrentUser(email :String ,token :String,password : String) {
         AuthInterceptor.setSessionToken(token)
         this.email = email
         this.token = token
+        this.password = password
         getCurrentUser()
     }
 
     private fun getCurrentUser() {
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                loggedInUserRepository.getCurrentUser(token)
+                loggedInUserRepository.getCurrentUser(token,password)
             }
         }
     }
