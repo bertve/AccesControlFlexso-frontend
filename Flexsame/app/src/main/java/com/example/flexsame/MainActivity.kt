@@ -1,6 +1,5 @@
 package com.example.flexsame
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +8,11 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -23,7 +24,9 @@ import com.example.flexsame.ui.dialogs.LogoutDialog
 import com.example.flexsame.ui.home.HomeFragmentDirections
 import com.example.flexsame.ui.login.LoginActivity
 import com.example.flexsame.ui.testNFC.ReceiverActivity
+import com.example.flexsame.utils.Utilities
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.nav_header.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -48,6 +51,18 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         navController = this.findNavController(R.id.myNavHostFragment)
         setupNavigation()
         setLoggedInUser()
+        setupListeners()
+    }
+
+    private fun setupListeners() {
+        loggedInUserViewModel.user.observe(this, Observer {
+            it?.let {
+                this.user = it
+                //set name in navdrawer
+                Log.i("fullname",user.getFullName())
+                navView.getHeaderView(0).findViewById<TextView>(R.id.name).text = user.getFullName()
+            }
+        })
     }
 
     private fun setLoggedInUser() {
@@ -57,6 +72,8 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         password = intent.getStringExtra("password").orEmpty()
         Log.i("currentUser","LOGIN: "+ email + " / " + token+" / "+password )
         loggedInUserViewModel.setCurrentUser(email,token,password)
+
+
     }
 
     private fun setupNavigation(){
@@ -132,14 +149,14 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                 dialog.show(supportFragmentManager,"Log out")
             }
             R.id.walletFragment ->{
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToWalletFragment(loggedInUserViewModel.user.value!!))
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToWalletFragment(user))
             }
             R.id.testNFCFragment -> {
                 navController.navigate(R.id.action_homeFragment_to_testNFCFragment)
 
             }
             R.id.accountFragment -> {
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToAccountFragment(loggedInUserViewModel.user.value!!))
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToAccountFragment(user))
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
