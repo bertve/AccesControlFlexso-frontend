@@ -2,10 +2,13 @@ package com.example.flexsame.di
 
 import android.content.Context
 import android.net.ConnectivityManager
+import com.example.flexsame.LoggedInUserViewModel
+import com.example.flexsame.network.AuthInterceptor
 import com.example.flexsame.ui.login.LoginDataSource
 import com.example.flexsame.network.AuthService
 import com.example.flexsame.network.KeyService
 import com.example.flexsame.repos.KeyRepository
+import com.example.flexsame.repos.LoggedInUserRepository
 import com.example.flexsame.repos.LoginRepository
 import com.example.flexsame.repos.RegisterRepository
 import com.example.flexsame.ui.account.AccountViewModel
@@ -23,6 +26,10 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.flexsame.utils.BASE_URL;
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.koin.android.ext.koin.androidApplication
 
 val myModule : Module = module {
 
@@ -32,12 +39,13 @@ val myModule : Module = module {
             .create()
     }
 
+
     //custom client with auth interceptor
-    /*single {
+    single {
         OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor)
             .build()
-    }*/
+    }
 
     //retrofit
     single {
@@ -45,7 +53,7 @@ val myModule : Module = module {
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(get()))
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
-           // .client(get())
+            .client(get())
             .build()
     }
 
@@ -76,6 +84,9 @@ val myModule : Module = module {
     single {
         RegisterRepository(get())
     }
+    single {
+        LoggedInUserRepository(get())
+    }
 
 
     //viewmodels
@@ -85,6 +96,7 @@ val myModule : Module = module {
     viewModel { WalletViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
+    viewModel { LoggedInUserViewModel(get()) }
 
 }
 

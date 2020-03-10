@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.example.flexsame.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import com.example.flexsame.R
 import com.example.flexsame.databinding.AccountFragmentBinding
+import com.example.flexsame.ui.dialogs.LogoutDialog
 
 class AccountFragment : Fragment() {
 
@@ -23,10 +25,16 @@ class AccountFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.account_fragment, container, false)
         binding.lifecycleOwner = this
         binding.accountViewModel = viewModel
-
+        setupListeners()
         return binding.root
     }
 
+    private fun setupListeners() {
+         binding.logout.setOnClickListener {
+             val dialog = LogoutDialog(activity as MainActivity)
+             dialog.show(fragmentManager!!,"Log out")
+         }
+    }
 
 
 }

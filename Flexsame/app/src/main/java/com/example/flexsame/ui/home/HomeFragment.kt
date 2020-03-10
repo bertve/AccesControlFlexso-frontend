@@ -25,15 +25,9 @@ class HomeFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.home_fragment,container,false)
         binding.lifecycleOwner = this
         binding.homeViewModel = this.viewModel
-        setupUI()
         return binding.root
     }
 
-    private fun setupUI() {
-        this.binding.useridTxtview.text = (activity as MainActivity).getUserId().toString()
-        this.binding.usernameTxtview.text = (activity as MainActivity).getUserName()
-        Log.i("login",(activity as MainActivity).getUserName())
-    }
 
 
 }

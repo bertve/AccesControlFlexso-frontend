@@ -87,7 +87,8 @@ class WalletFragment : Fragment() {
     private fun setupViewModel() {
         binding.lifecycleOwner = this
         binding.walletViewModel = viewModel
-        viewModel.setUserId((activity as MainActivity).getUserId())
+        //TODO
+        viewModel.setUserId(1)//HARDCODED
     }
 
 

@@ -10,7 +10,7 @@
         android:paddingTop="@dimen/vertical_margin"
         android:paddingRight="@dimen/horizontal_margin"
         android:paddingBottom="@dimen/vertical_margin"
-        tools:context=".LoginActivity">
+        tools:context=".ui.login.LoginActivity">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/message_containter"

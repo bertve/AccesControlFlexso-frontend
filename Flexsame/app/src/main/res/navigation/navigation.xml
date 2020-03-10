@@ -51,12 +51,12 @@
         android:label="Wallet" />
     <activity
         android:id="@+id/loginActivity"
-        android:name="com.example.flexsame.LoginActivity"
+        android:name="com.example.flexsame.ui.login.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
     <activity
         android:id="@+id/registerActivity"
-        android:name="com.example.flexsame.RegisterActivity"
+        android:name="com.example.flexsame.ui.register.RegisterActivity"
         android:label="activity_register"
         tools:layout="@layout/activity_register" />
 </navigation>

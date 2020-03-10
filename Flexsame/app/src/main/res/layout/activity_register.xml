@@ -17,7 +17,7 @@
         android:paddingTop="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
-        tools:context=".RegisterActivity">
+        tools:context=".ui.register.RegisterActivity">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/error_container"

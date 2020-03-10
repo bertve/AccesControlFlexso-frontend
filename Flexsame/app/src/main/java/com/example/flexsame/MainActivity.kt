@@ -18,8 +18,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.flexsame.databinding.ActivityMainBinding
+import com.example.flexsame.models.User
+import com.example.flexsame.ui.dialogs.LogoutDialog
+import com.example.flexsame.ui.login.LoginActivity
 import com.example.flexsame.ui.testNFC.ReceiverActivity
 import com.google.android.material.navigation.NavigationView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
@@ -28,21 +32,28 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     private lateinit var navView: NavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
-    private var userId : Long = 0
-    private var userName : String = ""
+
+    private var email : String = ""
+    private var token : String = ""
+
+    val loggedInUserViewModel : LoggedInUserViewModel by viewModel()
+
+    lateinit var user : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         navController = this.findNavController(R.id.myNavHostFragment)
         setupNavigation()
-        setLoggedInUserInfo()
+        setLoggedInUser()
     }
 
-    private fun setLoggedInUserInfo() {
+    private fun setLoggedInUser() {
         val intent : Intent = intent
-        this.userId = intent.getLongExtra("userId",0L)
-        this.userName = intent.getStringExtra("userName").orEmpty()
+        token = intent.getStringExtra("token").orEmpty()
+        email = intent.getStringExtra("email").orEmpty()
+        Log.i("currentUser","LOGIN: "+ email + " / " + token )
+        loggedInUserViewModel.setCurrentUser(email,token)
     }
 
     private fun setupNavigation(){
@@ -108,20 +119,14 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    @SuppressLint("MissingSuperCall")
-    override fun onNewIntent(intent: Intent) {
-        this.intent = intent
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_receiver ->{
-                Log.i("logout","yeet")
                 startReceiverActivity()
             }
             R.id.nav_logout ->{
-                Log.i("logout","clicked")
-                logout()
+                val dialog = LogoutDialog(this)
+                dialog.show(supportFragmentManager,"Log out")
             }
             R.id.walletFragment ->{
                 navController.navigate(R.id.action_homeFragment_to_walletFragment)
@@ -138,27 +143,18 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         return true
     }
 
-    private fun logout() {
+    fun logout() {
         val sharedPreferences = getSharedPreferences("preferences",0)
-        val login = Intent(this,LoginActivity::class.java)
+        val login = Intent(this, LoginActivity::class.java)
         login.putExtra("message","Succesfully logged out")
 
-
-            sharedPreferences.edit().remove("LOGIN_USERNAME")
-            .remove("LOGIN_ID")
-            .remove("LOGIN_TOKEN")
-            .commit()
+            sharedPreferences.edit()
+                .remove("LOGIN_EMAIL")
+                .remove("LOGIN_TOKEN")
+                .commit()
 
         startActivity(login)
 
-    }
-
-    fun getUserName() : String{
-        return this.userName
-    }
-
-    fun getUserId() : Long{
-        return this.userId
     }
 
 }

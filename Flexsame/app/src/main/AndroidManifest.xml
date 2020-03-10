@@ -21,9 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".ui.register.RegisterActivity"></activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

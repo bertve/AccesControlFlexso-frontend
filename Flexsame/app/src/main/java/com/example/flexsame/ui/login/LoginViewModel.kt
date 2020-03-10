@@ -9,6 +9,7 @@ import com.example.flexsame.repos.LoginRepository
 import com.example.flexsame.models.Result
 
 import com.example.flexsame.R
+import com.example.flexsame.models.LoginSucces
 import kotlinx.coroutines.*
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
@@ -30,7 +31,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             Log.i("login",result.toString())
             if (result is Result.Success) {
                 _loginResult.value =
-                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName,userId = result.data.userId,token = result.data.token))
+                    LoginResult(success = LoginSucces(token = result.data.token,email = result.data.email))
             } else {
                 _loginResult.value = LoginResult(error = R.string.login_failed)
             }

@@ -1,4 +1,4 @@
-package com.example.flexsame
+package com.example.flexsame.ui.login
 
 import android.content.Intent
 import androidx.lifecycle.Observer
@@ -10,17 +10,15 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.core.text.set
 import androidx.databinding.DataBindingUtil
+import com.example.flexsame.MainActivity
+import com.example.flexsame.R
+import com.example.flexsame.ui.register.RegisterActivity
 import com.example.flexsame.databinding.ActivityLoginBinding
+import com.example.flexsame.models.LoginSucces
 
-import com.example.flexsame.ui.login.LoggedInUserView
-import com.example.flexsame.ui.login.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -30,7 +28,9 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
+        binding = DataBindingUtil.setContentView(this,
+            R.layout.activity_login
+        )
 
         checkIfLoggedIn()
         setupMessage()
@@ -65,9 +65,8 @@ class LoginActivity : AppCompatActivity() {
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
 
-                val sharedPreferencesEditor = getSharedPreferences("preferences",0).edit()
-                sharedPreferencesEditor.putString("LOGIN_USERNAME",loginResult.success.displayName)
-                sharedPreferencesEditor.putLong("LOGIN_ID",loginResult.success.userId)
+                val sharedPreferencesEditor = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE).edit()
+                sharedPreferencesEditor.putString("LOGIN_EMAIL",loginResult.success.email)
                 sharedPreferencesEditor.putString("LOGIN_TOKEN",loginResult.success.token)
                 sharedPreferencesEditor.commit()
 
@@ -115,7 +114,8 @@ class LoginActivity : AppCompatActivity() {
 
             register.setOnClickListener{
                 v : View ->
-               val registerIntent  = Intent(v.context,RegisterActivity::class.java)
+               val registerIntent  = Intent(v.context,
+                   RegisterActivity::class.java)
                 startActivity(registerIntent)
             }
         }
@@ -123,20 +123,23 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkIfLoggedIn() {
-        val sharedPreferences = getSharedPreferences("preferences",0)
-        val login_username = sharedPreferences.getString("LOGIN_USERNAME",null)
+        val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
+        val login_email = sharedPreferences.getString("LOGIN_EMAIL",null)
         val login_token = sharedPreferences.getString("LOGIN_TOKEN",null)
-        val login_id = sharedPreferences.getLong("LOGIN_ID",0L)
-        if(login_username != null && login_token != null && login_id != 0L){
-            startMainActivity(LoggedInUserView(login_username,login_id,login_token))
+        if(login_email != null && login_token != null){
+            startMainActivity(
+                LoginSucces(
+                    login_token,
+                    login_email
+                )
+            )
         }
     }
 
-    private fun startMainActivity(success: LoggedInUserView) {
+    private fun startMainActivity(success: LoginSucces) {
         var mainIntent = Intent(this, MainActivity::class.java)
-        mainIntent.putExtra("userId",success.userId)
-        mainIntent.putExtra("userName",success.displayName)
         mainIntent.putExtra("token",success.token)
+        mainIntent.putExtra("email",success.email)
         startActivity(mainIntent)
     }
 
@@ -144,9 +147,13 @@ class LoginActivity : AppCompatActivity() {
     private fun messageContainerDissapear() {
         if (binding.messageContainter.visibility == View.VISIBLE) {
             binding.messageContainter.animation =
-                AnimationUtils.loadAnimation(this, R.anim.dissapear)
+                AnimationUtils.loadAnimation(this,
+                    R.anim.dissapear
+                )
             binding.message.animation =
-                AnimationUtils.loadAnimation(this, R.anim.dissapear)
+                AnimationUtils.loadAnimation(this,
+                    R.anim.dissapear
+                )
             binding.messageContainter.animate()
             binding.message.animate()
             binding.messageContainter.visibility = View.GONE
@@ -175,17 +182,21 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun messageContainerAppear() {
-        binding.messageContainter.animation = AnimationUtils.loadAnimation(this,R.anim.appear)
-        binding.message.animation = AnimationUtils.loadAnimation(this,R.anim.appear)
+        binding.messageContainter.animation = AnimationUtils.loadAnimation(this,
+            R.anim.appear
+        )
+        binding.message.animation = AnimationUtils.loadAnimation(this,
+            R.anim.appear
+        )
         binding.messageContainter.visibility = View.VISIBLE
         binding.message.visibility = View.VISIBLE
         binding.messageContainter.animate()
         binding.message.animate()
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
+    private fun updateUiWithUser(model: LoginSucces) {
         val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
+        val displayName = model.email
         // TODO : initiate successful logged in experience
         Toast.makeText(
             applicationContext,

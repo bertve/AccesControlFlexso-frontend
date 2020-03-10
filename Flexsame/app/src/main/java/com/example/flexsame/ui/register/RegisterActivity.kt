@@ -1,24 +1,23 @@
-package com.example.flexsame
+package com.example.flexsame.ui.register
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.example.flexsame.R
 import com.example.flexsame.databinding.ActivityRegisterBinding
-import com.example.flexsame.ui.register.RegisterViewModel
+import com.example.flexsame.ui.login.LoginActivity
 import com.mobsandgeeks.saripaar.ValidationError
 import com.mobsandgeeks.saripaar.Validator
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword
 import com.mobsandgeeks.saripaar.annotation.Email
 import com.mobsandgeeks.saripaar.annotation.NotEmpty
 import com.mobsandgeeks.saripaar.annotation.Password
-import kotlinx.android.synthetic.main.activity_register.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity(), Validator.ValidationListener {
@@ -42,7 +41,9 @@ class RegisterActivity : AppCompatActivity(), Validator.ValidationListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_register)
+        binding = DataBindingUtil.setContentView(this,
+            R.layout.activity_register
+        )
         binding.registerViewModel = viewModel
         binding.lifecycleOwner = this
         validator = Validator(this)
@@ -61,26 +62,38 @@ class RegisterActivity : AppCompatActivity(), Validator.ValidationListener {
 
 
     private fun setupListeners() {
+        //register button
         binding.register.setOnClickListener {
             validator.validate()// validatonSucceded or validationFailed
         }
 
+        //observes if request was succesfull
         viewModel.apiResponse.observe(this, Observer {
             if(it.success && it.message != ""){
-                var login = Intent(this,LoginActivity::class.java)
+                var login = Intent(this,
+                    LoginActivity::class.java)
                 login.putExtra("email",binding.email.text.toString())
                 login.putExtra("password",binding.password.text.toString())
                 login.putExtra("message",it.message)
                 startActivity(login)
             }
         })
+
+        //no need to push button
+        password_confirm.setOnEditorActionListener { _, actionId, _ ->
+            when (actionId){
+                EditorInfo.IME_ACTION_DONE ->{
+                    validator.validate()
+                }
+            }
+            false
+        }
     }
 
     override fun onValidationFailed(errors: MutableList<ValidationError>?) {
         for (error : ValidationError in errors!!.iterator()){
             var view : View = error.view
             val message :  String = error.getCollatedErrorMessage(this)
-
             if (view is EditText ){
                 (view as EditText).setError(message)
             }else{

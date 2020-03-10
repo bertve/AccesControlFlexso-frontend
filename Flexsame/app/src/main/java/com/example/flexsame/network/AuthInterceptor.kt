@@ -1,9 +1,21 @@
 package com.example.flexsame.network
 
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 
+
+/**
+ *
+ * @author Guust Ysebie
+ *
+ * singleton that is added when creating the client for retrofit
+ * it formats a token and adds it to the header
+ *
+ *
+ *
+ * */
 object AuthInterceptor : Interceptor {
 
     private var sessionToken: String = ""
@@ -42,7 +54,7 @@ object AuthInterceptor : Interceptor {
     /**
      * Formats the token in the way the api will accept it
      * */
-    fun generateFormattedToken(): String {
+     fun generateFormattedToken(): String {
         return "Bearer $sessionToken"
     }
 
