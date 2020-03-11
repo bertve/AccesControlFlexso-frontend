@@ -39,14 +39,6 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
             }
         }
     }
-
-    init {
-        viewModelScope.launch {
-            initOffices()
-        }
-
-    }
-
     private suspend fun initOffices() {
         withContext(Dispatchers.IO){
             keyRepository.getOffices(user.userId)
@@ -64,7 +56,6 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
         viewModelScope.launch {
             initOffices()
         }
-
     }
 
 

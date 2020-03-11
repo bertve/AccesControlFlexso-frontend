@@ -37,9 +37,9 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
 
-    private var email : String = ""
-    private var token : String = ""
-    private var password : String = ""
+    var email : String = ""
+    var token : String = ""
+    var password : String = ""
 
     val loggedInUserViewModel : LoggedInUserViewModel by viewModel()
 
@@ -72,8 +72,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         password = intent.getStringExtra("password").orEmpty()
         Log.i("currentUser","LOGIN: "+ email + " / " + token+" / "+password )
         loggedInUserViewModel.setCurrentUser(email,token,password)
-
-
     }
 
     private fun setupNavigation(){
@@ -90,7 +88,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                     true
                 }
                 R.id.accountFragment-> {
-                    navController.navigate(HomeFragmentDirections.actionHomeFragmentToAccountFragment(loggedInUserViewModel.user.value!!))
+                    navController.navigate(R.id.accountFragment)
                     true
                 }
                 else -> false
@@ -156,7 +154,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
             }
             R.id.accountFragment -> {
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToAccountFragment(user))
+                navController.navigate(R.id.accountFragment)
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
