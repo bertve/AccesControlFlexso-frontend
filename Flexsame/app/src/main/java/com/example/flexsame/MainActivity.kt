@@ -59,10 +59,20 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
             it?.let {
                 this.user = it
                 //set name in navdrawer
-                Log.i("fullname",user.getFullName())
                 navView.getHeaderView(0).findViewById<TextView>(R.id.name).text = user.getFullName()
             }
         })
+
+        loggedInUserViewModel.currentUserSucces.observe(this, Observer {
+            if(!it){
+                logout()
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loggedInUserViewModel.getCurrentUser()
     }
 
     private fun setLoggedInUser() {
