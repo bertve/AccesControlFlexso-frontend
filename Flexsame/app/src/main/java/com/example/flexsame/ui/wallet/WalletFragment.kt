@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -66,7 +67,10 @@ class WalletFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        val adapter = WalletAdapter(context!!)
+        val adapter = WalletAdapter(context!!,WalletItemListener {
+            officeId ->  Toast.makeText(context, "pushed officeId: ${officeId}", Toast.LENGTH_LONG).show()
+        })
+
         binding.walletList.adapter = adapter
 
         val divider = DividerItemDecoration(context,HORIZONTAL)
@@ -74,7 +78,7 @@ class WalletFragment : Fragment() {
 
         viewModel.filteredOffices.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.data = it
+                adapter.submitList(it)
             }
         })
     }
