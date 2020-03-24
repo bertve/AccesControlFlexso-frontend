@@ -110,7 +110,7 @@ class AccountFragment : Fragment(), Validator.ValidationListener {
             var view : View = error.view
             val message :  String = error.getCollatedErrorMessage(activity)
             if (view is EditText ){
-                (view as EditText).setError(message)
+                view.setError(message)
             }else{
                 Toast.makeText(activity,message, Toast.LENGTH_SHORT).show()
             }

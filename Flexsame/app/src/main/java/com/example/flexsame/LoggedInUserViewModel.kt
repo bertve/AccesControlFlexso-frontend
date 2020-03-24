@@ -50,4 +50,10 @@ class LoggedInUserViewModel(private val loggedInUserRepository: LoggedInUserRepo
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
+
 }

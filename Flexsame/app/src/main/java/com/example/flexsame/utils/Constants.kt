@@ -1,3 +1,3 @@
 package com.example.flexsame.utils
 
-val BASE_URL = "http://10.0.2.2:8080/api/"
+val BASE_URL = "https://key-api.cfapps.eu10.hana.ondemand.com/api/"

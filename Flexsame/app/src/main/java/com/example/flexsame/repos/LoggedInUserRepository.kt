@@ -24,7 +24,7 @@ class LoggedInUserRepository(private val keyService: KeyService) {
             _user.postValue(res)
            return true
         }catch (e : Exception){
-        Log.i("currentUser",e.message)
+        Log.i("currentUser",e.message?:"no message but something went wrong with current user request")
            return false
         }
     }

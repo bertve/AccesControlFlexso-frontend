@@ -18,7 +18,7 @@ class KeyRepository(private val keyService : KeyService){
             Log.i("api",res.toString())
             _offices.postValue(res)
         }catch (e :Exception){
-            Log.i("api",e.message)
+            Log.i("api",e.message?:"no message but something went wrong with offices request")
         }
     }
 }

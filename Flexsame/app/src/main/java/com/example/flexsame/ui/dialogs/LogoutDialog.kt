@@ -14,11 +14,11 @@ class LogoutDialog(val myActivity : MainActivity) : DialogFragment() {
         return myActivity.let {
             val builder = AlertDialog.Builder(it)
             builder.setMessage(R.string.dialog_logout)
-                .setPositiveButton(R.string.yes,DialogInterface.OnClickListener{dialog,id ->
+                .setPositiveButton(R.string.yes,DialogInterface.OnClickListener{_,_ ->
                     myActivity.logout()
                 })
                 .setNegativeButton(R.string.no,
-                    DialogInterface.OnClickListener{dialog, id ->
+                    DialogInterface.OnClickListener{_,_ ->
 
                     })
             builder.create()

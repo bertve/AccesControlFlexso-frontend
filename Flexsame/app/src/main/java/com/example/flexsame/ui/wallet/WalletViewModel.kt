@@ -40,9 +40,8 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
         }
     }
     private suspend fun initOffices() {
-        withContext(Dispatchers.IO){
             keyRepository.getOffices(user.userId)
-        }
+
     }
 
     override fun onCleared() {
