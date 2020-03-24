@@ -5,7 +5,7 @@
     <data>
         <variable
             name="homeViewModel"
-            type="com.example.flexsame.ui.home.HomeViewModel" />
+            type="com.flexso.flexsame.ui.home.HomeViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"

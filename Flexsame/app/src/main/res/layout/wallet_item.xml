@@ -5,9 +5,9 @@
     <data>
         <variable
             name="office"
-            type="com.example.flexsame.models.Office" />
+            type="com.flexso.flexsame.models.Office" />
         <variable
-            name="clickListener" type="com.example.flexsame.ui.wallet.WalletItemListener"/>
+            name="clickListener" type="com.flexso.flexsame.ui.wallet.WalletItemListener"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

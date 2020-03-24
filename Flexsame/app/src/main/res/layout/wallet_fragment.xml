@@ -5,7 +5,7 @@
     <data>
         <variable
             name="walletViewModel"
-            type="com.example.flexsame.ui.wallet.WalletViewModel" />
+            type="com.flexso.flexsame.ui.wallet.WalletViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

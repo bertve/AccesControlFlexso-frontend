@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.flexsame.ui.home.HomeFragment"
+        android:name="com.flexso.flexsame.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/home_fragment" >
         <action
@@ -33,33 +33,33 @@
     </fragment>
     <fragment
         android:id="@+id/testNFCFragment"
-        android:name="com.example.flexsame.ui.testNFC.TestNFCFragment"
+        android:name="com.flexso.flexsame.ui.testNFC.TestNFCFragment"
         android:label="TestNFC"
         tools:layout="@layout/test_nfc_fragment" />
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.example.flexsame.ui.account.AccountFragment"
+        android:name="com.flexso.flexsame.ui.account.AccountFragment"
         android:label="Account"
         tools:layout="@layout/account_fragment" />
     <activity
         android:id="@+id/receiver"
-        android:name="com.example.flexsame.ui.testNFC.ReceiverActivity"
+        android:name="com.flexso.flexsame.ui.testNFC.ReceiverActivity"
         android:label="Receiver" />
     <fragment
         android:id="@+id/walletFragment"
-        android:name="com.example.flexsame.ui.wallet.WalletFragment"
+        android:name="com.flexso.flexsame.ui.wallet.WalletFragment"
         android:label="Wallet" >
         <argument android:name="currentUser"
-            app:argType="com.example.flexsame.models.User" />
+            app:argType="com.flexso.flexsame.models.User" />
     </fragment>
     <activity
         android:id="@+id/loginActivity"
-        android:name="com.example.flexsame.ui.login.LoginActivity"
+        android:name="com.flexso.flexsame.ui.login.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
     <activity
         android:id="@+id/registerActivity"
-        android:name="com.example.flexsame.ui.register.RegisterActivity"
+        android:name="com.flexso.flexsame.ui.register.RegisterActivity"
         android:label="activity_register"
         tools:layout="@layout/activity_register" />
 </navigation>
