@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: co.infinum:goldfinger-rx:2.0.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/481984586e78376902d85798c82ce84c/goldfinger-rx-2.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/481984586e78376902d85798c82ce84c/goldfinger-rx-2.0.0/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/co.infinum/goldfinger-rx/2.0.0/2c3fb13915c57fbfe9bd2d24522c84e21f6c7cb3/goldfinger-rx-2.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/co.infinum/goldfinger-rx/2.0.0/8993b814ea3fde8e9be708d2b9aee6a2ceec900a/goldfinger-rx-2.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

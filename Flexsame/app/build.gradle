@@ -13,7 +13,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.flexso.flexsame"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -102,4 +102,7 @@ dependencies {
     //lottie for animations
     implementation "com.airbnb.android:lottie:$lottie_version"
 
+    //goldfinger
+    implementation 'co.infinum:goldfinger:2.0.0'
+    implementation 'co.infinum:goldfinger-rx:2.0.0'
 }

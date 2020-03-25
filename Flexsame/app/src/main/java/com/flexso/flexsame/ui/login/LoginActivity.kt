@@ -1,23 +1,27 @@
 package com.flexso.flexsame.ui.login
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import androidx.lifecycle.Observer
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
+import com.airbnb.lottie.LottieAnimationView
 import com.flexso.flexsame.MainActivity
 import com.flexso.flexsame.R
 import com.flexso.flexsame.ui.register.RegisterActivity
 import com.flexso.flexsame.databinding.ActivityLoginBinding
 import com.flexso.flexsame.models.LoginSucces
+import kotlinx.android.synthetic.main.activity_login.*
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,22 +29,33 @@ class LoginActivity : AppCompatActivity() {
 
     val loginViewModel: LoginViewModel by viewModel()
     lateinit var binding : ActivityLoginBinding
+    private lateinit var connectivityManager : ConnectivityManager
+    private lateinit var username : EditText
+    private lateinit var password : EditText
+    private lateinit var login : Button
+    private lateinit var loading : ProgressBar
+    private lateinit var register : Button
+    private lateinit var connectionRex : LottieAnimationView
+    private lateinit var logoFlexso: ImageView
+
+    override fun onStart() {
+        super.onStart()
+        checkConnection()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,
             R.layout.activity_login
         )
-
+        setupUI()
+        checkConnection()
         checkIfLoggedIn()
-        setupMessage()
+        setupfieldsOnLogout()
+        setupObservers()
+    }
 
-        val username = binding.email
-        val password = binding.password
-        val login = binding.login
-        val loading = binding.loading
-        val register = binding.register
-
+    private fun setupObservers() {
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
@@ -80,16 +95,16 @@ class LoginActivity : AppCompatActivity() {
 
         username.afterTextChanged {
             loginViewModel.loginDataChanged(
-                username.text.toString(),
-                password.text.toString()
+                    username.text.toString(),
+                    password.text.toString()
             )
         }
 
         password.apply {
             afterTextChanged {
                 loginViewModel.loginDataChanged(
-                    username.text.toString(),
-                    password.text.toString()
+                        username.text.toString(),
+                        password.text.toString()
                 )
             }
 
@@ -97,10 +112,9 @@ class LoginActivity : AppCompatActivity() {
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->{
                         loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString()
+                                username.text.toString(),
+                                password.text.toString()
                         )
-                        messageContainerDissapear()
                     }
 
                 }
@@ -110,17 +124,64 @@ class LoginActivity : AppCompatActivity() {
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
-                messageContainerDissapear()
             }
 
             register.setOnClickListener{
                 v : View ->
-               val registerIntent  = Intent(v.context,
-                   RegisterActivity::class.java)
+                val registerIntent  = Intent(v.context,
+                        RegisterActivity::class.java)
                 startActivity(registerIntent)
             }
         }
 
+        loginViewModel.connection.observe(this, Observer { connect ->
+            connect?.let {
+                if (connect) {
+                    Log.i("connection","connected")
+                    setVisibilityLoginScreen(true)
+
+                } else {
+                    Log.i("connection","no connection")
+                    setVisibilityLoginScreen(false)
+                }
+            }
+        })
+    }
+
+    private fun setVisibilityLoginScreen(visible : Boolean) {
+        //true -> login screen visible
+        //false -> TREX visible
+        var visibility = View.GONE
+        if(visible){
+            visibility = View.VISIBLE
+            connectionRex.visibility = View.GONE
+            connectionRex.cancelAnimation()
+        }else{
+            connectionRex.playAnimation()
+            connectionRex.visibility = View.VISIBLE
+        }
+        username.visibility = visibility
+        password.visibility = visibility
+        login.visibility = visibility
+        register.visibility = visibility
+        logoFlexso.visibility = visibility
+    }
+
+    private fun setupUI() {
+        username = binding.email
+        password = binding.password
+        login = binding.login
+        loading = binding.loading
+        register = binding.register
+        logoFlexso = binding.logo
+        connectionRex = binding.noConnection
+        connectionRex.visibility = View.GONE
+    }
+
+    private fun checkConnection() {
+        connectivityManager =
+                this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        loginViewModel.checkConnectivity(connectivityManager)
     }
 
     private fun checkIfLoggedIn() {
@@ -147,56 +208,12 @@ class LoginActivity : AppCompatActivity() {
         startActivity(mainIntent)
     }
 
-
-    private fun messageContainerDissapear() {
-        if (binding.messageContainter.visibility == View.VISIBLE) {
-            binding.messageContainter.animation =
-                AnimationUtils.loadAnimation(this,
-                    R.anim.dissapear
-                )
-            binding.message.animation =
-                AnimationUtils.loadAnimation(this,
-                    R.anim.dissapear
-                )
-            binding.messageContainter.animate()
-            binding.message.animate()
-            binding.messageContainter.visibility = View.GONE
-            binding.message.visibility = View.GONE
-        }
-    }
-
-    private fun setupMessage() {
-
+    private fun setupfieldsOnLogout() {
         if(!intent.getStringExtra("email").isNullOrEmpty()){
-            binding.message.text = intent.getStringExtra("message")
             binding.email.setText(intent.getStringExtra("email"))
             binding.password.setText(intent.getStringExtra("password"))
-            messageContainerAppear()
-        }else{
-            if (!intent.getStringExtra("message").isNullOrEmpty()){
-                binding.message.text = intent.getStringExtra("message")
-
-
-            }else{
-                binding.message.visibility = View.GONE
-                binding.messageContainter.visibility = View.GONE
-            }
-
+            Toast.makeText(applicationContext, intent.getStringExtra("message"), Toast.LENGTH_SHORT).show()
         }
-
-    }
-
-    private fun messageContainerAppear() {
-        binding.messageContainter.animation = AnimationUtils.loadAnimation(this,
-            R.anim.appear
-        )
-        binding.message.animation = AnimationUtils.loadAnimation(this,
-            R.anim.appear
-        )
-        binding.messageContainter.visibility = View.VISIBLE
-        binding.message.visibility = View.VISIBLE
-        binding.messageContainter.animate()
-        binding.message.animate()
     }
 
     private fun updateUiWithUser(model: LoginSucces) {

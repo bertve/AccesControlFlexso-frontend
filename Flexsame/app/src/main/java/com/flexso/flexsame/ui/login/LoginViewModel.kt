@@ -1,5 +1,9 @@
 package com.flexso.flexsame.ui.login
 
+import android.net.ConnectivityManager
+import android.net.ConnectivityManager.NetworkCallback
+import android.net.Network
+import android.net.NetworkRequest
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,6 +27,11 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
+
+    private val _connection = MutableLiveData<Boolean>()
+
+    val connection: LiveData<Boolean>
+        get() = _connection
 
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
@@ -63,5 +72,18 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun checkConnectivity(connectivityManager: ConnectivityManager) {
+        val networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onLost(network: Network?) {
+                _connection.postValue(false)
+            }
+
+            override fun onAvailable(network: Network?) {
+                _connection.postValue(true)
+            }
+        }
+        connectivityManager.registerDefaultNetworkCallback(networkCallback)
     }
 }

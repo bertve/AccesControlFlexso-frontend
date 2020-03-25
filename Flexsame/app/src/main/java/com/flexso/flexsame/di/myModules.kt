@@ -2,6 +2,7 @@ package com.flexso.flexsame.di
 
 import android.content.Context
 import android.net.ConnectivityManager
+import co.infinum.goldfinger.rx.RxGoldfinger
 import com.flexso.flexsame.LoggedInUserViewModel
 import com.flexso.flexsame.network.AuthInterceptor
 import com.flexso.flexsame.ui.login.LoginDataSource
@@ -61,11 +62,12 @@ val myModule : Module = module {
 
     //database
    // single {
-   //     AppDatabase.getInstance(get()).spotDao
+   //     AppDatabase.getInstance(get()).keyDao
    // }
 
     //connectivity_service
     single { androidContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
+
 
     //repos
     single {
