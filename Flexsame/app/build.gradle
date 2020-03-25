@@ -70,10 +70,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     //navigation
-    //implementation "android.arch.navigation:navigation-fragment-ktx:$navigation_version"
-   // implementation "android.arch.navigation:navigation-ui-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
     // Dynamic Feature Module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     // Testing Navigation
@@ -94,11 +93,13 @@ dependencies {
     implementation "com.google.code.gson:gson:$gson_version"
 
     // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutine"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 
     //form validation
     implementation "com.mobsandgeeks:android-saripaar:$saripaar_version"
 
+    //lottie for animations
+    implementation "com.airbnb.android:lottie:$lottie_version"
 
 }
