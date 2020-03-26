@@ -65,19 +65,19 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupGoldfinger() {
         val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
-        val login_email = sharedPreferences.getString("goldfinger_email",null)
-        val login_password = sharedPreferences.getString("goldfinger_password",null)
-
+        val loginEmail = sharedPreferences.getString("goldfinger_email",null)
+        val loginPassword = sharedPreferences.getString("goldfinger_password",null)
+        val settingsFingerprint = sharedPreferences.getBoolean("SETTINGS_AUTH_FINGERPRINT",true)
         goldfinger = RxGoldfinger.Builder(this)
                 .build()
-        if(goldfinger.canAuthenticate() && !login_email.isNullOrEmpty() && !login_password.isNullOrEmpty()){
+        if(goldfinger.canAuthenticate() && !loginEmail.isNullOrEmpty() && !loginPassword.isNullOrEmpty() && settingsFingerprint){
             params = Goldfinger.PromptParams.Builder(this)
                     .title("fingerprint authentication")
-                    .description("quick login for "+login_email)
+                    .description("quick login for "+loginEmail)
                     .negativeButtonText("Other account")
                     .build()
 
-            runFingerprintAuthPrompt(params,login_email,login_password)
+            runFingerprintAuthPrompt(params,loginEmail,loginPassword)
         }
 
     }
@@ -88,9 +88,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onNext(t: Goldfinger.Result) {
-                Log.i("goldfinger","type: " +t.type().name)
-                Log.i("goldfinger","mes: " + t.message())
-                Log.i("goldfinger", "reson: " +t.reason().name)
                 if(t.type() == Goldfinger.Type.SUCCESS){
                     loginViewModel.login(email,password)
                 }
@@ -203,11 +200,17 @@ class LoginActivity : AppCompatActivity() {
             val sharedPreferences = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
             val email = sharedPreferences.getString("goldfinger_email", null)
             val password = sharedPreferences.getString("goldfinger_password", null)
-            if(goldfinger.canAuthenticate() && !email.isNullOrEmpty() && !password.isNullOrEmpty()) {
-                runFingerprintAuthPrompt(params, email, password)
+            val settingsFingerprint = sharedPreferences.getBoolean("SETTINGS_AUTH_FINGERPRINT",true)
+            if (settingsFingerprint){
+                if(goldfinger.canAuthenticate() && !email.isNullOrEmpty() && !password.isNullOrEmpty()) {
+                    runFingerprintAuthPrompt(params, email, password)
+                }else{
+                    Toast.makeText(applicationContext,"No support for fingerprint authentication.",Toast.LENGTH_SHORT).show()
+                }
             }else{
-                Toast.makeText(applicationContext,"No support for fingerprint authentication.",Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,"Fingerprint authentication has been switched off in your settings.",Toast.LENGTH_SHORT).show()
             }
+
         }
 
     }
@@ -253,15 +256,15 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkIfLoggedIn() : Boolean {
         val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
-        val login_email = sharedPreferences.getString("LOGIN_EMAIL",null)
-        val login_token = sharedPreferences.getString("LOGIN_TOKEN",null)
-        val login_password = sharedPreferences.getString("LOGIN_PASSWORD",null)
-        if(login_email != null && login_token != null && login_password != null){
+        val loginEmail = sharedPreferences.getString("LOGIN_EMAIL",null)
+        val loginToken = sharedPreferences.getString("LOGIN_TOKEN",null)
+        val loginPassword = sharedPreferences.getString("LOGIN_PASSWORD",null)
+        if(loginEmail != null && loginToken != null && loginPassword != null){
             startMainActivity(
                 LoginSucces(
-                    login_token,
-                    login_email,
-                    login_password
+                    loginToken,
+                    loginEmail,
+                    loginPassword
                 )
             )
             return true
@@ -270,7 +273,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun startMainActivity(success: LoginSucces) {
-        var mainIntent = Intent(this, MainActivity::class.java)
+        val mainIntent = Intent(this, MainActivity::class.java)
         mainIntent.putExtra("token",success.token)
         mainIntent.putExtra("email",success.email)
         mainIntent.putExtra("password",success.password)
