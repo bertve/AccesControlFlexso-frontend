@@ -54,10 +54,12 @@ class LoginActivity : AppCompatActivity() {
         )
         setupUI()
         checkConnection()
-        checkIfLoggedIn()
+        var runGoldfinger = !checkIfLoggedIn()
         setupfieldsOnLogout()
         setupObservers()
-        setupGoldfinger()
+        if(runGoldfinger){
+            setupGoldfinger()
+        }
     }
 
     private fun setupGoldfinger() {
@@ -222,7 +224,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.checkConnectivity(connectivityManager)
     }
 
-    private fun checkIfLoggedIn() {
+    private fun checkIfLoggedIn() : Boolean {
         val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
         val login_email = sharedPreferences.getString("LOGIN_EMAIL",null)
         val login_token = sharedPreferences.getString("LOGIN_TOKEN",null)
@@ -235,7 +237,9 @@ class LoginActivity : AppCompatActivity() {
                     login_password
                 )
             )
+            return true
         }
+        return false
     }
 
     private fun startMainActivity(success: LoginSucces) {
