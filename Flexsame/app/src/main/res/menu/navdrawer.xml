@@ -15,10 +15,7 @@
         android:id="@+id/testNFCFragment"
         android:icon="@drawable/ic_nfc_24px"
         android:title="@string/testNFC" />
-    <item
-        android:id="@+id/nav_receiver"
-        android:icon="@drawable/ic_nfc_24px"
-        android:title="@string/receiver" />
+
     <item
         android:id="@+id/accountFragment"
         android:icon="@drawable/ic_person_24px"
@@ -29,7 +26,7 @@
         android:title="@string/settings" />
     <item
         android:id="@+id/nav_logout"
-        android:icon="@drawable/signout24"
+        android:icon="@drawable/ic_exit_to_app_black_18dp"
         android:title="@string/logout" />
 
 </menu>

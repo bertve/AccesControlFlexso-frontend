@@ -130,11 +130,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         navView.setNavigationItemSelectedListener(this)
     }
 
-    private fun startReceiverActivity() {
-        val intent = Intent(this,ReceiverActivity::class.java )
-        startActivity(intent)
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.myNavHostFragment)
         return NavigationUI.navigateUp(navController,drawerLayout)
@@ -147,9 +142,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.nav_receiver ->{
-                startReceiverActivity()
-            }
             R.id.nav_logout ->{
                 val dialog = LogoutDialog(this)
                 dialog.show(supportFragmentManager,"Log out")
