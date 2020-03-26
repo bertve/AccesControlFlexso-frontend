@@ -15,12 +15,15 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.databinding.DataBindingUtil
+import co.infinum.goldfinger.Goldfinger
+import co.infinum.goldfinger.rx.RxGoldfinger
 import com.airbnb.lottie.LottieAnimationView
 import com.flexso.flexsame.MainActivity
 import com.flexso.flexsame.R
 import com.flexso.flexsame.ui.register.RegisterActivity
 import com.flexso.flexsame.databinding.ActivityLoginBinding
 import com.flexso.flexsame.models.LoginSucces
+import io.reactivex.observers.DisposableObserver
 import kotlinx.android.synthetic.main.activity_login.*
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var register : Button
     private lateinit var connectionRex : LottieAnimationView
     private lateinit var logoFlexso: ImageView
+    private lateinit var goldfinger: RxGoldfinger
 
     override fun onStart() {
         super.onStart()
@@ -53,6 +57,46 @@ class LoginActivity : AppCompatActivity() {
         checkIfLoggedIn()
         setupfieldsOnLogout()
         setupObservers()
+        setupGoldfinger()
+    }
+
+    private fun setupGoldfinger() {
+        val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
+        val login_email = sharedPreferences.getString("goldfinger_email","")
+        val login_password = sharedPreferences.getString("goldfinger_password","")
+        Log.i("goldfinger",login_email)
+        Log.i("goldfinger",login_password)
+        goldfinger = RxGoldfinger.Builder(this)
+                .build()
+        if(goldfinger.canAuthenticate() && !login_email.isNullOrEmpty() && !login_password.isNullOrEmpty()){
+            val params = Goldfinger.PromptParams.Builder(this)
+                    .title("fingerprint authentication")
+                    .description("quick login for "+login_email)
+                    .negativeButtonText("Other account")
+                    .build()
+
+            val disposableObserver : DisposableObserver<Goldfinger.Result> = object : DisposableObserver<Goldfinger.Result>(){
+                override fun onComplete() {
+                    Log.i("goldfinger","complete")
+                    loginViewModel.login(login_email,login_password)
+                }
+
+                override fun onNext(t: Goldfinger.Result) {
+                    Log.i("goldfinger","onNext")
+                    Log.i("goldfinger","message: "+t.message())
+                    Log.i("goldfinger","value: "+t.value())
+                    Log.i("goldfinger","type: "+t.type())
+                    Log.i("goldfinger","reason: "+t.reason().name)
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.i("goldfinger","error")
+                    Log.i("goldfinger","mess: "+ e.message)
+                }
+            }
+            goldfinger.authenticate(params).subscribe(disposableObserver)
+        }
+
     }
 
     private fun setupObservers() {

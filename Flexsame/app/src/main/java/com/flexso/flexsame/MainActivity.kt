@@ -175,6 +175,8 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         login.putExtra("message","Succesfully logged out")
 
             sharedPreferences.edit()
+                    .putString("goldfinger_email",email)
+                    .putString("goldfinger_password",password)
                 .remove("LOGIN_EMAIL")
                 .remove("LOGIN_TOKEN")
                 .remove("LOGIN_PASSWORD")
