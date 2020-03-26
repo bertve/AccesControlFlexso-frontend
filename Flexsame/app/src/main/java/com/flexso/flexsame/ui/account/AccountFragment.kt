@@ -10,7 +10,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.airbnb.lottie.LottieDrawable
 import com.flexso.flexsame.LoggedInUserViewModel
 import com.flexso.flexsame.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -64,7 +63,7 @@ class AccountFragment : Fragment(), Validator.ValidationListener {
         password = binding.password
         password_confirm = binding.passwordConfirm
         binding.avatar.setMinAndMaxFrame(20,112)
-        binding.avatar.addAnimatorListener(AvatarAnimatorListener(binding.avatar))
+        binding.avatar.addAnimatorListener(BackAndForthAnimatorListener(binding.avatar))
     }
 
     private fun setupViewModel() {

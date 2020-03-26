@@ -5,7 +5,7 @@ import android.util.Log
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 
-class AvatarAnimatorListener(val avatar: LottieAnimationView) : Animator.AnimatorListener{
+class BackAndForthAnimatorListener(val anim: LottieAnimationView) : Animator.AnimatorListener{
     var counter = 0
     override fun onAnimationRepeat(animation: Animator?) {
     }
@@ -18,15 +18,14 @@ class AvatarAnimatorListener(val avatar: LottieAnimationView) : Animator.Animato
     }
 
     override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) {
-            avatar.reverseAnimationSpeed()
+            anim.reverseAnimationSpeed()
             if(counter%2==1){
-                avatar.playAnimation()
+                anim.playAnimation()
             }
     }
 
     override fun onAnimationStart(animation: Animator?, isReverse: Boolean) {
         counter ++
-
     }
 
     override fun onAnimationStart(animation: Animator?) {

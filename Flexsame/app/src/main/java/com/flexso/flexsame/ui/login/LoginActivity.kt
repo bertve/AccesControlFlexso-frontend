@@ -11,7 +11,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.databinding.DataBindingUtil
@@ -23,8 +22,8 @@ import com.flexso.flexsame.R
 import com.flexso.flexsame.ui.register.RegisterActivity
 import com.flexso.flexsame.databinding.ActivityLoginBinding
 import com.flexso.flexsame.models.LoginSucces
+import com.flexso.flexsame.ui.account.BackAndForthAnimatorListener
 import io.reactivex.observers.DisposableObserver
-import kotlinx.android.synthetic.main.activity_login.*
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,6 +40,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var connectionRex : LottieAnimationView
     private lateinit var logoFlexso: ImageView
     private lateinit var goldfinger: RxGoldfinger
+    private lateinit var fingerprintButton : LottieAnimationView
+    private lateinit var params: Goldfinger.PromptParams
 
     override fun onStart() {
         super.onStart()
@@ -71,28 +72,38 @@ class LoginActivity : AppCompatActivity() {
         goldfinger = RxGoldfinger.Builder(this)
                 .build()
         if(goldfinger.canAuthenticate() && !login_email.isNullOrEmpty() && !login_password.isNullOrEmpty()){
-            val params = Goldfinger.PromptParams.Builder(this)
+            params = Goldfinger.PromptParams.Builder(this)
                     .title("fingerprint authentication")
                     .description("quick login for "+login_email)
                     .negativeButtonText("Other account")
                     .build()
 
-            val disposableObserver : DisposableObserver<Goldfinger.Result> = object : DisposableObserver<Goldfinger.Result>(){
-                override fun onComplete() {
-                }
-
-                override fun onNext(t: Goldfinger.Result) {
-                    if(t.type() == Goldfinger.Type.SUCCESS){
-                        loginViewModel.login(login_email,login_password)
-                    }
-                }
-
-                override fun onError(e: Throwable) {
-                }
-            }
-            goldfinger.authenticate(params).subscribe(disposableObserver)
+            runFingerprintAuthPrompt(params,login_email,login_password)
         }
 
+    }
+
+    private fun runFingerprintAuthPrompt(params: Goldfinger.PromptParams,email:String,password: String) {
+        val disposableObserver : DisposableObserver<Goldfinger.Result> = object : DisposableObserver<Goldfinger.Result>(){
+            override fun onComplete() {
+            }
+
+            override fun onNext(t: Goldfinger.Result) {
+                Log.i("goldfinger","type: " +t.type().name)
+                Log.i("goldfinger","mes: " + t.message())
+                Log.i("goldfinger", "reson: " +t.reason().name)
+                if(t.type() == Goldfinger.Type.SUCCESS){
+                    loginViewModel.login(email,password)
+                }
+                if(t.reason()== Goldfinger.Reason.LOCKOUT){
+                    Toast.makeText(applicationContext,"To many attempts.Try again later.",Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onError(e: Throwable) {
+            }
+        }
+        goldfinger.authenticate(params).subscribe(disposableObserver)
     }
 
     private fun setupObservers() {
@@ -186,6 +197,16 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         })
+
+        fingerprintButton.setOnClickListener{
+            it as LottieAnimationView
+            it.playAnimation()
+            val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
+            val email = sharedPreferences.getString("goldfinger_email","")
+            val password = sharedPreferences.getString("goldfinger_password","")
+            runFingerprintAuthPrompt(params,email!!,password!!)
+        }
+
     }
 
     private fun setVisibilityLoginScreen(visible : Boolean) {
@@ -215,6 +236,9 @@ class LoginActivity : AppCompatActivity() {
         register = binding.register
         logoFlexso = binding.logo
         connectionRex = binding.noConnection
+        fingerprintButton = binding.fingerprint
+        fingerprintButton.setMinAndMaxFrame(15,150)
+        fingerprintButton.addAnimatorListener(BackAndForthAnimatorListener(fingerprintButton))
         connectionRex.visibility = View.GONE
     }
 
