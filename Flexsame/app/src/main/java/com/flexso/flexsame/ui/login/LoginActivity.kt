@@ -77,21 +77,15 @@ class LoginActivity : AppCompatActivity() {
 
             val disposableObserver : DisposableObserver<Goldfinger.Result> = object : DisposableObserver<Goldfinger.Result>(){
                 override fun onComplete() {
-                    Log.i("goldfinger","complete")
-                    loginViewModel.login(login_email,login_password)
                 }
 
                 override fun onNext(t: Goldfinger.Result) {
-                    Log.i("goldfinger","onNext")
-                    Log.i("goldfinger","message: "+t.message())
-                    Log.i("goldfinger","value: "+t.value())
-                    Log.i("goldfinger","type: "+t.type())
-                    Log.i("goldfinger","reason: "+t.reason().name)
+                    if(t.type() == Goldfinger.Type.SUCCESS){
+                        loginViewModel.login(login_email,login_password)
+                    }
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.i("goldfinger","error")
-                    Log.i("goldfinger","mess: "+ e.message)
                 }
             }
             goldfinger.authenticate(params).subscribe(disposableObserver)
