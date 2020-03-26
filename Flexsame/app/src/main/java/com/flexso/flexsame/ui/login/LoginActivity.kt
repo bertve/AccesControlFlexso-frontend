@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
         )
         setupUI()
         checkConnection()
-        var runGoldfinger = !checkIfLoggedIn()
+        val runGoldfinger = !checkIfLoggedIn()
         setupfieldsOnLogout()
         setupObservers()
         if(runGoldfinger){
@@ -65,10 +65,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupGoldfinger() {
         val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
-        val login_email = sharedPreferences.getString("goldfinger_email","")
-        val login_password = sharedPreferences.getString("goldfinger_password","")
-        Log.i("goldfinger",login_email)
-        Log.i("goldfinger",login_password)
+        val login_email = sharedPreferences.getString("goldfinger_email",null)
+        val login_password = sharedPreferences.getString("goldfinger_password",null)
+
         goldfinger = RxGoldfinger.Builder(this)
                 .build()
         if(goldfinger.canAuthenticate() && !login_email.isNullOrEmpty() && !login_password.isNullOrEmpty()){
@@ -201,10 +200,14 @@ class LoginActivity : AppCompatActivity() {
         fingerprintButton.setOnClickListener{
             it as LottieAnimationView
             it.playAnimation()
-            val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
-            val email = sharedPreferences.getString("goldfinger_email","")
-            val password = sharedPreferences.getString("goldfinger_password","")
-            runFingerprintAuthPrompt(params,email!!,password!!)
+            val sharedPreferences = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
+            val email = sharedPreferences.getString("goldfinger_email", null)
+            val password = sharedPreferences.getString("goldfinger_password", null)
+            if(goldfinger.canAuthenticate() && !email.isNullOrEmpty() && !password.isNullOrEmpty()) {
+                runFingerprintAuthPrompt(params, email, password)
+            }else{
+                Toast.makeText(applicationContext,"No support for fingerprint authentication.",Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
