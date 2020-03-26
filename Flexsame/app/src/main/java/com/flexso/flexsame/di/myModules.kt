@@ -2,7 +2,6 @@ package com.flexso.flexsame.di
 
 import android.content.Context
 import android.net.ConnectivityManager
-import co.infinum.goldfinger.rx.RxGoldfinger
 import com.flexso.flexsame.LoggedInUserViewModel
 import com.flexso.flexsame.network.AuthInterceptor
 import com.flexso.flexsame.ui.login.LoginDataSource
@@ -12,6 +11,7 @@ import com.flexso.flexsame.repos.*
 import com.flexso.flexsame.ui.home.HomeViewModel
 import com.flexso.flexsame.ui.login.LoginViewModel
 import com.flexso.flexsame.ui.register.RegisterViewModel
+import com.flexso.flexsame.ui.settings.SettingsViewModel
 import com.flexso.flexsame.ui.testNFC.TestNFCViewModel
 import com.flexso.flexsame.ui.wallet.WalletViewModel
 import com.google.gson.GsonBuilder
@@ -90,6 +90,7 @@ val myModule : Module = module {
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { LoggedInUserViewModel(get()) }
+    viewModel { SettingsViewModel() }
 
 }
 

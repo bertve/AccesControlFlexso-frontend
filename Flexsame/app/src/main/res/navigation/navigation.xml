@@ -30,6 +30,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_homeFragment_to_setttingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/testNFCFragment"
@@ -62,4 +65,8 @@
         android:name="com.flexso.flexsame.ui.register.RegisterActivity"
         android:label="activity_register"
         tools:layout="@layout/activity_register" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.flexso.flexsame.ui.settings.SettingsFragment"
+        android:label="Settings" />
 </navigation>

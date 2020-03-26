@@ -28,4 +28,5 @@
     <string name="dialog_logout">Are you sure you want to log out?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="settings">Settings</string>
 </resources>
