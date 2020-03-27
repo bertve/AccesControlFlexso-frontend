@@ -23,6 +23,7 @@
                 android:scaleType="centerCrop"
                 app:lottie_rawRes="@raw/edit_account_succes"
                 app:lottie_scale="0.2"
+                app:lottie_speed="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

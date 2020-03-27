@@ -232,6 +232,7 @@ class LoginActivity : AppCompatActivity() {
         login.visibility = visibility
         register.visibility = visibility
         logoFlexso.visibility = visibility
+        fingerprintButton.visibility = visibility
     }
 
     private fun setupUI() {
