@@ -13,8 +13,7 @@ import androidx.databinding.DataBindingUtil
 import com.flexso.flexsame.MainActivity
 import com.flexso.flexsame.R
 import com.flexso.flexsame.databinding.TestNfcFragmentBinding
-import com.flexso.flexsame.utils.OutcomingNfcManager
-import com.flexso.flexsame.utils.OutcomingNfcManager.NfcActivity
+import com.flexso.flexsame.ui.testNFC.OutcomingNfcManager.NfcActivity
 
 
 class TestNFCFragment : Fragment(), NfcActivity{

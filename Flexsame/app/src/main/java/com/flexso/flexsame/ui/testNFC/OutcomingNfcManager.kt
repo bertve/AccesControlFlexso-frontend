@@ -1,4 +1,4 @@
-package com.flexso.flexsame.utils
+package com.flexso.flexsame.ui.testNFC
 
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
