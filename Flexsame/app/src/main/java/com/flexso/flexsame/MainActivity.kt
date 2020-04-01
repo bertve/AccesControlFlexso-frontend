@@ -35,10 +35,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
 
-    var email : String = ""
-    var token : String = ""
-    var password : String = ""
-
     val loggedInUserViewModel : LoggedInUserViewModel by viewModel()
 
     lateinit var user : User
@@ -75,10 +71,9 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     private fun setLoggedInUser() {
         val intent : Intent = intent
-        token = intent.getStringExtra("token").orEmpty()
-        email = intent.getStringExtra("email").orEmpty()
-        password = intent.getStringExtra("password").orEmpty()
-        Log.i("currentUser","LOGIN: "+ email + " / " + token+" / "+password )
+        val token = intent.getStringExtra("token").orEmpty()
+        val email = intent.getStringExtra("email").orEmpty()
+        val password = intent.getStringExtra("password").orEmpty()
         loggedInUserViewModel.setCurrentUser(email,token,password)
     }
 
@@ -170,8 +165,8 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         login.putExtra("message","Succesfully logged out")
 
             sharedPreferences.edit()
-                    .putString("goldfinger_email",email)
-                    .putString("goldfinger_password",password)
+                    .putString("goldfinger_email",user.email)
+                    .putString("goldfinger_password",user.password)
                 .remove("LOGIN_EMAIL")
                 .remove("LOGIN_TOKEN")
                 .remove("LOGIN_PASSWORD")

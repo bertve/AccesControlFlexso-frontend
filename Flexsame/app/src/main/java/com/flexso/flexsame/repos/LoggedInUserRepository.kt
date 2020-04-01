@@ -14,8 +14,7 @@ class LoggedInUserRepository(private val keyService: KeyService) {
     val user:LiveData<User> get() = _user
 
     suspend fun getCurrentUser(token: String,password:String) : Boolean{
-        Log.i("currentUser","AUTHINT: "+AuthInterceptor.getToken())
-        var getPropertiesDeffered = keyService.getCurrentUser()
+        val getPropertiesDeffered = keyService.getCurrentUser()
        try{
             var res = getPropertiesDeffered.await()
            res.token = token
