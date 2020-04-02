@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     val loggedInUserViewModel : LoggedInUserViewModel by viewModel()
 
-    lateinit var user : User
+    var user : User = User(-1,"","","","","")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -164,16 +164,30 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         val login = Intent(this, LoginActivity::class.java)
         login.putExtra("message","Succesfully logged out")
 
+        if(user.userId != -1L){
             sharedPreferences.edit()
                     .putString("goldfinger_email",user.email)
                     .putString("goldfinger_password",user.password)
+                    .commit()
+        }
+            sharedPreferences.edit()
                 .remove("LOGIN_EMAIL")
                 .remove("LOGIN_TOKEN")
                 .remove("LOGIN_PASSWORD")
                 .commit()
 
         startActivity(login)
-
+        finish()
     }
 
+    override fun onStop() {
+        super.onStop()
+        val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
+        if(user.userId != -1L){
+            sharedPreferences.edit()
+                    .putString("goldfinger_email",user.email)
+                    .putString("goldfinger_password",user.password)
+                    .commit()
+        }
+    }
 }

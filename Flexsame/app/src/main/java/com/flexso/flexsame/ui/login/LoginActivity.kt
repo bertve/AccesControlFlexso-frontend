@@ -42,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var goldfinger: RxGoldfinger
     private lateinit var fingerprintButton : LottieAnimationView
     private lateinit var params: Goldfinger.PromptParams
+    private var onStartUpConnection : Boolean = false
 
     override fun onStart() {
         super.onStart()
@@ -54,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
             R.layout.activity_login
         )
         setupUI()
-        checkConnection()
+        onStartUpConnection = checkConnection()
         val runGoldfinger = !checkIfLoggedIn()
         setupfieldsOnLogout()
         setupObservers()
@@ -70,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
         val settingsFingerprint = sharedPreferences.getBoolean("SETTINGS_AUTH_FINGERPRINT",true)
         goldfinger = RxGoldfinger.Builder(this)
                 .build()
-        if(goldfinger.canAuthenticate() && !loginEmail.isNullOrEmpty() && !loginPassword.isNullOrEmpty() && settingsFingerprint){
+        if(goldfinger.canAuthenticate() && !loginEmail.isNullOrEmpty() && !loginPassword.isNullOrEmpty() && settingsFingerprint && onStartUpConnection){
             params = Goldfinger.PromptParams.Builder(this)
                     .title("fingerprint authentication")
                     .description("quick login for "+loginEmail)
@@ -203,6 +204,11 @@ class LoginActivity : AppCompatActivity() {
             val settingsFingerprint = sharedPreferences.getBoolean("SETTINGS_AUTH_FINGERPRINT",true)
             if (settingsFingerprint){
                 if(goldfinger.canAuthenticate() && !email.isNullOrEmpty() && !password.isNullOrEmpty()) {
+                    params = Goldfinger.PromptParams.Builder(this)
+                            .title("fingerprint authentication")
+                            .description("quick login for "+email)
+                            .negativeButtonText("Other account")
+                            .build()
                     runFingerprintAuthPrompt(params, email, password)
                 }else{
                     Toast.makeText(applicationContext,"No support for fingerprint authentication.",Toast.LENGTH_SHORT).show()
@@ -249,10 +255,10 @@ class LoginActivity : AppCompatActivity() {
         connectionRex.visibility = View.GONE
     }
 
-    private fun checkConnection() {
+    private fun checkConnection() : Boolean {
         connectivityManager =
                 this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        loginViewModel.checkConnectivity(connectivityManager)
+        return loginViewModel.checkConnectivity(connectivityManager)
     }
 
     private fun checkIfLoggedIn() : Boolean {

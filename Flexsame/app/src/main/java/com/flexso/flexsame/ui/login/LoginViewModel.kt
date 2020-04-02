@@ -74,7 +74,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         viewModelJob.cancel()
     }
 
-    fun checkConnectivity(connectivityManager: ConnectivityManager) {
+    fun checkConnectivity(connectivityManager: ConnectivityManager):Boolean {
         val networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onLost(network: Network?) {
                 _connection.postValue(false)
@@ -84,6 +84,9 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                 _connection.postValue(true)
             }
         }
+        val onStartUpConnection = connectivityManager.activeNetworkInfo?.isConnectedOrConnecting == true
+        _connection.postValue(onStartUpConnection)
         connectivityManager.registerDefaultNetworkCallback(networkCallback)
+        return onStartUpConnection
     }
 }

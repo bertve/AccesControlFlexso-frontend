@@ -13,6 +13,20 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/no_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/no_connection"
+            app:lottie_scale="0.3"
+            />
+
         <ImageView
             android:id="@+id/logo_flexso"
             android:layout_width="wrap_content"
