@@ -6,13 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val connectivityManager: ConnectivityManager) : ViewModel() {
     private val _connection = MutableLiveData<Boolean>()
 
     val connection: LiveData<Boolean>
         get() = _connection
 
-    fun checkConnectivity(connectivityManager: ConnectivityManager) {
+    fun checkConnectivity() {
         val networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onLost(network: Network?) {
                 _connection.postValue(false)

@@ -16,7 +16,7 @@ import com.flexso.flexsame.R
 import com.flexso.flexsame.models.LoginSucces
 import kotlinx.coroutines.*
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(private val loginRepository: LoginRepository,private val connectivityManager: ConnectivityManager) : ViewModel() {
 
     //coroutines
     private val viewModelJob = SupervisorJob()
@@ -74,7 +74,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         viewModelJob.cancel()
     }
 
-    fun checkConnectivity(connectivityManager: ConnectivityManager):Boolean {
+    fun checkConnectivity():Boolean {
         val networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onLost(network: Network?) {
                 _connection.postValue(false)

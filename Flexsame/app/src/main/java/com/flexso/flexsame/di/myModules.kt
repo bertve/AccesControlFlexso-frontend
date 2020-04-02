@@ -33,7 +33,6 @@ val myModule : Module = module {
             .create()
     }
 
-
     //custom client with auth interceptor
     single {
         OkHttpClient.Builder()
@@ -60,14 +59,8 @@ val myModule : Module = module {
         provideAuthService(get())
     }
 
-    //database
-   // single {
-   //     AppDatabase.getInstance(get()).keyDao
-   // }
-
     //connectivity_service
     single { androidContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
-
 
     //repos
     single {
@@ -84,10 +77,10 @@ val myModule : Module = module {
     }
 
     //viewmodels
-    viewModel { HomeViewModel() }
+    viewModel { HomeViewModel(get()) }
     viewModel { TestNFCViewModel()}
     viewModel { WalletViewModel(get()) }
-    viewModel { LoginViewModel(get()) }
+    viewModel { LoginViewModel(get(),get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { LoggedInUserViewModel(get()) }
     viewModel { SettingsViewModel() }

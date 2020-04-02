@@ -75,7 +75,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun checkConnection() {
-        val connectivityManager = this.activity!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return viewModel.checkConnectivity(connectivityManager)
+        viewModel.checkConnectivity()
     }
 }

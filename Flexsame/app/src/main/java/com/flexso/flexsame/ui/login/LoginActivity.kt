@@ -44,11 +44,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var params: Goldfinger.PromptParams
     private var onStartUpConnection : Boolean = false
 
-    override fun onStart() {
-        super.onStart()
-        checkConnection()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,
@@ -256,9 +251,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkConnection() : Boolean {
-        connectivityManager =
-                this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return loginViewModel.checkConnectivity(connectivityManager)
+        return loginViewModel.checkConnectivity()
     }
 
     private fun checkIfLoggedIn() : Boolean {
