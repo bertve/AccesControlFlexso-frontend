@@ -3,6 +3,7 @@ package com.flexso.flexsame
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.flexso.flexsame.models.Role
 import com.flexso.flexsame.models.User
 import com.flexso.flexsame.network.AuthInterceptor
 import com.flexso.flexsame.repos.LoggedInUserRepository

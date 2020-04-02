@@ -1,17 +1,11 @@
 package com.flexso.flexsame.models
 
-class Company {
-    val companyId: Long
-    val name: String
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-    constructor(id:Long,name: String){
-        this.companyId = id
-        this.name = name
-    }
-
+@Parcelize
+class Company(val companyId: Long, val name: String) :Parcelable{
     override fun toString(): String {
         return "Company(companyId=$companyId, name='$name')"
     }
-
-
 }
