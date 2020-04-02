@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_homeFragment_to_adminFragment"
             app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_companyFragment"
+            app:destination="@id/companyFragment" />
     </fragment>
     <fragment
         android:id="@+id/testNFCFragment"
@@ -76,4 +79,8 @@
         android:id="@+id/adminFragment"
         android:name="com.flexso.flexsame.ui.admin.AdminFragment"
         android:label="@string/admin" />
+    <fragment
+        android:id="@+id/companyFragment"
+        android:name="com.flexso.flexsame.ui.company.CompanyFragment"
+        android:label="CompanyFragment" />
 </navigation>

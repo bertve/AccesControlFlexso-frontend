@@ -24,6 +24,10 @@
         android:id="@+id/adminFragment"
         android:icon="@drawable/ic_supervisor_account_black_18dp"
         android:title="@string/admin" />
+    <item
+        android:id="@+id/companyFragment"
+        android:icon="@drawable/ic_business_center_black_18dp"
+        android:title="@string/company" />
 
     <item
         android:id="@+id/settingsFragment"

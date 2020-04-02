@@ -9,6 +9,7 @@ import com.flexso.flexsame.network.AuthService
 import com.flexso.flexsame.network.KeyService
 import com.flexso.flexsame.repos.*
 import com.flexso.flexsame.ui.admin.AdminViewModel
+import com.flexso.flexsame.ui.company.CompanyViewModel
 import com.flexso.flexsame.ui.home.HomeViewModel
 import com.flexso.flexsame.ui.login.LoginViewModel
 import com.flexso.flexsame.ui.register.RegisterViewModel
@@ -86,7 +87,7 @@ val myModule : Module = module {
     viewModel { LoggedInUserViewModel(get()) }
     viewModel { SettingsViewModel() }
     viewModel { AdminViewModel(get()) }
-
+    viewModel { CompanyViewModel(get()) }
 }
 
 private fun provideKeyService(retrofit: Retrofit): KeyService {

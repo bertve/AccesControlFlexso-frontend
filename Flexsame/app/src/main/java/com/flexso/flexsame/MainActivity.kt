@@ -157,6 +157,9 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
             R.id.adminFragment -> {
                 navController.navigate(R.id.adminFragment)
             }
+            R.id.companyFragment -> {
+                navController.navigate(R.id.companyFragment)
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
