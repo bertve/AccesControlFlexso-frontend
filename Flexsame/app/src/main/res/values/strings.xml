@@ -33,4 +33,5 @@
     <string name="settings_authentication_fingerprint">Fingerprint</string>
     <string name="servicedesc">apdu service</string>
     <string name="aiddescription">aid apdu service other</string>
+    <string name="admin">Admin</string>
 </resources>

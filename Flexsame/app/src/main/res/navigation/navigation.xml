@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_homeFragment_to_setttingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
     </fragment>
     <fragment
         android:id="@+id/testNFCFragment"
@@ -69,4 +72,8 @@
         android:id="@+id/settingsFragment"
         android:name="com.flexso.flexsame.ui.settings.SettingsFragment"
         android:label="Settings" />
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.flexso.flexsame.ui.admin.AdminFragment"
+        android:label="@string/admin" />
 </navigation>

@@ -88,7 +88,7 @@ class WalletFragment : Fragment() {
         binding.walletViewModel = viewModel
         val args = WalletFragmentArgs.fromBundle(arguments!!)
 
-        viewModel.setUser(args.currentUser)//HARDCODED
+        viewModel.setUser(args.currentUser)
     }
 
 
