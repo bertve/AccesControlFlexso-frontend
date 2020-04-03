@@ -19,6 +19,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.flexso.flexsame.databinding.ActivityMainBinding
+import com.flexso.flexsame.models.RoleName
 import com.flexso.flexsame.models.User
 import com.flexso.flexsame.ui.dialogs.LogoutDialog
 import com.flexso.flexsame.ui.home.HomeFragmentDirections
@@ -42,7 +43,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        navController = this.findNavController(R.id.myNavHostFragment)
         setupNavigation()
         setLoggedInUser()
         setupListeners()
@@ -54,6 +54,15 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                 this.user = it
                 //set name in navdrawer
                 navView.getHeaderView(0).findViewById<TextView>(R.id.name).text = user.getFullName()
+                //set menu in navdrawer
+                navView.menu.clear()
+                var menu = when(user.roles.elementAt(0).roleName){
+                    RoleName.ROLE_USER -> R.menu.navdrawer_user
+                    RoleName.ROLE_COMPANY -> R.menu.navdrawer_company
+                    RoleName.ROLE_ADMIN -> R.menu.navdrawer_admin
+                    else -> R.menu.navdrawer_user
+                }
+                navView.inflateMenu(menu)
             }
         })
 
@@ -78,6 +87,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     }
 
     private fun setupNavigation(){
+        navController = this.findNavController(R.id.myNavHostFragment)
         initDrawer()
         initBottomNav()
     }
@@ -113,7 +123,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         navView = binding.navView
         NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
         appBarConfiguration = AppBarConfiguration(navController.graph,drawerLayout)
-        NavigationUI.setupWithNavController(binding.navView,navController)
+        NavigationUI.setupWithNavController(navView,navController)
         // prevent nav gesture if not on start destination
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, _ ->
             if (nd.id == nc.graph.startDestination) {

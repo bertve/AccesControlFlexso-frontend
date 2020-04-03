@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home_24px"
+        android:title="@string/home" />
+
+    <item
+        android:id="@+id/walletFragment"
+        android:icon="@drawable/ic_wallet"
+        android:title="@string/wallet" />
+
+    <item
+        android:id="@+id/testNFCFragment"
+        android:icon="@drawable/ic_nfc_24px"
+        android:title="@string/testNFC" />
+
+    <item
+        android:id="@+id/accountFragment"
+        android:icon="@drawable/ic_person_24px"
+        android:title="@string/account" />
+
+    <item
+        android:id="@+id/companyFragment"
+        android:icon="@drawable/ic_business_center_black_18dp"
+        android:title="@string/company" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings_black_18dp"
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_exit_to_app_black_18dp"
+        android:title="@string/logout" />
+
+</menu>
