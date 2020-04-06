@@ -35,4 +35,5 @@
     <string name="aiddescription">aid apdu service other</string>
     <string name="admin">Admin</string>
     <string name="company">Company</string>
+    <string name="companies">Companies</string>
 </resources>

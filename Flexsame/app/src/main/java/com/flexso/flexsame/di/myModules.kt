@@ -3,6 +3,7 @@ package com.flexso.flexsame.di
 import android.content.Context
 import android.net.ConnectivityManager
 import com.flexso.flexsame.LoggedInUserViewModel
+import com.flexso.flexsame.network.AdminService
 import com.flexso.flexsame.network.AuthInterceptor
 import com.flexso.flexsame.ui.login.LoginDataSource
 import com.flexso.flexsame.network.AuthService
@@ -61,6 +62,10 @@ val myModule : Module = module {
         provideAuthService(get())
     }
 
+    single {
+        provideAdminService(get())
+    }
+
     //connectivity_service
     single { androidContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
 
@@ -76,6 +81,9 @@ val myModule : Module = module {
     }
     single {
         LoggedInUserRepository(get())
+    }
+    single {
+        AdminRepository(get())
     }
 
     //viewmodels
@@ -96,5 +104,9 @@ private fun provideKeyService(retrofit: Retrofit): KeyService {
 
 private fun provideAuthService(retrofit: Retrofit): AuthService{
     return retrofit.create(AuthService::class.java)
+}
+
+private fun provideAdminService(retrofit: Retrofit): AdminService {
+    return retrofit.create(AdminService::class.java)
 }
 

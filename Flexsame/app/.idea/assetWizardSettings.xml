@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_business_center_black_18dp" />
-                            <entry key="sourceFile" value="C:\Users\Bert Van Eeckhoutte\Documents\repo\AccesControlFlexso-frontend\Flexsame\app\src\main\res\drawable-v24\business_center-black-18dp.svg" />
+                            <entry key="outputName" value="ic_company" />
+                            <entry key="sourceFile" value="C:\Users\Bert Van Eeckhoutte\Documents\repo\AccesControlFlexso-frontend\Flexsame\app\src\main\res\drawable-v24\company.svg" />
                           </map>
                         </option>
                       </PersistentState>
