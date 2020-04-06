@@ -2,7 +2,9 @@ package com.flexso.flexsame.ui.wallet
 
 import androidx.lifecycle.*
 import com.flexso.flexsame.models.Office
+import com.flexso.flexsame.models.RoleName
 import com.flexso.flexsame.models.User
+import com.flexso.flexsame.repos.AdminRepository
 import com.flexso.flexsame.repos.KeyRepository
 import kotlinx.coroutines.*
 
@@ -40,7 +42,6 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
     }
     private suspend fun initOffices() {
             keyRepository.getOffices(user.userId)
-
     }
 
     override fun onCleared() {
@@ -51,9 +52,19 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
 
     fun  setUser(current : User) {
         this.user = current
-        viewModelScope.launch {
-            initOffices()
+        if(user.roles.any { r -> r.roleName == RoleName.ROLE_ADMIN }){
+            viewModelScope.launch {
+                initAdminOffices()
+            }
+        }else{
+            viewModelScope.launch {
+                initOffices()
+            }
         }
+    }
+
+    private suspend fun initAdminOffices() {
+        keyRepository.getAllOffices()
     }
 
 
