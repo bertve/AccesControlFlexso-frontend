@@ -8,7 +8,7 @@
             type="com.flexso.flexsame.ui.admin.AdminViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
+        android:id="@+id/admin_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.admin.AdminFragment">

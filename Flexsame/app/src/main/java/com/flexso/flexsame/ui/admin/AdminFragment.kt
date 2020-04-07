@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.flexso.flexsame.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.flexso.flexsame.R
@@ -86,6 +87,10 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         collapse_img.setOnClickListener {
             switchFab()
         }
+        binding.add.setOnClickListener {
+            validator.validate()
+            (activity as MainActivity).hideKeyboard(this.requireView())
+        }
         password_confirm.setOnEditorActionListener { _, actionId, _ ->
             when (actionId){
                 EditorInfo.IME_ACTION_DONE ->{
@@ -99,14 +104,37 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
        viewModel.addSucces.observe(viewLifecycleOwner, Observer {
             onResponseAdd(it)
         })
+
+        viewModel.removeSucces.observe(viewLifecycleOwner, Observer {
+            onResponseRemove(it)
+        })
+    }
+
+    private fun onResponseRemove(succes: Boolean) {
+        if(succes!!){
+            Toast.makeText(context,"succesfully removed",Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(context,"removal failed",Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun onResponseAdd(succes: Boolean) {
         if(succes!!){
+            switchFab()
+            resetAddCompanyFields()
             Toast.makeText(context,"succesfully added ${this.companyName.text}",Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(context,"failed to add ${this.companyName.text}",Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun resetAddCompanyFields() {
+        companyName.setText("")
+        firstName.setText("")
+        lastName.setText("")
+        email.setText("")
+        password.setText("")
+        password_confirm.setText("")
     }
 
     private fun switchFab() {
@@ -118,7 +146,7 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
     }
 
     private fun setupRecyclerView() {
-        val adapter = CompanyListAdapter(context!!)
+        val adapter = CompanyListAdapter(context!!,viewModel)
 
         binding.companyList.adapter = adapter
         val divider = DividerItemDecoration(context,HORIZONTAL)
@@ -130,6 +158,10 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
                     adapter.submitList(it)
                 }
         )
+
+        //swipe
+        val itemTouchHelper : ItemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter))
+        itemTouchHelper.attachToRecyclerView(binding.companyList)
 
     }
 
