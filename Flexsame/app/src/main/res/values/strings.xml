@@ -36,4 +36,6 @@
     <string name="admin">Admin</string>
     <string name="company">Company</string>
     <string name="companies">Companies</string>
+    <string name="add">Add</string>
+    <string name="company_name">Company Name</string>
 </resources>

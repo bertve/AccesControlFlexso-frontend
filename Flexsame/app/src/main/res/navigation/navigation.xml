@@ -78,7 +78,11 @@
     <fragment
         android:id="@+id/adminFragment"
         android:name="com.flexso.flexsame.ui.admin.AdminFragment"
-        android:label="@string/admin" />
+        android:label="@string/admin" >
+        <action
+            android:id="@+id/action_adminFragment_to_companyFragment"
+            app:destination="@id/companyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/companyFragment"
         android:name="com.flexso.flexsame.ui.company.CompanyFragment"

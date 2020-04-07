@@ -8,7 +8,7 @@
             name="user"
             type="com.flexso.flexsame.models.User" />
         <variable
-            name="clickListener" type="com.flexso.flexsame.ui.admin.CompanyListItemListener"/>
+            name="clickListener" type="com.flexso.flexsame.ui.admin.CompanyListAdapter.CompanyListItemListener"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

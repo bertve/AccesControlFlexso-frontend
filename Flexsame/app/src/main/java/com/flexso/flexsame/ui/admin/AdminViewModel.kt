@@ -3,10 +3,9 @@ package com.flexso.flexsame.ui.admin
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.flexso.flexsame.models.Office
 import com.flexso.flexsame.models.User
+import com.flexso.flexsame.models.dto.auth.SignUpRequestCompany
 import com.flexso.flexsame.repos.AdminRepository
-import com.flexso.flexsame.repos.KeyRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -21,19 +20,43 @@ class AdminViewModel(private val adminRepository: AdminRepository) : ViewModel()
     //company_users
     var users : LiveData<List<User>> = adminRepository.users
 
+    //add_succes
+    private val _addSucces = MutableLiveData<Boolean>()
+    val addSucces : LiveData<Boolean> get() = _addSucces
+
+    //remove_succes
+    private val _removeSucces = MutableLiveData<Boolean>()
+    val removeSucces : LiveData<Boolean> get() = _removeSucces
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
 
     init {
+            getCompanyUsers()
+    }
+
+    private fun getCompanyUsers(){
         viewModelScope.launch {
-            initCompanyUsers()
+            adminRepository.getCompanyUsers()
+            users = adminRepository.users
+        }
+
+    }
+
+    fun addCompany(signUpRequestCompany: SignUpRequestCompany) {
+        viewModelScope.launch {
+           _addSucces.postValue(adminRepository.addCompany(signUpRequestCompany))
+            getCompanyUsers()
         }
     }
 
-    private suspend fun initCompanyUsers(){
-            adminRepository.getCompanyUsers()
+    fun removeCompany(userId : Long){
+        viewModelScope.launch {
+            _removeSucces.postValue(adminRepository.removeCompany(userId))
+            getCompanyUsers()
+        }
     }
 
 }

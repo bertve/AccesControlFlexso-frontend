@@ -2,8 +2,10 @@ package com.flexso.flexsame.ui.admin
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +13,9 @@ import com.flexso.flexsame.R
 import com.flexso.flexsame.databinding.CompanylistItemBinding
 import com.flexso.flexsame.models.User
 
-class CompanyListAdapter(val context : Context, val clickListener: CompanyListItemListener) : ListAdapter<User, CompanyListAdapter.ViewHolder>(CompanyListDiffCallBack()) {
+class CompanyListAdapter(val context : Context) : ListAdapter<User, CompanyListAdapter.ViewHolder>(CompanyListDiffCallBack()) {
+
+    var isCLickable : Boolean = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -21,7 +25,10 @@ class CompanyListAdapter(val context : Context, val clickListener: CompanyListIt
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         setAnimations(holder)
-        holder.bind(clickListener,item)
+        holder.bind(
+                CompanyListItemListener {
+            userId -> if (this.isCLickable){Toast.makeText(context, "pushed company with userId: ${userId}", Toast.LENGTH_LONG).show()}
+        },item)
     }
 
     private fun setAnimations(holder: ViewHolder) {
@@ -63,5 +70,11 @@ class CompanyListAdapter(val context : Context, val clickListener: CompanyListIt
             return oldItem == newItem
         }
 
+    }
+
+    class CompanyListItemListener (val clickListener: (itemId : Long) -> Unit) {
+        fun onClick(v : View, u : User) {
+            clickListener(u.userId)
+        }
     }
 }

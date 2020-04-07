@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.admin.AdminFragment">
-
         <TextView
             android:id="@+id/title"
             style="@style/title"
@@ -29,7 +28,110 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintTop_toBottomOf="@+id/title" >
+
+        </androidx.recyclerview.widget.RecyclerView>
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/add_company_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior"
+                android:gravity="bottom|center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/collapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_collapse_24px" />
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/company_name"
+                    android:inputType="text"
+                    android:selectAllOnFocus="true" />
+
+                <EditText
+                    android:id="@+id/firstName"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/first_name"
+                    android:inputType="text"
+                    android:selectAllOnFocus="true" />
+
+                <EditText
+                    android:id="@+id/lastName"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/last_name"
+                    android:inputType="text"
+                    android:selectAllOnFocus="true" />
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
+                    android:selectAllOnFocus="true" />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/prompt_password"
+                    android:inputType="textPassword"
+                    android:selectAllOnFocus="true" />
+
+                <EditText
+                    android:id="@+id/password_confirm"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:hint="@string/password_confirmation"
+                    android:imeActionLabel="@string/add"
+                    android:inputType="textPassword"
+                    android:selectAllOnFocus="true" />
+
+                <Button
+                    android:id="@+id/add"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/design_default_color_background"
+                    android:enabled="true"
+                    android:text="@string/add"
+                    android:textColor="@color/colorPrimaryDark" />
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_add_24px" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
