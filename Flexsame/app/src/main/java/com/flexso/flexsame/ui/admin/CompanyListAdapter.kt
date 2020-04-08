@@ -1,27 +1,27 @@
 package com.flexso.flexsame.ui.admin
 
-import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.flexso.flexsame.R
 import com.flexso.flexsame.databinding.CompanylistItemBinding
 import com.flexso.flexsame.models.User
-import com.google.android.material.snackbar.Snackbar
 
-class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewModel) : ListAdapter<User, CompanyListAdapter.ViewHolder>(CompanyListDiffCallBack()) {
+class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewModel) : ListAdapter<User, CompanyListAdapter.ViewHolder>(CompanyListDiffCallBack()),Filterable {
 
     var isCLickable : Boolean = true
+    var mListRef: List<User>? = null
+    var mFilteredList: List<User>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -101,4 +101,41 @@ class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewMode
             clickListener(u.userId)
         }
     }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence): FilterResults {
+
+                val charString = charSequence.toString()
+
+                if (charString.isEmpty()) {
+
+                    mFilteredList = mListRef
+                } else {
+                    mListRef?.let {
+                        val filteredList = arrayListOf<User>()
+                        for (item in mListRef!!) {
+                                if (charString.toLowerCase() in item.company!!.name.toLowerCase()
+                                ) {
+                                    filteredList.add(item)
+                                }
+
+                        }
+
+                        mFilteredList = filteredList
+                    }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = mFilteredList
+                return filterResults
+            }
+
+            override fun publishResults(
+                    charSequence: CharSequence,
+                    filterResults: FilterResults
+            ) {
+                mFilteredList = filterResults.values as ArrayList<User>
+                submitList(mFilteredList)
+            }
+        }    }
 }

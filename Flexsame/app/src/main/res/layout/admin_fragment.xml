@@ -19,6 +19,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <SearchView
+            android:id="@+id/filter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/company_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/company_list"
             android:layout_width="0dp"
@@ -28,10 +41,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" >
+            app:layout_constraintTop_toBottomOf="@+id/filter" >
 
         </androidx.recyclerview.widget.RecyclerView>
+
         <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,16 +58,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:background="@color/white"
+                android:background="@drawable/background_shadow_top"
+                android:gravity="bottom|center"
                 android:orientation="vertical"
                 android:visibility="invisible"
-                app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior"
-                android:gravity="bottom|center">
+                app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/collapse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     app:srcCompat="@drawable/ic_collapse_24px" />
 
                 <EditText
@@ -63,7 +79,7 @@
                     android:layout_marginBottom="8dp"
                     android:hint="@string/company_name"
                     android:inputType="text"
-                    android:selectAllOnFocus="true" />
+                     />
 
                 <EditText
                     android:id="@+id/firstName"
@@ -72,7 +88,7 @@
                     android:layout_marginBottom="8dp"
                     android:hint="@string/first_name"
                     android:inputType="text"
-                    android:selectAllOnFocus="true" />
+                    />
 
                 <EditText
                     android:id="@+id/lastName"
@@ -81,7 +97,7 @@
                     android:layout_marginBottom="8dp"
                     android:hint="@string/last_name"
                     android:inputType="text"
-                    android:selectAllOnFocus="true" />
+                     />
 
                 <EditText
                     android:id="@+id/email"
@@ -90,7 +106,7 @@
                     android:layout_marginBottom="8dp"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
-                    android:selectAllOnFocus="true" />
+                     />
 
                 <EditText
                     android:id="@+id/password"
@@ -99,7 +115,7 @@
                     android:layout_marginBottom="8dp"
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
-                    android:selectAllOnFocus="true" />
+                     />
 
                 <EditText
                     android:id="@+id/password_confirm"
@@ -109,7 +125,7 @@
                     android:hint="@string/password_confirmation"
                     android:imeActionLabel="@string/add"
                     android:inputType="textPassword"
-                    android:selectAllOnFocus="true" />
+                     />
 
                 <Button
                     android:id="@+id/add"
@@ -120,6 +136,7 @@
                     android:enabled="true"
                     android:text="@string/add"
                     android:textColor="@color/colorPrimaryDark" />
+
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -131,6 +148,7 @@
                 android:layout_marginBottom="16dp"
                 android:clickable="true"
                 app:srcCompat="@drawable/ic_add_24px" />
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

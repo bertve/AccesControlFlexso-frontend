@@ -12,8 +12,7 @@ import com.flexso.flexsame.network.AdminService
 import java.lang.Exception
 
 class AdminRepository(private val adminService: AdminService) {
-    private var _users = MutableLiveData<List<User>>()
-    val users: LiveData<List<User>> get() = _users
+    var _users = MutableLiveData<List<User>>()
 
     suspend fun getCompanyUsers(){
         var getPropertiesDeffered = adminService.getCompanyUsers()

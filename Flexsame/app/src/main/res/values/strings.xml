@@ -38,4 +38,5 @@
     <string name="companies">Companies</string>
     <string name="add">Add</string>
     <string name="company_name">Company Name</string>
+    <color name="gray_shadow">#80AAAAAA</color>
 </resources>

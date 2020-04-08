@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -32,6 +33,8 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
     private lateinit var  binding : AdminFragmentBinding
     private lateinit var fab : FloatingActionButton
     private lateinit var collapse_img : ImageView
+    private lateinit var companyListAdapter: CompanyListAdapter
+
     //validation
     @NotEmpty(message = "Company name is required" )
     private lateinit var companyName : EditText
@@ -58,7 +61,6 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         setupUI()
         setupRecyclerView()
         setupObservers()
-        setupFilter()
 
         return binding.root
     }
@@ -108,6 +110,22 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         viewModel.removeSucces.observe(viewLifecycleOwner, Observer {
             onResponseRemove(it)
         })
+
+        binding.filter.setOnQueryTextListener(object : OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                filter(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filter(newText)
+                return true
+            }
+        })
+    }
+
+    private fun filter(s : String?){
+        companyListAdapter.filter.filter(s)
     }
 
     private fun onResponseRemove(succes: Boolean) {
@@ -142,12 +160,9 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         (binding.companyList.adapter as CompanyListAdapter).isCLickable = !fab.isExpanded
     }
 
-    private fun setupFilter() {
-    }
-
     private fun setupRecyclerView() {
         val adapter = CompanyListAdapter(context!!,viewModel)
-
+        companyListAdapter = adapter
         binding.companyList.adapter = adapter
         val divider = DividerItemDecoration(context,HORIZONTAL)
         binding.companyList.addItemDecoration(divider)
@@ -155,6 +170,9 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         viewModel.users.observe(
                 viewLifecycleOwner,
                 Observer{
+                    if (adapter.mListRef == null) {
+                        adapter.mListRef = it
+                    }
                     adapter.submitList(it)
                 }
         )

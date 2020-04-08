@@ -1,5 +1,6 @@
 package com.flexso.flexsame.ui.admin
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +19,8 @@ class AdminViewModel(private val adminRepository: AdminRepository) : ViewModel()
     private val viewModelScope = CoroutineScope( viewModelJob + Dispatchers.Main)
 
     //company_users
-    var users : LiveData<List<User>> = adminRepository.users
+    private var _users : MutableLiveData<List<User>> = adminRepository._users
+    val users : LiveData<List<User>> get() = _users
 
     //add_succes
     private val _addSucces = MutableLiveData<Boolean>()
@@ -27,6 +29,7 @@ class AdminViewModel(private val adminRepository: AdminRepository) : ViewModel()
     //remove_succes
     private val _removeSucces = MutableLiveData<Boolean>()
     val removeSucces : LiveData<Boolean> get() = _removeSucces
+
 
     override fun onCleared() {
         super.onCleared()
@@ -40,7 +43,7 @@ class AdminViewModel(private val adminRepository: AdminRepository) : ViewModel()
     private fun getCompanyUsers(){
         viewModelScope.launch {
             adminRepository.getCompanyUsers()
-            users = adminRepository.users
+            _users = adminRepository._users
         }
 
     }

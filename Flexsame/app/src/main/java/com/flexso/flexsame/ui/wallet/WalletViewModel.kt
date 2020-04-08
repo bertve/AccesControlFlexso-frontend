@@ -20,7 +20,6 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
     var offices : LiveData<List<Office>> = keyRepository.offices
     val filteredOffices : MutableLiveData<List<Office>> = MutableLiveData()
 
-
     fun filterOffices(filter : String?){
         val sortedList : List<Office> = offices.value!!.sortedWith(
             compareBy({ it.company.name }
