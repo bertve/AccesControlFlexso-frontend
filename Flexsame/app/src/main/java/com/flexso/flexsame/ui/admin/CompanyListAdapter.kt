@@ -3,6 +3,7 @@ package com.flexso.flexsame.ui.admin
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,11 @@ import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.flexso.flexsame.MainActivity
 import com.flexso.flexsame.R
 import com.flexso.flexsame.databinding.CompanylistItemBinding
 import com.flexso.flexsame.models.User
@@ -33,7 +36,9 @@ class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewMode
         setAnimations(holder)
         holder.bind(
                 CompanyListItemListener {
-            userId -> if (this.isCLickable){Toast.makeText(context, "pushed company with userId: ${userId}", Toast.LENGTH_LONG).show()}
+            user -> if (this.isCLickable){
+                    (context as MainActivity).findNavController(R.id.myNavHostFragment).navigate(AdminFragmentDirections.actionAdminFragmentToCompanyFragment(user.company))
+                }
         },item)
     }
 
@@ -55,7 +60,7 @@ class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewMode
                 })
                 .setNegativeButton(R.string.no,
                         DialogInterface.OnClickListener{ _, _ ->
-
+                        adminViewModel.getCompanyUsers()
                         })
         .create()
         dialog.show()
@@ -65,7 +70,6 @@ class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewMode
 
 
     class ViewHolder private constructor(val binding : CompanylistItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
 
         fun bind(clickListener: CompanyListItemListener,item: User) {
             binding.user = item
@@ -96,9 +100,9 @@ class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewMode
 
     }
 
-    class CompanyListItemListener (val clickListener: (itemId : Long) -> Unit) {
+    class CompanyListItemListener (val clickListener: (user : User) -> Unit) {
         fun onClick(v : View, u : User) {
-            clickListener(u.userId)
+            clickListener(u)
         }
     }
 
@@ -109,8 +113,9 @@ class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewMode
                 val charString = charSequence.toString()
 
                 if (charString.isEmpty()) {
-
-                    mFilteredList = mListRef
+                    mFilteredList = mListRef?.sortedWith(
+                            compareBy({ it.company!!.name }
+                            ))
                 } else {
                     mListRef?.let {
                         val filteredList = arrayListOf<User>()
@@ -126,7 +131,9 @@ class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewMode
                     }
                 }
                 val filterResults = FilterResults()
-                filterResults.values = mFilteredList
+                filterResults.values = mFilteredList?.sortedWith(
+                        compareBy({ it.company!!.name }
+                        ))
                 return filterResults
             }
 
@@ -134,7 +141,7 @@ class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewMode
                     charSequence: CharSequence,
                     filterResults: FilterResults
             ) {
-                mFilteredList = filterResults.values as ArrayList<User>
+                mFilteredList = filterResults.values as List<User>?
                 submitList(mFilteredList)
             }
         }    }

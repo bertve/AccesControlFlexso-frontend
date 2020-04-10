@@ -26,5 +26,16 @@ class Office(val officeId: Long, val company: Company, val address: Address) {
         return result
     }
 
+    fun streetHouseNumberString() : String{
+        return this.address.street + " " + this.address.houseNumber
+    }
+
+    fun postalCodeCity() : String{
+        return this.address.postalCode + " " + this.address.town
+    }
+
+    fun filterString() : String{
+        return this.address.street + this.address.houseNumber + this.address.postalCode + this.address.town + this.address.country
+    }
 
 }

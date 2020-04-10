@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.flexso.flexsame.R
 import com.flexso.flexsame.models.Office
 import androidx.recyclerview.widget.ListAdapter
-import com.flexso.flexsame.databinding.OfficeItemBinding
+import com.flexso.flexsame.databinding.WalletItemBinding
 
 class WalletAdapter(val context : Context,val clickListener: WalletItemListener) : ListAdapter<Office,WalletAdapter.ViewHolder>(WalletDiffCallBack()){
 
@@ -33,7 +33,7 @@ class WalletAdapter(val context : Context,val clickListener: WalletItemListener)
         binding.keyImg.animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_right)
     }
 
-    class ViewHolder private constructor(val binding : OfficeItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding : WalletItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
 
         fun bind(clickListener: WalletItemListener,item: Office) {
@@ -49,7 +49,7 @@ class WalletAdapter(val context : Context,val clickListener: WalletItemListener)
         companion object{
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = OfficeItemBinding.inflate(layoutInflater,parent,false)
+                val binding = WalletItemBinding.inflate(layoutInflater,parent,false)
                 return ViewHolder(binding)
             }
         }

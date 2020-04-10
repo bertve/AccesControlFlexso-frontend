@@ -40,7 +40,7 @@ class AdminViewModel(private val adminRepository: AdminRepository) : ViewModel()
             getCompanyUsers()
     }
 
-    private fun getCompanyUsers(){
+    fun getCompanyUsers(){
         viewModelScope.launch {
             adminRepository.getCompanyUsers()
             _users = adminRepository._users

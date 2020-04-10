@@ -59,7 +59,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_company">
+            app:srcCompat="@drawable/ic_corporation">
 
         </androidx.appcompat.widget.AppCompatImageView>
 

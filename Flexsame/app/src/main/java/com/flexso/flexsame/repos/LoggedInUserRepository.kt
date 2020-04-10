@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.flexso.flexsame.models.User
-import com.flexso.flexsame.models.dto.UpdateRequest
+import com.flexso.flexsame.models.dto.UpdateAccountRequest
 import com.flexso.flexsame.network.AuthInterceptor
 import com.flexso.flexsame.network.KeyService
 import java.lang.Exception
@@ -30,7 +30,7 @@ class LoggedInUserRepository(private val keyService: KeyService) {
 
     suspend fun update(user : User) : Boolean{
         try {
-            val response = keyService.updateUser(UpdateRequest(user.userId,user.firstName,user.lastName,user.email,user.password))
+        val response = keyService.updateUser(UpdateAccountRequest(user.userId,user.firstName,user.lastName,user.email,user.password))
             val data = response.await()
             Log.i("update",data.toString())
             _user.postValue(data)

@@ -2,7 +2,7 @@ package com.flexso.flexsame.network
 
 import com.flexso.flexsame.models.Office
 import com.flexso.flexsame.models.User
-import com.flexso.flexsame.models.dto.UpdateRequest
+import com.flexso.flexsame.models.dto.UpdateAccountRequest
 import kotlinx.coroutines.Deferred
 import retrofit2.http.*
 
@@ -16,5 +16,5 @@ interface KeyService {
     fun getCurrentUser():Deferred<User>
 
     @PUT("users")
-    fun updateUser(@Body updateRequest: UpdateRequest):Deferred<User>
+    fun updateUser(@Body updateAccountRequest: UpdateAccountRequest):Deferred<User>
 }

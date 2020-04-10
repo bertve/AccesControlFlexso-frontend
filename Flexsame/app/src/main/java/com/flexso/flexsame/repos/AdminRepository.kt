@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.flexso.flexsame.models.Office
 import com.flexso.flexsame.models.User
-import com.flexso.flexsame.models.dto.UpdateRequest
 import com.flexso.flexsame.models.dto.auth.ApiResponse
 import com.flexso.flexsame.models.dto.auth.SignUpRequestCompany
 import com.flexso.flexsame.network.AdminService
@@ -31,7 +30,7 @@ class AdminRepository(private val adminService: AdminService) {
             val data : ApiResponse = response.await()
             Log.i("add_company",data.toString())
             return data.success
-        }catch(e: Throwable) {
+        }catch(e: Exception) {
             Log.i("add_company","something went wrong with the request")
             Log.i("add_company",e.message!!)
             return false
@@ -44,7 +43,7 @@ class AdminRepository(private val adminService: AdminService) {
             val data : Boolean = response.await()
             Log.i("remove_company",data.toString())
             return data
-        }catch(e: Throwable) {
+        }catch(e: Exception) {
             Log.i("remove_company","something went wrong with the request")
             Log.i("remove_company",e.message!!)
             return false

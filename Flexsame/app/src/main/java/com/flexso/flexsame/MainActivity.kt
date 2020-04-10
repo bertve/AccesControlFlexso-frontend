@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                     RoleName.ROLE_USER -> R.menu.navdrawer_user
                     RoleName.ROLE_COMPANY -> R.menu.navdrawer_company
                     RoleName.ROLE_ADMIN -> R.menu.navdrawer_admin
-                    else -> R.menu.navdrawer_user
                 }
                 navView.inflateMenu(menu)
             }
@@ -168,7 +167,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                 navController.navigate(R.id.adminFragment)
             }
             R.id.companyFragment -> {
-                navController.navigate(R.id.companyFragment)
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToCompanyFragment(user.company))
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

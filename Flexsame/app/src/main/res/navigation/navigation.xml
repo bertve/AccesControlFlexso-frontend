@@ -86,5 +86,16 @@
     <fragment
         android:id="@+id/companyFragment"
         android:name="com.flexso.flexsame.ui.company.CompanyFragment"
-        android:label="CompanyFragment" />
+        android:label="@string/company">
+        <argument
+            android:name="company"
+            app:argType="com.flexso.flexsame.models.Company"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_companyFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_companyFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

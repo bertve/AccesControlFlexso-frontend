@@ -25,5 +25,13 @@ data class User (val userId :Long
         return "User(userId=$userId, firstName='$firstName', lastName='$lastName', email='$email', password='$password', token='$token', roles=$roles, company=$company)"
     }
 
+    fun isCompany():Boolean{
+        return this.roles.any { it.roleName == RoleName.ROLE_COMPANY }
+    }
+
+    fun isAdmin():Boolean{
+        return this.roles.any { it.roleName == RoleName.ROLE_ADMIN }
+    }
+
 
 }

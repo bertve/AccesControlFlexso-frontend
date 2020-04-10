@@ -1,18 +1,23 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/OpenSansTextViewStyle</item>
         <item name="android:buttonStyle">@style/OpenSansButtonStyle</item>
         <item name="android:editTextStyle">@style/OpenSansEditTextViewStyle</item>
         <item name="android:imageButtonStyle">@style/imageButtonStyle</item>
-
+        <item name="floatingActionButtonStyle">@style/myFab</item>
     </style>
 
+<style name="myFab" parent="@style/Widget.MaterialComponents.FloatingActionButton">
+    <item name="android:color">@color/colorPrimary</item>
+</style>
     <style name="OpenSansTextViewStyle" parent="android:Widget.Material.TextView">
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
@@ -21,8 +26,9 @@
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
 
-    <style name="OpenSansButtonStyle" parent="android:Widget.Material.Button">
+    <style name="OpenSansButtonStyle" parent="Theme.MaterialComponents.Light">
         <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:textColor">@color/white</item>
     </style>
     <style name="imageButtonStyle" parent="android:Widget.Material.ImageButton">
         <item name="android:background">@color/colorPrimary</item>

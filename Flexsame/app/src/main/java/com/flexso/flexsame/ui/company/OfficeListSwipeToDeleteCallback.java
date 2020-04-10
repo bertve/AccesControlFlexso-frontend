@@ -1,24 +1,22 @@
-package com.flexso.flexsame.ui.admin;
+package com.flexso.flexsame.ui.company;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.flexso.flexsame.R;
 
-public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
-    private CompanyListAdapter adapter;
+public class OfficeListSwipeToDeleteCallback  extends ItemTouchHelper.SimpleCallback {
+    private OfficeListAdapter adapter;
     private Drawable icon;
     private final ColorDrawable backgroundToLeft;
 
-    public SwipeToDeleteCallback(CompanyListAdapter adapter) {
+    public OfficeListSwipeToDeleteCallback(OfficeListAdapter adapter) {
         super(0,ItemTouchHelper.LEFT);
         this.adapter = adapter;
         icon = ContextCompat.getDrawable(this.adapter.getContext(),

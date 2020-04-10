@@ -6,22 +6,154 @@
         <variable
             name="companyViewModel"
             type="com.flexso.flexsame.ui.company.CompanyViewModel" />
+        <variable
+            name="company"
+            type="com.flexso.flexsame.models.Company" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
+        android:id="@+id/admin_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.company.CompanyFragment">
-
+        tools:context=".ui.admin.AdminFragment">
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/company_name"
+            style="@style/title"
+            android:text="@{company.name}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintStart_toEndOf="@+id/company_name"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <SearchView
+            android:id="@+id/filter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/company_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/company_name" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/office_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text="my company screen"
+            android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/filter" >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/add_office_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:background="@drawable/background_shadow_top"
+                android:gravity="bottom|center"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/collapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:srcCompat="@drawable/ic_collapse_24px" />
+
+                <EditText
+                    android:id="@+id/street"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/street"
+                    android:inputType="text"
+                    />
+
+                <EditText
+                    android:id="@+id/houseNumber"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/house_number"
+                    android:inputType="text"
+                    />
+
+                <EditText
+                    android:id="@+id/city"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/city"
+                    android:inputType="text"
+                    />
+
+                <EditText
+                    android:id="@+id/postalCode"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/postal_code"
+                    android:inputType="text"
+                    />
+
+                <EditText
+                    android:id="@+id/country"
+                    android:layout_width="@dimen/input_field"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/country"
+                    android:inputType="text"
+                    />
+
+                <Button
+                    android:id="@+id/add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:enabled="true"
+                    android:text="@string/add"
+                    />
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_add_24px" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -2,6 +2,7 @@ package com.flexso.flexsame.ui.admin
 
 import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,7 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.admin_fragment,container,false)
+
         setupViewModel()
         setupValidator()
         setupUI()
@@ -129,20 +131,20 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
     }
 
     private fun onResponseRemove(succes: Boolean) {
-        if(succes!!){
-            Toast.makeText(context,"succesfully removed",Toast.LENGTH_SHORT).show()
+        if(succes){
+            Toast.makeText(context,"Succesfully removed",Toast.LENGTH_SHORT).show()
         }else{
-            Toast.makeText(context,"removal failed",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Removal failed",Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun onResponseAdd(succes: Boolean) {
-        if(succes!!){
+        if(succes){
             switchFab()
             resetAddCompanyFields()
-            Toast.makeText(context,"succesfully added ${this.companyName.text}",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Succesfully added ${this.companyName.text}",Toast.LENGTH_SHORT).show()
         }else{
-            Toast.makeText(context,"failed to add ${this.companyName.text}",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Failed to add ${this.companyName.text}",Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -170,6 +172,7 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         viewModel.users.observe(
                 viewLifecycleOwner,
                 Observer{
+                    Log.i("bug",it.toString())
                     if (adapter.mListRef == null) {
                         adapter.mListRef = it
                     }
@@ -178,7 +181,7 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         )
 
         //swipe
-        val itemTouchHelper : ItemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter))
+        val itemTouchHelper : ItemTouchHelper = ItemTouchHelper(CompanyListSwipeToDeleteCallback(adapter))
         itemTouchHelper.attachToRecyclerView(binding.companyList)
 
     }
@@ -207,6 +210,13 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
                 email.text.toString(),
                 password.text.toString()))
     }
+
+    override fun onResume() {
+        super.onResume()
+        companyListAdapter.filter.filter("")
+
+    }
+
 
 
 }
