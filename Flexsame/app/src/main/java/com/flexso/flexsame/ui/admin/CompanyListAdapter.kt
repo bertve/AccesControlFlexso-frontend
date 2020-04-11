@@ -49,6 +49,7 @@ class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewMode
         binding.companyName.animation = anim
         binding.email.animation = anim
         binding.name.animation = anim
+        binding.cardContainer.animation = anim
     }
 
     fun deleteItem(position: Int) {

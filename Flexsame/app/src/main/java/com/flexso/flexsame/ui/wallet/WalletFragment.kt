@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.flexso.flexsame.R
 import com.flexso.flexsame.databinding.WalletFragmentBinding
+import com.flexso.flexsame.utils.DefaultItemDecorator
 
 class WalletFragment : Fragment() {
 
@@ -73,8 +74,8 @@ class WalletFragment : Fragment() {
 
         binding.walletList.adapter = adapter
 
-        val divider = DividerItemDecoration(context,HORIZONTAL)
-        binding.walletList.addItemDecoration(divider)
+        binding.walletList.addItemDecoration(DefaultItemDecorator(context!!.resources.getDimensionPixelSize(R.dimen.list_horizontal_spacing),
+                context!!.resources.getDimensionPixelSize(R.dimen.list_vertical_spacing)))
 
         viewModel.filteredOffices.observe(viewLifecycleOwner, Observer {
             it?.let {

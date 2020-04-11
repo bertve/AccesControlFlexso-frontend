@@ -21,6 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.flexso.flexsame.R
 import com.flexso.flexsame.databinding.AdminFragmentBinding
 import com.flexso.flexsame.models.dto.auth.SignUpRequestCompany
+import com.flexso.flexsame.utils.DefaultItemDecorator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mobsandgeeks.saripaar.ValidationError
 import com.mobsandgeeks.saripaar.Validator
@@ -166,8 +167,8 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         val adapter = CompanyListAdapter(context!!,viewModel)
         companyListAdapter = adapter
         binding.companyList.adapter = adapter
-        val divider = DividerItemDecoration(context,HORIZONTAL)
-        binding.companyList.addItemDecoration(divider)
+        binding.companyList.addItemDecoration(DefaultItemDecorator(context!!.resources.getDimensionPixelSize(R.dimen.list_horizontal_spacing),
+                context!!.resources.getDimensionPixelSize(R.dimen.list_vertical_spacing)))
 
         viewModel.users.observe(
                 viewLifecycleOwner,

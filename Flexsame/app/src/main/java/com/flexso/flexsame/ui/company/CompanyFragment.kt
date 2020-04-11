@@ -21,6 +21,7 @@ import com.flexso.flexsame.R
 import com.flexso.flexsame.databinding.CompanyFragmentBinding
 import com.flexso.flexsame.models.Address
 import com.flexso.flexsame.models.Company
+import com.flexso.flexsame.utils.DefaultItemDecorator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mobsandgeeks.saripaar.ValidationError
@@ -158,8 +159,9 @@ class CompanyFragment : Fragment(), Validator.ValidationListener{
         val adapter = OfficeListAdapter(context!!,viewModel)
         officeListAdapter = adapter
         binding.officeList.adapter = adapter
-        val divider = DividerItemDecoration(context, ClipDrawable.HORIZONTAL)
-        binding.officeList.addItemDecoration(divider)
+
+        binding.officeList.addItemDecoration(DefaultItemDecorator(context!!.resources.getDimensionPixelSize(R.dimen.list_horizontal_spacing),
+                context!!.resources.getDimensionPixelSize(R.dimen.list_vertical_spacing)))
 
         viewModel.offices.observe(
                 viewLifecycleOwner,

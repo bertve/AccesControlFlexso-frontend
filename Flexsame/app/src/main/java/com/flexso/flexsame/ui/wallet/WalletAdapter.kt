@@ -31,6 +31,7 @@ class WalletAdapter(val context : Context,val clickListener: WalletItemListener)
         binding.cityTxt.animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_right)
         binding.countryTxt.animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_right)
         binding.keyImg.animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_right)
+        binding.cardContainer.animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_right)
     }
 
     class ViewHolder private constructor(val binding : WalletItemBinding) : RecyclerView.ViewHolder(binding.root) {

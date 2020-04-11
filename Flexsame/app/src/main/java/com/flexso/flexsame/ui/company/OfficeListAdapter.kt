@@ -52,6 +52,7 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
         binding.officeImg.animation = anim
         binding.postalCodeCity.animation = anim
         binding.country.animation = anim
+        binding.cardContainer.animation = anim
     }
 
     fun deleteItem(position: Int){
