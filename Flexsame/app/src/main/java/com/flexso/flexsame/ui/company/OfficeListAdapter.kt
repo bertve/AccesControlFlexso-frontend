@@ -58,15 +58,19 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
         val o : Office = this.currentList.get(position)
         val dialog : AlertDialog = AlertDialog.Builder(context)
                 .setMessage("delete office: ${o.address.street}")
-                .setPositiveButton(R.string.yes, DialogInterface.OnClickListener{ _, _ ->
+                .setPositiveButton(R.string.delete, DialogInterface.OnClickListener{ _, _ ->
                     companyViewModel.removeOffice(o.officeId)
                 })
-                .setNegativeButton(R.string.no,
+                .setNegativeButton(R.string.cancel,
                         DialogInterface.OnClickListener{ _, _ ->
                             companyViewModel.getOffices()
                         })
+                .setOnCancelListener {
+                    companyViewModel.getOffices()
+                }
                 .create()
         dialog.show()
+
     }
 
 

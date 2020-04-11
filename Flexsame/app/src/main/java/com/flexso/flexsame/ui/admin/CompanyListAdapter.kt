@@ -55,15 +55,20 @@ class CompanyListAdapter(val context : Context,val adminViewModel: AdminViewMode
         val u : User = this.currentList.get(position)
         val dialog : AlertDialog = AlertDialog.Builder(context)
         .setMessage("delete company: ${u.company!!.name}")
-                .setPositiveButton(R.string.yes, DialogInterface.OnClickListener{ _, _ ->
+                .setPositiveButton(R.string.delete, DialogInterface.OnClickListener{ _, _ ->
                     adminViewModel.removeCompany(u.userId)
                 })
-                .setNegativeButton(R.string.no,
+                .setNegativeButton(R.string.cancel,
                         DialogInterface.OnClickListener{ _, _ ->
-                        adminViewModel.getCompanyUsers()
+                            adminViewModel.getCompanyUsers()
+
                         })
+                .setOnCancelListener {
+                    adminViewModel.getCompanyUsers()
+                }
         .create()
         dialog.show()
+
     }
 
 
