@@ -85,52 +85,84 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     app:srcCompat="@drawable/ic_collapse_24px" />
-
-                <EditText
-                    android:id="@+id/street"
-                    android:layout_width="@dimen/input_field"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    >
+                    <EditText
+                    android:id="@+id/street"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:hint="@string/street"
                     android:inputType="text"
                     />
 
-                <EditText
-                    android:id="@+id/houseNumber"
-                    android:layout_width="@dimen/input_field"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/house_number"
-                    android:inputType="text"
-                    />
+                    <EditText
+                        android:id="@+id/houseNumber"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:hint="@string/house_number"
+                        android:inputType="text"
+                        />
 
-                <EditText
-                    android:id="@+id/city"
-                    android:layout_width="@dimen/input_field"
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    > <EditText
+                    android:id="@+id/city"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:hint="@string/city"
                     android:inputType="text"
                     />
 
-                <EditText
-                    android:id="@+id/postalCode"
-                    android:layout_width="@dimen/input_field"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/postal_code"
-                    android:inputType="text"
-                    />
+                    <EditText
+                        android:id="@+id/postalCode"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:hint="@string/postal_code"
+                        android:inputType="text"
+                        />
 
-                <EditText
-                    android:id="@+id/country"
-                    android:layout_width="@dimen/input_field"
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/country"
-                    android:inputType="text"
-                    />
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp">
+                    <EditText
+                        android:id="@+id/country"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:hint="@string/country"
+                        android:inputType="text"
+                        />
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/add"

@@ -71,61 +71,92 @@
                     android:layout_marginTop="4dp"
                     app:srcCompat="@drawable/ic_collapse_24px" />
 
-                <EditText
-                    android:id="@+id/name"
-                    android:layout_width="@dimen/input_field"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/company_name"
-                    android:inputType="text"
-                     />
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    >
 
-                <EditText
-                    android:id="@+id/firstName"
-                    android:layout_width="@dimen/input_field"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/first_name"
-                    android:inputType="text"
-                    />
+                    <EditText
+                        android:id="@+id/name"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:hint="@string/company_name"
+                        android:inputType="text" />
 
-                <EditText
-                    android:id="@+id/lastName"
-                    android:layout_width="@dimen/input_field"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/last_name"
-                    android:inputType="text"
-                     />
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_email"
+                        android:inputType="textEmailAddress" />
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/email"
-                    android:layout_width="@dimen/input_field"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                     />
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp">
 
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="@dimen/input_field"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/prompt_password"
-                    android:inputType="textPassword"
-                     />
+                    <EditText
+                        android:id="@+id/firstName"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/first_name"
+                        android:inputType="text" />
 
-                <EditText
-                    android:id="@+id/password_confirm"
-                    android:layout_width="@dimen/input_field"
+                    <EditText
+                        android:id="@+id/lastName"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/last_name"
+                        android:inputType="text" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:hint="@string/password_confirmation"
-                    android:imeActionLabel="@string/add"
-                    android:inputType="textPassword"
-                     />
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp">
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_password"
+                        android:inputType="textPassword" />
+
+                    <EditText
+                        android:id="@+id/password_confirm"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/password_confirmation"
+                        android:imeActionLabel="@string/add"
+                        android:inputType="textPassword" />
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/add"
