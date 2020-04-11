@@ -72,7 +72,7 @@ val myModule : Module = module {
 
     //repos
     single {
-        KeyRepository(get(),get())
+        KeyRepository(get(),get(),get())
     }
     single {
         LoginRepository(LoginDataSource(get()))

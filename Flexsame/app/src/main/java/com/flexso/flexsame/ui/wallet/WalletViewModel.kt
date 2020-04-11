@@ -17,7 +17,7 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
     private val viewModelScope = CoroutineScope( viewModelJob + Dispatchers.Main)
 
     //offices
-    var offices : LiveData<List<Office>> = keyRepository.offices
+    var offices : MutableLiveData<List<Office>> = keyRepository.offices
     val filteredOffices : MutableLiveData<List<Office>> = MutableLiveData()
 
     fun filterOffices(filter : String?){
@@ -55,11 +55,19 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
             viewModelScope.launch {
                 initAdminOffices()
             }
+        }else if(user.roles.any {r -> r.roleName == RoleName.ROLE_COMPANY }){
+            viewModelScope.launch {
+                initCompanyOffices()
+            }
         }else{
             viewModelScope.launch {
                 initOffices()
             }
         }
+    }
+
+    private suspend fun initCompanyOffices() {
+        keyRepository.getAllOfficesFromCompany(user.company!!.companyId)
     }
 
     private suspend fun initAdminOffices() {
