@@ -20,7 +20,7 @@ class AdminRepository(private val adminService: AdminService) {
             Log.i("api",res.toString())
             _users.postValue(res)
         }catch (e : Exception){
-            Log.i("api",e.message?:"no message but something went wrong with offices request")
+            Log.i("api",e.message?:"no message but something went wrong with CompanyUsers request")
         }
     }
 
@@ -28,11 +28,10 @@ class AdminRepository(private val adminService: AdminService) {
         val response = adminService.addCompany(signUpRequestCompany)
         try {
             val data : ApiResponse = response.await()
-            Log.i("add_company",data.toString())
+            Log.i("api",data.toString())
             return data.success
         }catch(e: Exception) {
-            Log.i("add_company","something went wrong with the request")
-            Log.i("add_company",e.message!!)
+            Log.i("api",e.message?:"no message but something went wrong with CompanyUsers request")
             return false
         }
     }
@@ -41,11 +40,10 @@ class AdminRepository(private val adminService: AdminService) {
         val response = adminService.deleteCompany(userId)
         try {
             val data : Boolean = response.await()
-            Log.i("remove_company",data.toString())
+            Log.i("api",data.toString())
             return data
         }catch(e: Exception) {
-            Log.i("remove_company","something went wrong with the request")
-            Log.i("remove_company",e.message!!)
+            Log.i("api",e.message?:"no message but something went wrong with CompanyUsers request")
             return false
         }
     }

@@ -40,7 +40,7 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
         holder.bind(
                 OfficeListItemListener {
                     office -> if (this.isCLickable){
-                    Toast.makeText(context, "pushed office: $office}", Toast.LENGTH_LONG).show()
+                    (context as MainActivity).findNavController(R.id.myNavHostFragment).navigate(CompanyFragmentDirections.actionCompanyFragmentToOfficeFragment(office))
                 }
                 },item)
     }

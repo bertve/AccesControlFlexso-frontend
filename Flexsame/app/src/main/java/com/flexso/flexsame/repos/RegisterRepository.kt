@@ -14,8 +14,7 @@ class RegisterRepository(val authService: AuthService) {
             return data
 
         } catch (e: Throwable) {
-            Log.i("register","something went wrong with the request")
-            Log.i("register",e.message!!)
+            Log.i("register",e.message?:"no message but something went wrong with register request")
             return ApiResponse(false,"something went wrong with the request")
         }
     }

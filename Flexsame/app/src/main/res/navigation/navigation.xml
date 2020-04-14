@@ -92,10 +92,15 @@
             app:argType="com.flexso.flexsame.models.Company"
             app:nullable="true" />
         <action
-            android:id="@+id/action_companyFragment_to_adminFragment"
-            app:destination="@id/adminFragment" />
-        <action
-            android:id="@+id/action_companyFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_companyFragment_to_officeFragment"
+            app:destination="@id/officeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/officeFragment"
+        android:name="com.flexso.flexsame.ui.office.OfficeFragment"
+        android:label="Office" >
+        <argument
+            android:name="currentOffice"
+            app:argType="com.flexso.flexsame.models.Office" />
     </fragment>
 </navigation>

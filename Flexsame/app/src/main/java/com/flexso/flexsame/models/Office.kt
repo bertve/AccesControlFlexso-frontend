@@ -1,6 +1,10 @@
 package com.flexso.flexsame.models
 
-class Office(val officeId: Long, val company: Company, val address: Address) {
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+class Office(val officeId: Long, val company: Company, var address: Address) :Parcelable{
 
     override fun toString(): String {
         return "Office(officeId=$officeId, address=$address, company=$company)"

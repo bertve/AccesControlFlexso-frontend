@@ -1,20 +1,16 @@
 package com.flexso.flexsame.ui.company
 
 import android.content.DialogInterface
-import android.graphics.drawable.ClipDrawable
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.setPadding
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.flexso.flexsame.MainActivity
 import com.flexso.flexsame.R

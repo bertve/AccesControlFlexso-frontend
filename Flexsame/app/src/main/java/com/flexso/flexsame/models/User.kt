@@ -32,6 +32,4 @@ data class User (val userId :Long
     fun isAdmin():Boolean{
         return this.roles.any { it.roleName == RoleName.ROLE_ADMIN }
     }
-
-
 }

@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.admin.AdminFragment">
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/street"
             style="@style/title"
             android:text="@string/companies"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,13 +30,13 @@
             app:layout_constraintBottom_toTopOf="@+id/company_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintTop_toBottomOf="@+id/street" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/company_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

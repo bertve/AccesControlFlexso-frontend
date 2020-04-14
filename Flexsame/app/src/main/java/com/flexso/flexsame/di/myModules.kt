@@ -10,6 +10,7 @@ import com.flexso.flexsame.ui.admin.AdminViewModel
 import com.flexso.flexsame.ui.company.CompanyViewModel
 import com.flexso.flexsame.ui.home.HomeViewModel
 import com.flexso.flexsame.ui.login.LoginViewModel
+import com.flexso.flexsame.ui.office.OfficeViewModel
 import com.flexso.flexsame.ui.register.RegisterViewModel
 import com.flexso.flexsame.ui.settings.SettingsViewModel
 import com.flexso.flexsame.ui.testNFC.TestNFCViewModel
@@ -89,6 +90,9 @@ val myModule : Module = module {
     single {
         CompanyRepository(get())
     }
+    single {
+        OfficeRepository(get())
+    }
 
     //viewmodels
     viewModel { HomeViewModel(get()) }
@@ -100,6 +104,7 @@ val myModule : Module = module {
     viewModel { SettingsViewModel() }
     viewModel { AdminViewModel(get()) }
     viewModel { CompanyViewModel(get()) }
+    viewModel { OfficeViewModel(get()) }
 }
 
 private fun provideKeyService(retrofit: Retrofit): KeyService {

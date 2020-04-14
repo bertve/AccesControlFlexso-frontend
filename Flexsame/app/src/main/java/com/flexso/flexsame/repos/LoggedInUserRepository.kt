@@ -32,12 +32,11 @@ class LoggedInUserRepository(private val keyService: KeyService) {
         try {
         val response = keyService.updateUser(UpdateAccountRequest(user.userId,user.firstName,user.lastName,user.email,user.password))
             val data = response.await()
-            Log.i("update",data.toString())
+            Log.i("update_currentUser",data.toString())
             _user.postValue(data)
             return true
         }catch(e: Throwable) {
-            Log.i("update","something went wrong with the request")
-            Log.i("update",e.message!!)
+            Log.i("currentUser",e.message?:"no message but something went wrong with current user update request")
             return false
         }
     }
