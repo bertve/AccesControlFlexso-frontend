@@ -22,7 +22,7 @@ class UnAuthorizedPersonListAdapter (val context : Context, val officeViewModel:
     var mFilteredList: List<User>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+        return ViewHolder.from(parent,officeViewModel)
     }
 
 
@@ -61,7 +61,7 @@ class UnAuthorizedPersonListAdapter (val context : Context, val officeViewModel:
     }
 
 
-    class ViewHolder private constructor(val binding : UnauthorizedpersonlistItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding : UnauthorizedpersonlistItemBinding,val viewModel: OfficeViewModel) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(clickListener: UnAuthorizedPersonListItemListener, item: User) {
             binding.user = item
@@ -69,15 +69,19 @@ class UnAuthorizedPersonListAdapter (val context : Context, val officeViewModel:
             binding.name.text = item.getFullName()
             binding.email.text = item.email
             binding.cardContainer.isCheckable = true
-            binding.cardContainer.isChecked = false
+            if (viewModel.checkedPersons.value.isNullOrEmpty()){
+                binding.cardContainer.isChecked = false
+            }else{
+                binding.cardContainer.isChecked = viewModel.checkedPersons.value!!.contains(item.userId)
+            }
             binding.executePendingBindings()
         }
 
         companion object{
-            fun from(parent: ViewGroup): ViewHolder {
+            fun from(parent: ViewGroup,viewModel: OfficeViewModel): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = UnauthorizedpersonlistItemBinding.inflate(layoutInflater,parent,false)
-                return ViewHolder(binding)
+                return ViewHolder(binding,viewModel)
             }
         }
     }

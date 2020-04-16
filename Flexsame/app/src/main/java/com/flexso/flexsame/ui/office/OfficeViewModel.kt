@@ -23,8 +23,8 @@ class OfficeViewModel(private val officeRepository: OfficeRepository) : ViewMode
     lateinit var office : Office
 
     //checkedPersons
-    private var checkedPersons : MutableList<Long> = mutableListOf()
-
+    private var _checkedPersons : MutableLiveData<MutableList<Long>> = MutableLiveData()
+    val checkedPersons : LiveData<MutableList<Long>> get() = _checkedPersons
     //auth_persons
     private var _authorizedPersons : MutableLiveData<List<User>> = officeRepository.authorizedPersons
     val authorizedPersons : LiveData<List<User>> get() = _authorizedPersons
@@ -51,6 +51,10 @@ class OfficeViewModel(private val officeRepository: OfficeRepository) : ViewMode
         viewModelJob.cancel()
     }
 
+    init {
+        _checkedPersons.value = mutableListOf()
+    }
+
     fun setCurrentOffice(currentOffice: Office) {
         this.office = currentOffice
         getAuthorizedPersons()
@@ -73,7 +77,7 @@ class OfficeViewModel(private val officeRepository: OfficeRepository) : ViewMode
     }
 
     fun addCheckedPersons(){
-        this.checkedPersons.forEach {
+        this._checkedPersons.value!!.forEach {
             this.authorizePerson(it)
         }
     }
@@ -106,18 +110,24 @@ class OfficeViewModel(private val officeRepository: OfficeRepository) : ViewMode
     }
 
     fun removeFromCheckedList(userId: Long) {
-        this.checkedPersons.remove(userId)
-        Log.i("checked_min",checkedPersons.toString())
+        val res :MutableList<Long> = this._checkedPersons.value!!
+        res.remove(userId)
+        this._checkedPersons.value = res
+        Log.i("checked_min",_checkedPersons.value.toString())
     }
 
     fun addToCheckedList(userId: Long) {
-        this.checkedPersons.add(userId)
-        Log.i("checked_plus",checkedPersons.toString())
+        val res :MutableList<Long> = this._checkedPersons.value!!
+        res.add(userId)
+        this._checkedPersons.value = res
+        Log.i("checked_plus",_checkedPersons.value.toString())
     }
 
     fun resetCheckedList(){
-        this.checkedPersons.clear()
-        Log.i("checked_reset",checkedPersons.toString())
+        val res :MutableList<Long> = this._checkedPersons.value!!
+        res.clear()
+        this._checkedPersons.value = res
+        Log.i("checked_reset",_checkedPersons.value.toString())
     }
 
 }

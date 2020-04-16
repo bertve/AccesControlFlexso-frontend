@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.SearchView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -34,7 +31,7 @@ class OfficeFragment : Fragment() {
     private lateinit var collapse_img : ImageView
     private lateinit var authorizedPersonListAdapter: AuthorizedPersonListAdapter
     private lateinit var unAuthorizedPersonListAdapter: UnAuthorizedPersonListAdapter
-
+    private lateinit var addButton: Button
     //helpers
     private var addressHelper :  Address = Address("","","","","")
 
@@ -172,12 +169,19 @@ class OfficeFragment : Fragment() {
 
         )
 
+        viewModel.checkedPersons.observe(viewLifecycleOwner,
+                Observer {
+                    Log.i("checkedList",it.toString())
+                    this.addButton.isEnabled = it.size != 0
+                })
+
     }
 
     private fun setupUI() {
         fab = binding.fab
         fab.bringToFront()
         collapse_img = binding.collapse
+        addButton = binding.add
     }
 
     private fun setupViewModel() {
