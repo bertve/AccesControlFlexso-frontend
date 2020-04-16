@@ -1,6 +1,5 @@
 package com.flexso.flexsame.ui.wallet
 
-import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.flexso.flexsame.R
 import com.flexso.flexsame.databinding.WalletFragmentBinding
@@ -77,7 +75,7 @@ class WalletFragment : Fragment() {
         binding.walletList.addItemDecoration(DefaultItemDecorator(context!!.resources.getDimensionPixelSize(R.dimen.list_horizontal_spacing),
                 context!!.resources.getDimensionPixelSize(R.dimen.list_vertical_spacing)))
 
-        viewModel.filteredOffices.observe(viewLifecycleOwner, Observer {
+        viewModel._filteredOffices.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }

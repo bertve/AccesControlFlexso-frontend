@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import com.flexso.flexsame.models.Office
 import com.flexso.flexsame.models.RoleName
 import com.flexso.flexsame.models.User
-import com.flexso.flexsame.repos.AdminRepository
 import com.flexso.flexsame.repos.KeyRepository
 import kotlinx.coroutines.*
 
@@ -18,7 +17,8 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
 
     //offices
     var offices : MutableLiveData<List<Office>> = keyRepository.offices
-    val filteredOffices : MutableLiveData<List<Office>> = MutableLiveData()
+    var _filteredOffices : MutableLiveData<List<Office>> = MutableLiveData()
+    val filteredOffices : LiveData<List<Office>> = _filteredOffices
 
     fun filterOffices(filter : String?){
         val sortedList : List<Office> = offices.value!!.sortedWith(
@@ -30,10 +30,10 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
                 ,{ it.address.houseNumber}
                 ))
         if( filter == null || filter.trim() == "" || filter.trim() == "All") {
-            this.filteredOffices.value = sortedList
+            this._filteredOffices.value = sortedList
 
         }else{
-            this.filteredOffices.value = sortedList.filter {
+            this._filteredOffices.value = sortedList.filter {
                 it.company.name == filter
 
             }
