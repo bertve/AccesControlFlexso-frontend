@@ -12,16 +12,15 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flexso.flexsame.R;
-import com.flexso.flexsame.ui.company.OfficeListAdapter;
 
 public class AuthorizedPersonListSwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
+    private final ColorDrawable backgroundToLeft;
     private AuthorizedPersonListAdapter adapter;
     private Drawable icon;
-    private final ColorDrawable backgroundToLeft;
 
     public AuthorizedPersonListSwipeToDeleteCallback(AuthorizedPersonListAdapter adapter) {
-        super(0,ItemTouchHelper.LEFT);
+        super(0, ItemTouchHelper.LEFT);
         this.adapter = adapter;
         icon = ContextCompat.getDrawable(this.adapter.getContext(),
                 R.drawable.ic_delete_sweep_white_36dp);

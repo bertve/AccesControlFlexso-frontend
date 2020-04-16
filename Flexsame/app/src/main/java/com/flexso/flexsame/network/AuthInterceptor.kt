@@ -5,20 +5,10 @@ import okhttp3.Response
 import java.io.IOException
 
 
-/**
- *
- * @author Guust Ysebie
- *
- * singleton that is added when creating the client for retrofit
- * it formats a token and adds it to the header
- *
- *
- *
- * */
 object AuthInterceptor : Interceptor {
 
     private var sessionToken: String = ""
-    private val AUTH_NAME = "authorization";
+    private val AUTH_NAME = "authorization"
 
 
     /**
@@ -53,7 +43,7 @@ object AuthInterceptor : Interceptor {
     /**
      * Formats the token in the way the api will accept it
      * */
-     fun generateFormattedToken(): String {
+    fun generateFormattedToken(): String {
         return "Bearer $sessionToken"
     }
 

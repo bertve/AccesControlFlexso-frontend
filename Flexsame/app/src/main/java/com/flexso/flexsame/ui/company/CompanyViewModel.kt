@@ -1,6 +1,5 @@
 package com.flexso.flexsame.ui.company
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,28 +12,28 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class CompanyViewModel (private val companyRepository: CompanyRepository) : ViewModel() {
+class CompanyViewModel(private val companyRepository: CompanyRepository) : ViewModel() {
     //coroutines
     private val viewModelJob = SupervisorJob()
-    private val viewModelScope = CoroutineScope( viewModelJob + Dispatchers.Main)
+    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    lateinit var company : Company
+    lateinit var company: Company
 
     //company_users
-    private var _offices : MutableLiveData<List<Office>> = companyRepository.offices
-    val offices : LiveData<List<Office>> get() = _offices
+    private var _offices: MutableLiveData<List<Office>> = companyRepository.offices
+    val offices: LiveData<List<Office>> get() = _offices
 
     //add_succes
     private val _addSucces = MutableLiveData<Boolean>()
-    val addSucces : LiveData<Boolean> get() = _addSucces
+    val addSucces: LiveData<Boolean> get() = _addSucces
 
     //remove_succes
     private val _removeSucces = MutableLiveData<Boolean>()
-    val removeSucces : LiveData<Boolean> get() = _removeSucces
+    val removeSucces: LiveData<Boolean> get() = _removeSucces
 
     //edit_succes
     private val _editSucces = MutableLiveData<Boolean>()
-    val editSucces : LiveData<Boolean> get() = _editSucces
+    val editSucces: LiveData<Boolean> get() = _editSucces
 
     override fun onCleared() {
         super.onCleared()
@@ -43,7 +42,7 @@ class CompanyViewModel (private val companyRepository: CompanyRepository) : View
 
     fun setCurrentCompany(company: Company) {
         this.company = company
-            getOffices()
+        getOffices()
     }
 
     fun getOffices() {
@@ -55,25 +54,25 @@ class CompanyViewModel (private val companyRepository: CompanyRepository) : View
 
     fun removeOffice(officeId: Long) {
         viewModelScope.launch {
-            _removeSucces.postValue(companyRepository.removeOffice(company.companyId,officeId))
+            _removeSucces.postValue(companyRepository.removeOffice(company.companyId, officeId))
             getOffices()
         }
     }
 
     fun addOffice(a: Address) {
         viewModelScope.launch {
-            _addSucces.postValue(companyRepository.addOffice(company.companyId,a))
+            _addSucces.postValue(companyRepository.addOffice(company.companyId, a))
             getOffices()
         }
     }
 
-    fun editCompanyName(s: String){
-        var helper = Company(company.companyId,s)
+    fun editCompanyName(s: String) {
+        var helper = Company(company.companyId, s)
         viewModelScope.launch {
-            if(companyRepository.updateCompany(helper)){
+            if (companyRepository.updateCompany(helper)) {
                 _editSucces.postValue(true)
                 company.name = s
-            }else{
+            } else {
                 _editSucces.postValue(false)
             }
         }

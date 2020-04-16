@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.flexso.flexsame.R;
 
 public class CompanyListSwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
+    private final ColorDrawable backgroundToLeft;
     private CompanyListAdapter adapter;
     private Drawable icon;
-    private final ColorDrawable backgroundToLeft;
 
     public CompanyListSwipeToDeleteCallback(CompanyListAdapter adapter) {
-        super(0,ItemTouchHelper.LEFT);
+        super(0, ItemTouchHelper.LEFT);
         this.adapter = adapter;
         icon = ContextCompat.getDrawable(this.adapter.getContext(),
                 R.drawable.ic_delete_sweep_white_36dp);

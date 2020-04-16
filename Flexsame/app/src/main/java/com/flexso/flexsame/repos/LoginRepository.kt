@@ -1,8 +1,8 @@
 package com.flexso.flexsame.repos
 
-import com.flexso.flexsame.ui.login.LoginDataSource
-import com.flexso.flexsame.models.Result
 import com.flexso.flexsame.models.LoginSucces
+import com.flexso.flexsame.models.Result
+import com.flexso.flexsame.ui.login.LoginDataSource
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -11,7 +11,7 @@ import com.flexso.flexsame.models.LoginSucces
 
 class LoginRepository(val dataSource: LoginDataSource) {
 
-    var loginSucces : LoginSucces? = null
+    var loginSucces: LoginSucces? = null
         private set
 
     init {
@@ -19,7 +19,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
     }
 
 
-     suspend fun login(username: String, password: String): Result<LoginSucces> {
+    suspend fun login(username: String, password: String): Result<LoginSucces> {
         // handle login
         val result = dataSource.login(username, password)
 
@@ -30,7 +30,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
         return result
     }
 
-    private fun setLoginSucces(loginSucces : LoginSucces) {
+    private fun setLoginSucces(loginSucces: LoginSucces) {
         this.loginSucces = loginSucces
 
     }

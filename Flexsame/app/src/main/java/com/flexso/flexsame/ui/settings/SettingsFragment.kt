@@ -13,13 +13,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : Fragment() {
 
-    val viewModel : SettingsViewModel by viewModel()
+    val viewModel: SettingsViewModel by viewModel()
     lateinit var binding: SettingsFragmentBinding
-    lateinit var auth_fingerprint_switch : Switch
+    lateinit var auth_fingerprint_switch: Switch
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.settings_fragment,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.settings_fragment, container, false)
         setupViewModel()
         setupUI()
         setupObservers()
@@ -27,15 +27,14 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupUI() {
-        val sharedPreferences = this.activity!!.getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
-        val auth_fingerprint_activated = sharedPreferences.getBoolean("SETTINGS_AUTH_FINGERPRINT",true)
+        val sharedPreferences = this.activity!!.getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
+        val auth_fingerprint_activated = sharedPreferences.getBoolean("SETTINGS_AUTH_FINGERPRINT", true)
         auth_fingerprint_switch = binding.authenticationFingerprintSwitch
         auth_fingerprint_switch.isChecked = auth_fingerprint_activated
     }
 
     private fun setupObservers() {
-        auth_fingerprint_switch.setOnCheckedChangeListener{
-            _,isChecked ->
+        auth_fingerprint_switch.setOnCheckedChangeListener { _, isChecked ->
             setFingerAuthentication(isChecked)
         }
     }
@@ -45,9 +44,9 @@ class SettingsFragment : Fragment() {
         binding.settingsViewModel = viewModel
     }
 
-    fun setFingerAuthentication(b : Boolean){
-        val sharedPreferencesEditor = this.activity!!.getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE).edit()
-        sharedPreferencesEditor.putBoolean("SETTINGS_AUTH_FINGERPRINT",b)
+    fun setFingerAuthentication(b: Boolean) {
+        val sharedPreferencesEditor = this.activity!!.getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE).edit()
+        sharedPreferencesEditor.putBoolean("SETTINGS_AUTH_FINGERPRINT", b)
                 .commit()
     }
 

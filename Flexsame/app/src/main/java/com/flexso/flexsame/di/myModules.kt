@@ -4,51 +4,51 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.flexso.flexsame.LoggedInUserViewModel
 import com.flexso.flexsame.network.*
-import com.flexso.flexsame.ui.login.LoginDataSource
 import com.flexso.flexsame.repos.*
 import com.flexso.flexsame.ui.admin.AdminViewModel
 import com.flexso.flexsame.ui.company.CompanyViewModel
 import com.flexso.flexsame.ui.home.HomeViewModel
+import com.flexso.flexsame.ui.login.LoginDataSource
 import com.flexso.flexsame.ui.login.LoginViewModel
 import com.flexso.flexsame.ui.office.OfficeViewModel
 import com.flexso.flexsame.ui.register.RegisterViewModel
 import com.flexso.flexsame.ui.settings.SettingsViewModel
 import com.flexso.flexsame.ui.testNFC.TestNFCViewModel
 import com.flexso.flexsame.ui.wallet.WalletViewModel
+import com.flexso.flexsame.utils.BASE_URL
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.flexso.flexsame.utils.BASE_URL;
-import okhttp3.OkHttpClient
 
-val myModule : Module = module {
+val myModule: Module = module {
 
     //gson
     single {
         GsonBuilder()
-            .create()
+                .create()
     }
 
     //custom client with auth interceptor
     single {
         OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor)
-            .build()
+                .addInterceptor(AuthInterceptor)
+                .build()
     }
 
     //retrofit
     single {
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(get()))
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .client(get())
-            .build()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(get()))
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .client(get())
+                .build()
     }
 
     //api services
@@ -73,7 +73,7 @@ val myModule : Module = module {
 
     //repos
     single {
-        KeyRepository(get(),get(),get())
+        KeyRepository(get(), get(), get())
     }
     single {
         LoginRepository(LoginDataSource(get()))
@@ -96,9 +96,9 @@ val myModule : Module = module {
 
     //viewmodels
     viewModel { HomeViewModel(get()) }
-    viewModel { TestNFCViewModel()}
+    viewModel { TestNFCViewModel() }
     viewModel { WalletViewModel(get()) }
-    viewModel { LoginViewModel(get(),get()) }
+    viewModel { LoginViewModel(get(), get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { LoggedInUserViewModel(get()) }
     viewModel { SettingsViewModel() }
@@ -111,7 +111,7 @@ private fun provideKeyService(retrofit: Retrofit): KeyService {
     return retrofit.create(KeyService::class.java)
 }
 
-private fun provideAuthService(retrofit: Retrofit): AuthService{
+private fun provideAuthService(retrofit: Retrofit): AuthService {
     return retrofit.create(AuthService::class.java)
 }
 

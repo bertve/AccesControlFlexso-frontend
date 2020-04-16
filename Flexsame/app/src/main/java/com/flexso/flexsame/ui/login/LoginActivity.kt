@@ -1,94 +1,92 @@
 package com.flexso.flexsame.ui.login
 
-import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import androidx.lifecycle.Observer
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import co.infinum.goldfinger.Goldfinger
 import co.infinum.goldfinger.rx.RxGoldfinger
 import com.airbnb.lottie.LottieAnimationView
 import com.flexso.flexsame.MainActivity
 import com.flexso.flexsame.R
-import com.flexso.flexsame.ui.register.RegisterActivity
 import com.flexso.flexsame.databinding.ActivityLoginBinding
 import com.flexso.flexsame.models.LoginSucces
-import com.flexso.flexsame.ui.account.BackAndForthAnimatorListener
+import com.flexso.flexsame.ui.register.RegisterActivity
+import com.flexso.flexsame.utils.BackAndForthAnimatorListener
 import io.reactivex.observers.DisposableObserver
-
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
 
     val loginViewModel: LoginViewModel by viewModel()
-    lateinit var binding : ActivityLoginBinding
-    private lateinit var connectivityManager : ConnectivityManager
-    private lateinit var username : EditText
-    private lateinit var password : EditText
-    private lateinit var login : Button
-    private lateinit var loading : ProgressBar
-    private lateinit var register : Button
-    private lateinit var connectionRex : LottieAnimationView
+    lateinit var binding: ActivityLoginBinding
+    private lateinit var connectivityManager: ConnectivityManager
+    private lateinit var username: EditText
+    private lateinit var password: EditText
+    private lateinit var login: Button
+    private lateinit var loading: ProgressBar
+    private lateinit var register: Button
+    private lateinit var connectionRex: LottieAnimationView
     private lateinit var logoFlexso: ImageView
     private lateinit var goldfinger: RxGoldfinger
-    private lateinit var fingerprintButton : LottieAnimationView
+    private lateinit var fingerprintButton: LottieAnimationView
     private lateinit var params: Goldfinger.PromptParams
-    private var onStartUpConnection : Boolean = false
+    private var onStartUpConnection: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,
-            R.layout.activity_login
+                R.layout.activity_login
         )
         setupUI()
         onStartUpConnection = checkConnection()
         val runGoldfinger = !checkIfLoggedIn()
         setupfieldsOnLogout()
         setupObservers()
-        if(runGoldfinger){
+        if (runGoldfinger) {
             setupGoldfinger()
         }
     }
 
     private fun setupGoldfinger() {
-        val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
-        val loginEmail = sharedPreferences.getString("goldfinger_email",null)
-        val loginPassword = sharedPreferences.getString("goldfinger_password",null)
-        val settingsFingerprint = sharedPreferences.getBoolean("SETTINGS_AUTH_FINGERPRINT",true)
+        val sharedPreferences = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
+        val loginEmail = sharedPreferences.getString("goldfinger_email", null)
+        val loginPassword = sharedPreferences.getString("goldfinger_password", null)
+        val settingsFingerprint = sharedPreferences.getBoolean("SETTINGS_AUTH_FINGERPRINT", true)
         goldfinger = RxGoldfinger.Builder(this)
                 .build()
-        if(goldfinger.canAuthenticate() && !loginEmail.isNullOrEmpty() && !loginPassword.isNullOrEmpty() && settingsFingerprint && onStartUpConnection){
+        if (goldfinger.canAuthenticate() && !loginEmail.isNullOrEmpty() && !loginPassword.isNullOrEmpty() && settingsFingerprint && onStartUpConnection) {
             params = Goldfinger.PromptParams.Builder(this)
                     .title("fingerprint authentication")
-                    .description("quick login for "+loginEmail)
+                    .description("quick login for " + loginEmail)
                     .negativeButtonText("Other account")
                     .build()
 
-            runFingerprintAuthPrompt(params,loginEmail,loginPassword)
+            runFingerprintAuthPrompt(params, loginEmail, loginPassword)
         }
 
     }
 
-    private fun runFingerprintAuthPrompt(params: Goldfinger.PromptParams,email:String,password: String) {
-        val disposableObserver : DisposableObserver<Goldfinger.Result> = object : DisposableObserver<Goldfinger.Result>(){
+    private fun runFingerprintAuthPrompt(params: Goldfinger.PromptParams, email: String, password: String) {
+        val disposableObserver: DisposableObserver<Goldfinger.Result> = object : DisposableObserver<Goldfinger.Result>() {
             override fun onComplete() {
             }
 
             override fun onNext(t: Goldfinger.Result) {
-                if(t.type() == Goldfinger.Type.SUCCESS){
-                    loginViewModel.login(email,password)
+                if (t.type() == Goldfinger.Type.SUCCESS) {
+                    loginViewModel.login(email, password)
                 }
-                if(t.reason()== Goldfinger.Reason.LOCKOUT){
-                    Toast.makeText(applicationContext,"To many attempts.Try again later.",Toast.LENGTH_SHORT).show()
+                if (t.reason() == Goldfinger.Reason.LOCKOUT) {
+                    Toast.makeText(applicationContext, "To many attempts.Try again later.", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -123,10 +121,10 @@ class LoginActivity : AppCompatActivity() {
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
 
-                val sharedPreferencesEditor = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE).edit()
-                sharedPreferencesEditor.putString("LOGIN_EMAIL",loginResult.success.email)
-                sharedPreferencesEditor.putString("LOGIN_TOKEN",loginResult.success.token)
-                sharedPreferencesEditor.putString("LOGIN_PASSWORD",loginResult.success.password)
+                val sharedPreferencesEditor = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE).edit()
+                sharedPreferencesEditor.putString("LOGIN_EMAIL", loginResult.success.email)
+                sharedPreferencesEditor.putString("LOGIN_TOKEN", loginResult.success.token)
+                sharedPreferencesEditor.putString("LOGIN_PASSWORD", loginResult.success.password)
                 sharedPreferencesEditor.commit()
 
                 startMainActivity(loginResult.success)
@@ -153,7 +151,7 @@ class LoginActivity : AppCompatActivity() {
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->{
+                    EditorInfo.IME_ACTION_DONE -> {
                         loginViewModel.login(
                                 username.text.toString(),
                                 password.text.toString()
@@ -169,9 +167,8 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
 
-            register.setOnClickListener{
-                v : View ->
-                val registerIntent  = Intent(v.context,
+            register.setOnClickListener { v: View ->
+                val registerIntent = Intent(v.context,
                         RegisterActivity::class.java)
                 startActivity(registerIntent)
             }
@@ -180,51 +177,51 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.connection.observe(this, Observer { connect ->
             connect?.let {
                 if (connect) {
-                    Log.i("connection","connected")
+                    Log.i("connection", "connected")
                     setVisibilityLoginScreen(true)
 
                 } else {
-                    Log.i("connection","no connection")
+                    Log.i("connection", "no connection")
                     setVisibilityLoginScreen(false)
                 }
             }
         })
 
-        fingerprintButton.setOnClickListener{
+        fingerprintButton.setOnClickListener {
             it as LottieAnimationView
             it.playAnimation()
             val sharedPreferences = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
             val email = sharedPreferences.getString("goldfinger_email", null)
             val password = sharedPreferences.getString("goldfinger_password", null)
-            val settingsFingerprint = sharedPreferences.getBoolean("SETTINGS_AUTH_FINGERPRINT",true)
-            if (settingsFingerprint){
-                if(goldfinger.canAuthenticate() && !email.isNullOrEmpty() && !password.isNullOrEmpty()) {
+            val settingsFingerprint = sharedPreferences.getBoolean("SETTINGS_AUTH_FINGERPRINT", true)
+            if (settingsFingerprint) {
+                if (goldfinger.canAuthenticate() && !email.isNullOrEmpty() && !password.isNullOrEmpty()) {
                     params = Goldfinger.PromptParams.Builder(this)
                             .title("fingerprint authentication")
-                            .description("quick login for "+email)
+                            .description("quick login for " + email)
                             .negativeButtonText("Other account")
                             .build()
                     runFingerprintAuthPrompt(params, email, password)
-                }else{
-                    Toast.makeText(applicationContext,"No support for fingerprint authentication.",Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(applicationContext, "No support for fingerprint authentication.", Toast.LENGTH_SHORT).show()
                 }
-            }else{
-                Toast.makeText(applicationContext,"Fingerprint authentication has been switched off in your settings.",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(applicationContext, "Fingerprint authentication has been switched off in your settings.", Toast.LENGTH_SHORT).show()
             }
 
         }
 
     }
 
-    private fun setVisibilityLoginScreen(visible : Boolean) {
+    private fun setVisibilityLoginScreen(visible: Boolean) {
         //true -> login screen visible
         //false -> TREX visible
         var visibility = View.GONE
-        if(visible){
+        if (visible) {
             visibility = View.VISIBLE
             connectionRex.visibility = View.GONE
             connectionRex.cancelAnimation()
-        }else{
+        } else {
             connectionRex.playAnimation()
             connectionRex.visibility = View.VISIBLE
         }
@@ -245,27 +242,27 @@ class LoginActivity : AppCompatActivity() {
         logoFlexso = binding.logo
         connectionRex = binding.noConnection
         fingerprintButton = binding.fingerprint
-        fingerprintButton.setMinAndMaxFrame(15,150)
+        fingerprintButton.setMinAndMaxFrame(15, 150)
         fingerprintButton.addAnimatorListener(BackAndForthAnimatorListener(fingerprintButton))
         connectionRex.visibility = View.GONE
     }
 
-    private fun checkConnection() : Boolean {
+    private fun checkConnection(): Boolean {
         return loginViewModel.checkConnectivity()
     }
 
-    private fun checkIfLoggedIn() : Boolean {
-        val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
-        val loginEmail = sharedPreferences.getString("LOGIN_EMAIL",null)
-        val loginToken = sharedPreferences.getString("LOGIN_TOKEN",null)
-        val loginPassword = sharedPreferences.getString("LOGIN_PASSWORD",null)
-        if(loginEmail != null && loginToken != null && loginPassword != null){
+    private fun checkIfLoggedIn(): Boolean {
+        val sharedPreferences = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
+        val loginEmail = sharedPreferences.getString("LOGIN_EMAIL", null)
+        val loginToken = sharedPreferences.getString("LOGIN_TOKEN", null)
+        val loginPassword = sharedPreferences.getString("LOGIN_PASSWORD", null)
+        if (loginEmail != null && loginToken != null && loginPassword != null) {
             startMainActivity(
-                LoginSucces(
-                    loginToken,
-                    loginEmail,
-                    loginPassword
-                )
+                    LoginSucces(
+                            loginToken,
+                            loginEmail,
+                            loginPassword
+                    )
             )
             return true
         }
@@ -274,14 +271,14 @@ class LoginActivity : AppCompatActivity() {
 
     private fun startMainActivity(success: LoginSucces) {
         val mainIntent = Intent(this, MainActivity::class.java)
-        mainIntent.putExtra("token",success.token)
-        mainIntent.putExtra("email",success.email)
-        mainIntent.putExtra("password",success.password)
+        mainIntent.putExtra("token", success.token)
+        mainIntent.putExtra("email", success.email)
+        mainIntent.putExtra("password", success.password)
         startActivity(mainIntent)
     }
 
     private fun setupfieldsOnLogout() {
-        if(!intent.getStringExtra("email").isNullOrEmpty()){
+        if (!intent.getStringExtra("email").isNullOrEmpty()) {
             binding.email.setText(intent.getStringExtra("email"))
             binding.password.setText(intent.getStringExtra("password"))
             Toast.makeText(applicationContext, intent.getStringExtra("message"), Toast.LENGTH_SHORT).show()
@@ -293,9 +290,9 @@ class LoginActivity : AppCompatActivity() {
         val displayName = model.email
         // TODO : initiate successful logged in experience
         Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
+                applicationContext,
+                "$welcome $displayName",
+                Toast.LENGTH_LONG
         ).show()
     }
 

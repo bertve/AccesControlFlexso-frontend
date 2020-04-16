@@ -1,46 +1,46 @@
 package com.flexso.flexsame.ui.testNFC
 
 import android.nfc.NfcAdapter
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.flexso.flexsame.MainActivity
 import com.flexso.flexsame.R
 import com.flexso.flexsame.databinding.TestNfcFragmentBinding
 import com.flexso.flexsame.ui.testNFC.OutcomingNfcManager.NfcActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class TestNFCFragment : Fragment(), NfcActivity{
+class TestNFCFragment : Fragment(), NfcActivity {
 
-    val viewModel : TestNFCViewModel by viewModel()
+    val viewModel: TestNFCViewModel by viewModel()
 
-    private lateinit var binding : TestNfcFragmentBinding
+    private lateinit var binding: TestNfcFragmentBinding
 
     private var nfcAdapter: NfcAdapter? = null
-    private var isNfcSupported : Boolean = false
+    private var isNfcSupported: Boolean = false
     private lateinit var outcomingNfcCallback: OutcomingNfcManager
 
-    private var message :String = ""
+    private var message: String = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.test_nfc_fragment,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.test_nfc_fragment, container, false)
         binding.lifecycleOwner = this
         binding.testNFCViewModel = this.viewModel
         setupNFC()
-        binding.sendButton.setOnClickListener{ sendMessage()}
+        binding.sendButton.setOnClickListener { sendMessage() }
         return binding.root
     }
 
-    private fun setupNFC(){
+    private fun setupNFC() {
         this.nfcAdapter = NfcAdapter.getDefaultAdapter(activity)
         this.isNfcSupported = this.nfcAdapter != null
         checkNFC()
@@ -61,9 +61,9 @@ class TestNFCFragment : Fragment(), NfcActivity{
             binding.sendButton.isEnabled = false
         } else if (!nfcAdapter!!.isEnabled) {
             Toast.makeText(
-                activity,
-                "NFC disabled on this device. Turn on to proceed",
-                Toast.LENGTH_SHORT
+                    activity,
+                    "NFC disabled on this device. Turn on to proceed",
+                    Toast.LENGTH_SHORT
             ).show()
             binding.sendButton.isEnabled = false
         } else {
@@ -73,13 +73,13 @@ class TestNFCFragment : Fragment(), NfcActivity{
 
     private fun sendMessage() {
         this.message = binding.messageInput.text.toString()
-        Log.i("nfc","sender sendMessage "+ message)
+        Log.i("nfc", "sender sendMessage " + message)
         binding.messageInput.setText("")
         (activity as MainActivity).hideKeyboard(this.view!!)
     }
 
     override fun getOutcomingMessage(): String {
-        Log.i("nfc","sender 84 getOutComingMessage "+message)
+        Log.i("nfc", "sender 84 getOutComingMessage " + message)
         return this.message
     }
 
@@ -88,8 +88,6 @@ class TestNFCFragment : Fragment(), NfcActivity{
             Toast.makeText(activity, R.string.message_beaming_complete, Toast.LENGTH_SHORT).show()
         }
     }
-
-
 
 
 }

@@ -18,33 +18,33 @@ class OfficeViewModel(private val officeRepository: OfficeRepository) : ViewMode
 
     //coroutines
     private val viewModelJob = SupervisorJob()
-    private val viewModelScope = CoroutineScope( viewModelJob + Dispatchers.Main)
+    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    lateinit var office : Office
+    lateinit var office: Office
 
     //checkedPersons
-    private var _checkedPersons : MutableLiveData<MutableList<Long>> = MutableLiveData()
-    val checkedPersons : LiveData<MutableList<Long>> get() = _checkedPersons
+    private var _checkedPersons: MutableLiveData<MutableList<Long>> = MutableLiveData()
+    val checkedPersons: LiveData<MutableList<Long>> get() = _checkedPersons
     //auth_persons
-    private var _authorizedPersons : MutableLiveData<List<User>> = officeRepository.authorizedPersons
-    val authorizedPersons : LiveData<List<User>> get() = _authorizedPersons
+    private var _authorizedPersons: MutableLiveData<List<User>> = officeRepository.authorizedPersons
+    val authorizedPersons: LiveData<List<User>> get() = _authorizedPersons
 
     //unauth_persons
-    private var _unAuthorizedPersons : MutableLiveData<List<User>> = officeRepository.unAuthorizedPersons
-    val unAuthorizedPersons : LiveData<List<User>> get() = _unAuthorizedPersons
+    private var _unAuthorizedPersons: MutableLiveData<List<User>> = officeRepository.unAuthorizedPersons
+    val unAuthorizedPersons: LiveData<List<User>> get() = _unAuthorizedPersons
 
 
     //add_succes
     private val _addSucces = MutableLiveData<Boolean>()
-    val addSucces : LiveData<Boolean> get() = _addSucces
+    val addSucces: LiveData<Boolean> get() = _addSucces
 
     //remove_succes
     private val _removeSucces = MutableLiveData<Boolean>()
-    val removeSucces : LiveData<Boolean> get() = _removeSucces
+    val removeSucces: LiveData<Boolean> get() = _removeSucces
 
     //edit_succes
     private val _editSucces = MutableLiveData<Boolean>()
-    val editSucces : LiveData<Boolean> get() = _editSucces
+    val editSucces: LiveData<Boolean> get() = _editSucces
 
     override fun onCleared() {
         super.onCleared()
@@ -70,21 +70,21 @@ class OfficeViewModel(private val officeRepository: OfficeRepository) : ViewMode
 
     fun deAuthorizeUserFromOffice(userId: Long) {
         viewModelScope.launch {
-            _removeSucces.postValue(officeRepository.deAuthorizePerson(office.officeId,userId))
+            _removeSucces.postValue(officeRepository.deAuthorizePerson(office.officeId, userId))
             getAuthorizedPersons()
             getUnAuthorizedPersons()
         }
     }
 
-    fun addCheckedPersons(){
+    fun addCheckedPersons() {
         this._checkedPersons.value!!.forEach {
             this.authorizePerson(it)
         }
     }
 
-    fun authorizePerson(userId : Long){
+    fun authorizePerson(userId: Long) {
         viewModelScope.launch {
-            _addSucces.postValue(officeRepository.authorizePerson(office.officeId,userId))
+            _addSucces.postValue(officeRepository.authorizePerson(office.officeId, userId))
             getAuthorizedPersons()
             getUnAuthorizedPersons()
         }
@@ -97,37 +97,37 @@ class OfficeViewModel(private val officeRepository: OfficeRepository) : ViewMode
         }
     }
 
-    fun editOfficeAddress(a : Address){
-        var helper = Office(office.officeId,office.company,a)
+    fun editOfficeAddress(a: Address) {
+        var helper = Office(office.officeId, office.company, a)
         viewModelScope.launch {
-            if(officeRepository.updateOffice(helper)){
+            if (officeRepository.updateOffice(helper)) {
                 _editSucces.postValue(true)
                 office.address = a
-            }else{
+            } else {
                 _editSucces.postValue(false)
             }
         }
     }
 
     fun removeFromCheckedList(userId: Long) {
-        val res :MutableList<Long> = this._checkedPersons.value!!
+        val res: MutableList<Long> = this._checkedPersons.value!!
         res.remove(userId)
         this._checkedPersons.value = res
-        Log.i("checked_min",_checkedPersons.value.toString())
+        Log.i("checked_min", _checkedPersons.value.toString())
     }
 
     fun addToCheckedList(userId: Long) {
-        val res :MutableList<Long> = this._checkedPersons.value!!
+        val res: MutableList<Long> = this._checkedPersons.value!!
         res.add(userId)
         this._checkedPersons.value = res
-        Log.i("checked_plus",_checkedPersons.value.toString())
+        Log.i("checked_plus", _checkedPersons.value.toString())
     }
 
-    fun resetCheckedList(){
-        val res :MutableList<Long> = this._checkedPersons.value!!
+    fun resetCheckedList() {
+        val res: MutableList<Long> = this._checkedPersons.value!!
         res.clear()
         this._checkedPersons.value = res
-        Log.i("checked_reset",_checkedPersons.value.toString())
+        Log.i("checked_reset", _checkedPersons.value.toString())
     }
 
 }

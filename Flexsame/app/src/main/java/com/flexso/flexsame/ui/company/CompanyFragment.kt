@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -25,33 +28,33 @@ import com.mobsandgeeks.saripaar.Validator
 import com.mobsandgeeks.saripaar.annotation.NotEmpty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CompanyFragment : Fragment(), Validator.ValidationListener{
+class CompanyFragment : Fragment(), Validator.ValidationListener {
 
     private val viewModel: CompanyViewModel by viewModel()
-    private lateinit var  binding : CompanyFragmentBinding
-    private lateinit var fab : FloatingActionButton
-    private lateinit var collapse_img : ImageView
+    private lateinit var binding: CompanyFragmentBinding
+    private lateinit var fab: FloatingActionButton
+    private lateinit var collapse_img: ImageView
     private lateinit var officeListAdapter: OfficeListAdapter
 
     //validation
-    private lateinit var validator : Validator
-    @NotEmpty(message = "Street is required" )
-    private lateinit var street : EditText
-    @NotEmpty(message = "House number is required" )
-    private lateinit var houseNumber : EditText
-    @NotEmpty(message = "Postal code is required" )
-    private lateinit var postalCode : EditText
-    @NotEmpty(message = "City is required" )
-    private lateinit var city : EditText
+    private lateinit var validator: Validator
+    @NotEmpty(message = "Street is required")
+    private lateinit var street: EditText
+    @NotEmpty(message = "House number is required")
+    private lateinit var houseNumber: EditText
+    @NotEmpty(message = "Postal code is required")
+    private lateinit var postalCode: EditText
+    @NotEmpty(message = "City is required")
+    private lateinit var city: EditText
     @NotEmpty(message = "Country is required")
-    private lateinit var country : EditText
+    private lateinit var country: EditText
 
     //helpers
-    private var companyTitleHelper : String = ""
+    private var companyTitleHelper: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.company_fragment,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.company_fragment, container, false)
         setupViewModel()
         setupValidator()
         setupUI()
@@ -73,8 +76,8 @@ class CompanyFragment : Fragment(), Validator.ValidationListener{
             (activity as MainActivity).hideKeyboard(this.requireView())
         }
         country.setOnEditorActionListener { _, actionId, _ ->
-            when (actionId){
-                EditorInfo.IME_ACTION_DONE ->{
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
                     validator.validate()
                     (activity as MainActivity).hideKeyboard(this.requireView())
                 }
@@ -92,8 +95,8 @@ class CompanyFragment : Fragment(), Validator.ValidationListener{
         viewModel.removeSucces.observe(
                 viewLifecycleOwner,
                 Observer {
-            onResponseRemove(it)
-        })
+                    onResponseRemove(it)
+                })
 
         binding.filter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -109,7 +112,7 @@ class CompanyFragment : Fragment(), Validator.ValidationListener{
 
         binding.edit.setOnClickListener {
             val builder = MaterialAlertDialogBuilder(context)
-            val layout : ConstraintLayout= LayoutInflater.from(context).inflate(R.layout.edit_company_name_dialog,null) as ConstraintLayout
+            val layout: ConstraintLayout = LayoutInflater.from(context).inflate(R.layout.edit_company_name_dialog, null) as ConstraintLayout
             val input = layout.findViewById<EditText>(R.id.companyName)
             input.setText(viewModel.company.name)
             builder.setTitle("Edit company name")
@@ -118,7 +121,7 @@ class CompanyFragment : Fragment(), Validator.ValidationListener{
                         viewModel.editCompanyName(input.text.toString())
                         companyTitleHelper = input.text.toString()
                     })
-                    .setNegativeButton(R.string.cancel,DialogInterface.OnClickListener { dialog, which -> dialog.cancel()})
+                    .setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
             builder.show()
         }
 
@@ -152,7 +155,7 @@ class CompanyFragment : Fragment(), Validator.ValidationListener{
     }
 
     private fun setupRecyclerView() {
-        val adapter = OfficeListAdapter(context!!,viewModel)
+        val adapter = OfficeListAdapter(context!!, viewModel)
         officeListAdapter = adapter
         binding.officeList.adapter = adapter
 
@@ -161,7 +164,7 @@ class CompanyFragment : Fragment(), Validator.ValidationListener{
 
         viewModel.offices.observe(
                 viewLifecycleOwner,
-                Observer{
+                Observer {
                     if (adapter.mListRef == null) {
                         adapter.mListRef = it
                     }
@@ -170,41 +173,40 @@ class CompanyFragment : Fragment(), Validator.ValidationListener{
         )
 
         //swipe
-        val itemTouchHelper : ItemTouchHelper = ItemTouchHelper(OfficeListSwipeToDeleteCallback(adapter))
+        val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(OfficeListSwipeToDeleteCallback(adapter))
         itemTouchHelper.attachToRecyclerView(binding.officeList)
     }
 
-    private fun filter(s : String?){
+    private fun filter(s: String?) {
         officeListAdapter.filter.filter(s)
     }
 
     private fun onResponseRemove(succes: Boolean) {
-        if(succes){
-            Toast.makeText(context,"Succesfully removed", Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(context,"Removal failed", Toast.LENGTH_SHORT).show()
+        if (succes) {
+            Toast.makeText(context, "Succesfully removed", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Removal failed", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun onResponseAdd(succes: Boolean) {
-        if(succes){
+        if (succes) {
             switchFab()
             resetAddOfficeFields()
-            Toast.makeText(context,"Succesfully added ", Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(context,"Failed to add", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Succesfully added ", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Failed to add", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun onResponseEdit(succes: Boolean) {
-        if(succes){
-            binding.company = Company(viewModel.company.companyId,companyTitleHelper)
-            Toast.makeText(context,"Succesfully edited", Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(context,"Failed to edit", Toast.LENGTH_SHORT).show()
+        if (succes) {
+            binding.company = Company(viewModel.company.companyId, companyTitleHelper)
+            Toast.makeText(context, "Succesfully edited", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Failed to edit", Toast.LENGTH_SHORT).show()
         }
     }
-
 
 
     private fun resetAddOfficeFields() {
@@ -221,15 +223,16 @@ class CompanyFragment : Fragment(), Validator.ValidationListener{
     }
 
     override fun onValidationFailed(errors: MutableList<ValidationError>?) {
-        for (error : ValidationError in errors!!.iterator()){
-            var view : View = error.view
-            val message :  String = error.getCollatedErrorMessage(activity)
-            if (view is EditText ){
-                view.setError(message)
-            }else{
-                Toast.makeText(activity,message, Toast.LENGTH_SHORT).show()
+        for (error: ValidationError in errors!!.iterator()) {
+            var view: View = error.view
+            val message: String = error.getCollatedErrorMessage(activity)
+            if (view is EditText) {
+                view.error = message
+            } else {
+                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
             }
-        }    }
+        }
+    }
 
     override fun onValidationSucceeded() {
         viewModel.addOffice(Address(

@@ -5,19 +5,21 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.flexso.flexsame.R;
 
-public class OfficeListSwipeToDeleteCallback  extends ItemTouchHelper.SimpleCallback {
+public class OfficeListSwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
+    private final ColorDrawable backgroundToLeft;
     private OfficeListAdapter adapter;
     private Drawable icon;
-    private final ColorDrawable backgroundToLeft;
 
     public OfficeListSwipeToDeleteCallback(OfficeListAdapter adapter) {
-        super(0,ItemTouchHelper.LEFT);
+        super(0, ItemTouchHelper.LEFT);
         this.adapter = adapter;
         icon = ContextCompat.getDrawable(this.adapter.getContext(),
                 R.drawable.ic_delete_sweep_white_36dp);

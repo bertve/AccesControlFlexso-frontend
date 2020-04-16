@@ -2,13 +2,12 @@ package com.flexso.flexsame
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -24,21 +23,20 @@ import com.flexso.flexsame.models.User
 import com.flexso.flexsame.ui.dialogs.LogoutDialog
 import com.flexso.flexsame.ui.home.HomeFragmentDirections
 import com.flexso.flexsame.ui.login.LoginActivity
-import com.flexso.flexsame.ui.testNFC.ReceiverActivity
 import com.google.android.material.navigation.NavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var drawerLayout : DrawerLayout
+    private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
 
-    val loggedInUserViewModel : LoggedInUserViewModel by viewModel()
+    val loggedInUserViewModel: LoggedInUserViewModel by viewModel()
 
-    var user : User = User(-1,"","","","","")
+    var user: User = User(-1, "", "", "", "", "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +54,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                 navView.getHeaderView(0).findViewById<TextView>(R.id.name).text = user.getFullName()
                 //set menu in navdrawer
                 navView.menu.clear()
-                var menu = when(user.roles.elementAt(0).roleName){
+                var menu = when (user.roles.elementAt(0).roleName) {
                     RoleName.ROLE_USER -> R.menu.navdrawer_user
                     RoleName.ROLE_COMPANY -> R.menu.navdrawer_company
                     RoleName.ROLE_ADMIN -> R.menu.navdrawer_admin
@@ -66,7 +64,7 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
         })
 
         loggedInUserViewModel.currentUserSucces.observe(this, Observer {
-            if(!it){
+            if (!it) {
                 logout()
             }
         })
@@ -78,14 +76,14 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     }
 
     private fun setLoggedInUser() {
-        val intent : Intent = intent
+        val intent: Intent = intent
         val token = intent.getStringExtra("token").orEmpty()
         val email = intent.getStringExtra("email").orEmpty()
         val password = intent.getStringExtra("password").orEmpty()
-        loggedInUserViewModel.setCurrentUser(email,token,password)
+        loggedInUserViewModel.setCurrentUser(email, token, password)
     }
 
-    private fun setupNavigation(){
+    private fun setupNavigation() {
         navController = this.findNavController(R.id.myNavHostFragment)
         initDrawer()
         initBottomNav()
@@ -94,24 +92,23 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     private fun initBottomNav() {
         val navBottom = binding.bottomNavigation
         navBottom.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId){
+            when (item.itemId) {
                 R.id.homeFragment -> {
                     navController.navigate(R.id.homeFragment)
                     true
                 }
-                R.id.accountFragment-> {
+                R.id.accountFragment -> {
                     navController.navigate(R.id.accountFragment)
                     true
                 }
                 else -> false
             }
         }
-        navController.addOnDestinationChangedListener{ _,dest,_ ->
-            if( dest.id == R.id.homeFragment ||
-                dest.id == R.id.accountFragment){
+        navController.addOnDestinationChangedListener { _, dest, _ ->
+            if (dest.id == R.id.homeFragment ||
+                    dest.id == R.id.accountFragment) {
                 navBottom.visibility = View.VISIBLE
-            }
-            else{
+            } else {
                 navBottom.visibility = View.GONE
             }
         }
@@ -120,9 +117,9 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     private fun initDrawer() {
         drawerLayout = binding.drawerLayout
         navView = binding.navView
-        NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
-        appBarConfiguration = AppBarConfiguration(navController.graph,drawerLayout)
-        NavigationUI.setupWithNavController(navView,navController)
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+        NavigationUI.setupWithNavController(navView, navController)
         // prevent nav gesture if not on start destination
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, _ ->
             if (nd.id == nc.graph.startDestination) {
@@ -136,21 +133,21 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.myNavHostFragment)
-        return NavigationUI.navigateUp(navController,drawerLayout)
+        return NavigationUI.navigateUp(navController, drawerLayout)
     }
 
-    fun hideKeyboard(view : View){
+    fun hideKeyboard(view: View) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.nav_logout ->{
+        when (item.itemId) {
+            R.id.nav_logout -> {
                 val dialog = LogoutDialog(this)
-                dialog.show(supportFragmentManager,"Log out")
+                dialog.show(supportFragmentManager, "Log out")
             }
-            R.id.walletFragment ->{
+            R.id.walletFragment -> {
                 navController.navigate(HomeFragmentDirections.actionHomeFragmentToWalletFragment(user))
             }
             R.id.testNFCFragment -> {
@@ -175,17 +172,17 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     }
 
     fun logout() {
-        val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
         val login = Intent(this, LoginActivity::class.java)
-        login.putExtra("message","Succesfully logged out")
+        login.putExtra("message", "Succesfully logged out")
 
-        if(user.userId != -1L){
+        if (user.userId != -1L) {
             sharedPreferences.edit()
-                    .putString("goldfinger_email",user.email)
-                    .putString("goldfinger_password",user.password)
+                    .putString("goldfinger_email", user.email)
+                    .putString("goldfinger_password", user.password)
                     .commit()
         }
-            sharedPreferences.edit()
+        sharedPreferences.edit()
                 .remove("LOGIN_EMAIL")
                 .remove("LOGIN_TOKEN")
                 .remove("LOGIN_PASSWORD")
@@ -197,11 +194,11 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     override fun onStop() {
         super.onStop()
-        val sharedPreferences = getSharedPreferences("PREFERENCES",android.content.Context.MODE_PRIVATE)
-        if(user.userId != -1L){
+        val sharedPreferences = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
+        if (user.userId != -1L) {
             sharedPreferences.edit()
-                    .putString("goldfinger_email",user.email)
-                    .putString("goldfinger_password",user.password)
+                    .putString("goldfinger_email", user.email)
+                    .putString("goldfinger_password", user.password)
                     .commit()
         }
     }

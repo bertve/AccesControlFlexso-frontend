@@ -1,6 +1,5 @@
 package com.flexso.flexsame.ui.admin
 
-import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,10 +13,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.flexso.flexsame.MainActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.flexso.flexsame.R
 import com.flexso.flexsame.databinding.AdminFragmentBinding
 import com.flexso.flexsame.models.dto.auth.SignUpRequestCompany
@@ -29,35 +26,36 @@ import com.mobsandgeeks.saripaar.annotation.ConfirmPassword
 import com.mobsandgeeks.saripaar.annotation.Email
 import com.mobsandgeeks.saripaar.annotation.NotEmpty
 import com.mobsandgeeks.saripaar.annotation.Password
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdminFragment : Fragment(), Validator.ValidationListener {
     private val viewModel: AdminViewModel by viewModel()
-    private lateinit var  binding : AdminFragmentBinding
-    private lateinit var fab : FloatingActionButton
-    private lateinit var collapse_img : ImageView
+    private lateinit var binding: AdminFragmentBinding
+    private lateinit var fab: FloatingActionButton
+    private lateinit var collapse_img: ImageView
     private lateinit var companyListAdapter: CompanyListAdapter
 
     //validation
-    @NotEmpty(message = "Company name is required" )
-    private lateinit var companyName : EditText
-    @NotEmpty(message = "Firstname is required" )
-    private lateinit var firstName : EditText
-    @NotEmpty(message = "Lastname is required" )
-    private lateinit var lastName : EditText
-    @NotEmpty(message = "Email is required" )
+    @NotEmpty(message = "Company name is required")
+    private lateinit var companyName: EditText
+    @NotEmpty(message = "Firstname is required")
+    private lateinit var firstName: EditText
+    @NotEmpty(message = "Lastname is required")
+    private lateinit var lastName: EditText
+    @NotEmpty(message = "Email is required")
     @Email(message = "Must be an email address")
-    private lateinit var email : EditText
+    private lateinit var email: EditText
     @NotEmpty(message = "Password is required")
-    @Password(min= 6,scheme = Password.Scheme.ALPHA)
-    private lateinit var password : EditText
+    @Password(min = 6, scheme = Password.Scheme.ALPHA)
+    private lateinit var password: EditText
     @ConfirmPassword
-    private lateinit var password_confirm : EditText
+    private lateinit var password_confirm: EditText
 
-    private lateinit var validator : Validator
+    private lateinit var validator: Validator
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.admin_fragment,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.admin_fragment, container, false)
 
         setupViewModel()
         setupValidator()
@@ -97,8 +95,8 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
             (activity as MainActivity).hideKeyboard(this.requireView())
         }
         password_confirm.setOnEditorActionListener { _, actionId, _ ->
-            when (actionId){
-                EditorInfo.IME_ACTION_DONE ->{
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
                     validator.validate()
                     (activity as MainActivity).hideKeyboard(this.requireView())
                 }
@@ -106,7 +104,7 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
             false
         }
 
-       viewModel.addSucces.observe(viewLifecycleOwner, Observer {
+        viewModel.addSucces.observe(viewLifecycleOwner, Observer {
             onResponseAdd(it)
         })
 
@@ -114,7 +112,7 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
             onResponseRemove(it)
         })
 
-        binding.filter.setOnQueryTextListener(object : OnQueryTextListener{
+        binding.filter.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 filter(query)
                 return true
@@ -127,25 +125,25 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         })
     }
 
-    private fun filter(s : String?){
+    private fun filter(s: String?) {
         companyListAdapter.filter.filter(s)
     }
 
     private fun onResponseRemove(succes: Boolean) {
-        if(succes){
-            Toast.makeText(context,"Succesfully removed",Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(context,"Removal failed",Toast.LENGTH_SHORT).show()
+        if (succes) {
+            Toast.makeText(context, "Succesfully removed", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Removal failed", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun onResponseAdd(succes: Boolean) {
-        if(succes){
+        if (succes) {
             switchFab()
             resetAddCompanyFields()
-            Toast.makeText(context,"Succesfully added ${this.companyName.text}",Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(context,"Failed to add ${this.companyName.text}",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Succesfully added ${this.companyName.text}", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Failed to add ${this.companyName.text}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -164,7 +162,7 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
     }
 
     private fun setupRecyclerView() {
-        val adapter = CompanyListAdapter(context!!,viewModel)
+        val adapter = CompanyListAdapter(context!!, viewModel)
         companyListAdapter = adapter
         binding.companyList.adapter = adapter
         binding.companyList.addItemDecoration(DefaultItemDecorator(context!!.resources.getDimensionPixelSize(R.dimen.list_horizontal_spacing),
@@ -172,8 +170,8 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
 
         viewModel.users.observe(
                 viewLifecycleOwner,
-                Observer{
-                    Log.i("bug",it.toString())
+                Observer {
+                    Log.i("bug", it.toString())
                     if (adapter.mListRef == null) {
                         adapter.mListRef = it
                     }
@@ -182,7 +180,7 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         )
 
         //swipe
-        val itemTouchHelper : ItemTouchHelper = ItemTouchHelper(CompanyListSwipeToDeleteCallback(adapter))
+        val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(CompanyListSwipeToDeleteCallback(adapter))
         itemTouchHelper.attachToRecyclerView(binding.companyList)
 
     }
@@ -193,13 +191,13 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
     }
 
     override fun onValidationFailed(errors: MutableList<ValidationError>?) {
-        for (error : ValidationError in errors!!.iterator()){
-            var view : View = error.view
-            val message :  String = error.getCollatedErrorMessage(activity)
-            if (view is EditText ){
-                view.setError(message)
-            }else{
-                Toast.makeText(activity,message, Toast.LENGTH_SHORT).show()
+        for (error: ValidationError in errors!!.iterator()) {
+            var view: View = error.view
+            val message: String = error.getCollatedErrorMessage(activity)
+            if (view is EditText) {
+                view.error = message
+            } else {
+                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -217,7 +215,6 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         companyListAdapter.filter.filter("")
 
     }
-
 
 
 }

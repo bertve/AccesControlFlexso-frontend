@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Office(val officeId: Long, val company: Company, var address: Address) :Parcelable{
+class Office(val officeId: Long, val company: Company, var address: Address) : Parcelable {
 
     override fun toString(): String {
         return "Office(officeId=$officeId, address=$address, company=$company)"
@@ -30,15 +30,15 @@ class Office(val officeId: Long, val company: Company, var address: Address) :Pa
         return result
     }
 
-    fun streetHouseNumberString() : String{
+    fun streetHouseNumberString(): String {
         return this.address.street + " " + this.address.houseNumber
     }
 
-    fun postalCodeCity() : String{
+    fun postalCodeCity(): String {
         return this.address.postalCode + " " + this.address.town
     }
 
-    fun filterString() : String{
+    fun filterString(): String {
         return this.address.street + this.address.houseNumber + this.address.postalCode + this.address.town + this.address.country
     }
 

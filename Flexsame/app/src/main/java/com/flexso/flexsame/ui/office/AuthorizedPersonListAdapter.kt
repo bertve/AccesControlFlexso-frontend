@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,9 +17,9 @@ import com.flexso.flexsame.databinding.AuthorizedpersonlistItemBinding
 import com.flexso.flexsame.models.User
 
 
-class AuthorizedPersonListAdapter  (val context : Context, val officeViewModel: OfficeViewModel) : ListAdapter<User, AuthorizedPersonListAdapter.ViewHolder>(AuthorizedPersonListDiffCallBack()), Filterable {
+class AuthorizedPersonListAdapter(val context: Context, val officeViewModel: OfficeViewModel) : ListAdapter<User, AuthorizedPersonListAdapter.ViewHolder>(AuthorizedPersonListDiffCallBack()), Filterable {
 
-    var isCLickable : Boolean = true
+    var isCLickable: Boolean = true
     var mListRef: List<User>? = null
     var mFilteredList: List<User>? = null
 
@@ -33,11 +32,11 @@ class AuthorizedPersonListAdapter  (val context : Context, val officeViewModel: 
         val item = getItem(position)
         setAnimations(holder)
         holder.bind(
-                AuthorizedPersonListItemListener {
-                    user -> if (this.isCLickable){
-                   // Toast.makeText(context, "pushed user: $user}", Toast.LENGTH_LONG).show()
-                }
-                },item)
+                AuthorizedPersonListItemListener { user ->
+                    if (this.isCLickable) {
+                        // Toast.makeText(context, "pushed user: $user}", Toast.LENGTH_LONG).show()
+                    }
+                }, item)
     }
 
     private fun setAnimations(holder: ViewHolder) {
@@ -49,15 +48,15 @@ class AuthorizedPersonListAdapter  (val context : Context, val officeViewModel: 
         binding.cardContainer.animation = anim
     }
 
-    fun deleteItem(position: Int){
-        val u : User = this.currentList.get(position)
-        val dialog : AlertDialog = AlertDialog.Builder(context)
+    fun deleteItem(position: Int) {
+        val u: User = this.currentList.get(position)
+        val dialog: AlertDialog = AlertDialog.Builder(context)
                 .setMessage("delete user: ${u.getFullName()}")
-                .setPositiveButton(R.string.delete, DialogInterface.OnClickListener{ _, _ ->
+                .setPositiveButton(R.string.delete, DialogInterface.OnClickListener { _, _ ->
                     officeViewModel.deAuthorizeUserFromOffice(u.userId)
                 })
                 .setNegativeButton(R.string.cancel,
-                        DialogInterface.OnClickListener{ _, _ ->
+                        DialogInterface.OnClickListener { _, _ ->
                             officeViewModel.getAuthorizedPersons()
                         })
                 .setOnCancelListener {
@@ -69,9 +68,9 @@ class AuthorizedPersonListAdapter  (val context : Context, val officeViewModel: 
     }
 
 
-    class ViewHolder private constructor(val binding :AuthorizedpersonlistItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding: AuthorizedpersonlistItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(clickListener: AuthorizedPersonListItemListener,item: User) {
+        fun bind(clickListener: AuthorizedPersonListItemListener, item: User) {
             binding.user = item
             binding.clickListener = clickListener
             binding.name.text = item.getFullName()
@@ -79,16 +78,16 @@ class AuthorizedPersonListAdapter  (val context : Context, val officeViewModel: 
             binding.executePendingBindings()
         }
 
-        companion object{
+        companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = AuthorizedpersonlistItemBinding.inflate(layoutInflater,parent,false)
+                val binding = AuthorizedpersonlistItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
     }
 
-    class AuthorizedPersonListDiffCallBack : DiffUtil.ItemCallback<User>(){
+    class AuthorizedPersonListDiffCallBack : DiffUtil.ItemCallback<User>() {
         override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
             return oldItem.userId == newItem.userId
         }
@@ -99,8 +98,8 @@ class AuthorizedPersonListAdapter  (val context : Context, val officeViewModel: 
 
     }
 
-    class AuthorizedPersonListItemListener (val clickListener: (user : User) -> Unit) {
-        fun onClick(v : View, u : User) {
+    class AuthorizedPersonListItemListener(val clickListener: (user: User) -> Unit) {
+        fun onClick(v: View, u: User) {
             clickListener(u)
         }
     }
@@ -115,7 +114,7 @@ class AuthorizedPersonListAdapter  (val context : Context, val officeViewModel: 
 
                     mFilteredList = mListRef?.sortedWith(
                             compareBy({ it.lastName },
-                                    {it.firstName}
+                                    { it.firstName }
                             ))
                 } else {
                     mListRef?.let {
@@ -134,7 +133,7 @@ class AuthorizedPersonListAdapter  (val context : Context, val officeViewModel: 
                 val filterResults = FilterResults()
                 filterResults.values = mFilteredList?.sortedWith(
                         compareBy({ it.lastName },
-                                {it.firstName}
+                                { it.firstName }
                         ))
                 return filterResults
             }
@@ -146,5 +145,6 @@ class AuthorizedPersonListAdapter  (val context : Context, val officeViewModel: 
                 mFilteredList = filterResults.values as List<User>?
                 submitList(mFilteredList)
             }
-        }    }
+        }
+    }
 }

@@ -5,11 +5,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.flexso.flexsame.R
 
 class ReceiverActivity : AppCompatActivity() {
@@ -19,7 +19,7 @@ class ReceiverActivity : AppCompatActivity() {
     private var incomingMessage: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i("nfc","receiver activity created")
+        Log.i("nfc", "receiver activity created")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_receiver)
         setupNFC()
@@ -37,9 +37,9 @@ class ReceiverActivity : AppCompatActivity() {
 
         if (!nfcAdapter!!.isEnabled) {
             Toast.makeText(
-                this,
-                "NFC disabled on this device. Turn on to proceed",
-                Toast.LENGTH_SHORT
+                    this,
+                    "NFC disabled on this device. Turn on to proceed",
+                    Toast.LENGTH_SHORT
             ).show()
         }
 
@@ -67,19 +67,19 @@ class ReceiverActivity : AppCompatActivity() {
     }
 
     private fun receiveMessageFromDevice(intent: Intent) {
-        Log.i("nfc","receiver 68 receiveFromDevice")
+        Log.i("nfc", "receiver 68 receiveFromDevice")
         val action = intent.action
-        Log.i("nfc","intent: "+intent.action)
+        Log.i("nfc", "intent: " + intent.action)
         if (NfcAdapter.ACTION_NDEF_DISCOVERED == action) {
-            Log.i("nfc","ACTION_NDEF_DISCOVERED ")
+            Log.i("nfc", "ACTION_NDEF_DISCOVERED ")
             handleNdefMessage(intent)
         }
-        if(NfcAdapter.ACTION_TECH_DISCOVERED == action){
-            Log.i("nfc","ACTION_TECH_DISCOVERED  ")
+        if (NfcAdapter.ACTION_TECH_DISCOVERED == action) {
+            Log.i("nfc", "ACTION_TECH_DISCOVERED  ")
             handleNdefMessage(intent)
         }
-        if(NfcAdapter.ACTION_TAG_DISCOVERED == action){
-            Log.i("nfc","ACTION_TAG_DISCOVERED")
+        if (NfcAdapter.ACTION_TAG_DISCOVERED == action) {
+            Log.i("nfc", "ACTION_TAG_DISCOVERED")
             handleNdefMessage(intent)
         }
     }
@@ -92,7 +92,7 @@ class ReceiverActivity : AppCompatActivity() {
             val ndefRecord_0 = inNdefRecords[0]
 
             val inMessage = String(ndefRecord_0.payload)
-            Log.i("nfc","receiver 79 "+ inMessage)
+            Log.i("nfc", "receiver 79 " + inMessage)
 
             incomingMessage?.text = inMessage
         }

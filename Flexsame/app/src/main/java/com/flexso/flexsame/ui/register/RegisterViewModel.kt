@@ -14,48 +14,48 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class RegisterViewModel (val registerRepository: RegisterRepository): ViewModel() {
+class RegisterViewModel(val registerRepository: RegisterRepository) : ViewModel() {
 
     //coroutines
     private val viewModelJob = SupervisorJob()
-    private val viewModelScope = CoroutineScope( viewModelJob + Dispatchers.Main)
+    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val _apiResponse = MutableLiveData<ApiResponse>()
-    val apiResponse : LiveData<ApiResponse> = _apiResponse
+    val apiResponse: LiveData<ApiResponse> = _apiResponse
 
 
     init {
-        _apiResponse.value = ApiResponse(true,"")
+        _apiResponse.value = ApiResponse(true, "")
     }
 
 
-    val error = Transformations.map(_apiResponse){
-        if (it.success ){
+    val error = Transformations.map(_apiResponse) {
+        if (it.success) {
             View.GONE
-        }else{
-                View.VISIBLE
+        } else {
+            View.VISIBLE
         }
 
     }
 
-    val errorMessage =  Transformations.map(_apiResponse){
-        if(_apiResponse.value != null){
+    val errorMessage = Transformations.map(_apiResponse) {
+        if (_apiResponse.value != null) {
             _apiResponse.value!!.message
-        }else{
+        } else {
             ""
         }
     }
 
-    fun register(firstName: String, lastName: String, email: String, password :String, password_confirm: String) {
+    fun register(firstName: String, lastName: String, email: String, password: String, password_confirm: String) {
 
-        if(password == password_confirm){
-            Log.i("register","password and password confirmation match")
+        if (password == password_confirm) {
+            Log.i("register", "password and password confirmation match")
             viewModelScope.launch {
-              _apiResponse.value =  registerRepository.register(firstName,lastName,email,password)
+                _apiResponse.value = registerRepository.register(firstName, lastName, email, password)
             }
-        }else{
-            Log.i("register","password and password confirmation don't match")
-            this._apiResponse.value = ApiResponse(false,"Password confirmation doesn't match")
+        } else {
+            Log.i("register", "password and password confirmation don't match")
+            this._apiResponse.value = ApiResponse(false, "Password confirmation doesn't match")
         }
     }
 

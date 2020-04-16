@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.flexso.flexsame.R
@@ -15,39 +14,38 @@ import com.flexso.flexsame.databinding.UnauthorizedpersonlistItemBinding
 import com.flexso.flexsame.models.User
 import com.google.android.material.card.MaterialCardView
 
-class UnAuthorizedPersonListAdapter (val context : Context, val officeViewModel: OfficeViewModel) : ListAdapter<User, UnAuthorizedPersonListAdapter.ViewHolder>(AuthorizedPersonListAdapter.AuthorizedPersonListDiffCallBack()), Filterable {
+class UnAuthorizedPersonListAdapter(val context: Context, val officeViewModel: OfficeViewModel) : ListAdapter<User, UnAuthorizedPersonListAdapter.ViewHolder>(AuthorizedPersonListAdapter.AuthorizedPersonListDiffCallBack()), Filterable {
 
-    var isCLickable : Boolean = true
+    var isCLickable: Boolean = true
     var mListRef: List<User>? = null
     var mFilteredList: List<User>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent,officeViewModel)
+        return ViewHolder.from(parent, officeViewModel)
     }
-
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         setAnimations(holder)
         holder.bind(
-                UnAuthorizedPersonListItemListener { user,view ->
+                UnAuthorizedPersonListItemListener { user, view ->
                     if (this.isCLickable) {
-                        (view as MaterialCardView).isChecked = !(view as MaterialCardView).isChecked
-                        if (view.isChecked){
+                        (view as MaterialCardView).isChecked = !view.isChecked
+                        if (view.isChecked) {
                             addToCheckedList(user.userId)
-                        }else{
+                        } else {
                             removeFromCheckedList(user.userId)
                         }
                     }
-                },item)
+                }, item)
     }
 
-    private fun removeFromCheckedList(userId: Long){
+    private fun removeFromCheckedList(userId: Long) {
         officeViewModel.removeFromCheckedList(userId)
     }
 
-    private fun addToCheckedList(userId: Long){
+    private fun addToCheckedList(userId: Long) {
         officeViewModel.addToCheckedList(userId)
     }
 
@@ -61,7 +59,7 @@ class UnAuthorizedPersonListAdapter (val context : Context, val officeViewModel:
     }
 
 
-    class ViewHolder private constructor(val binding : UnauthorizedpersonlistItemBinding,val viewModel: OfficeViewModel) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding: UnauthorizedpersonlistItemBinding, val viewModel: OfficeViewModel) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(clickListener: UnAuthorizedPersonListItemListener, item: User) {
             binding.user = item
@@ -69,26 +67,26 @@ class UnAuthorizedPersonListAdapter (val context : Context, val officeViewModel:
             binding.name.text = item.getFullName()
             binding.email.text = item.email
             binding.cardContainer.isCheckable = true
-            if (viewModel.checkedPersons.value.isNullOrEmpty()){
+            if (viewModel.checkedPersons.value.isNullOrEmpty()) {
                 binding.cardContainer.isChecked = false
-            }else{
+            } else {
                 binding.cardContainer.isChecked = viewModel.checkedPersons.value!!.contains(item.userId)
             }
             binding.executePendingBindings()
         }
 
-        companion object{
-            fun from(parent: ViewGroup,viewModel: OfficeViewModel): ViewHolder {
+        companion object {
+            fun from(parent: ViewGroup, viewModel: OfficeViewModel): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = UnauthorizedpersonlistItemBinding.inflate(layoutInflater,parent,false)
-                return ViewHolder(binding,viewModel)
+                val binding = UnauthorizedpersonlistItemBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding, viewModel)
             }
         }
     }
 
-    class UnAuthorizedPersonListItemListener (val clickListener: (user : User,view:View) -> Unit) {
-        fun onClick(v : View, u : User) {
-            clickListener(u,v)
+    class UnAuthorizedPersonListItemListener(val clickListener: (user: User, view: View) -> Unit) {
+        fun onClick(v: View, u: User) {
+            clickListener(u, v)
         }
     }
 
@@ -103,7 +101,7 @@ class UnAuthorizedPersonListAdapter (val context : Context, val officeViewModel:
 
                     mFilteredList = mListRef?.sortedWith(
                             compareBy({ it.lastName },
-                                    {it.firstName}
+                                    { it.firstName }
                             ))
                 } else {
                     mListRef?.let {
@@ -122,7 +120,7 @@ class UnAuthorizedPersonListAdapter (val context : Context, val officeViewModel:
                 val filterResults = FilterResults()
                 filterResults.values = mFilteredList?.sortedWith(
                         compareBy({ it.lastName },
-                                {it.firstName}
+                                { it.firstName }
                         ))
                 return filterResults
             }

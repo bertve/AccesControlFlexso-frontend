@@ -9,23 +9,18 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.flexso.flexsame.MainActivity
 import com.flexso.flexsame.R
-import com.flexso.flexsame.databinding.CompanylistItemBinding
 import com.flexso.flexsame.databinding.OfficelistItemBinding
 import com.flexso.flexsame.models.Office
-import com.flexso.flexsame.models.User
-import com.flexso.flexsame.ui.admin.AdminFragmentDirections
-import com.flexso.flexsame.ui.admin.CompanyListAdapter
 
-class OfficeListAdapter (val context : Context,val companyViewModel: CompanyViewModel) : ListAdapter<Office, OfficeListAdapter.ViewHolder>(OfficeListDiffCallBack()), Filterable {
+class OfficeListAdapter(val context: Context, val companyViewModel: CompanyViewModel) : ListAdapter<Office, OfficeListAdapter.ViewHolder>(OfficeListDiffCallBack()), Filterable {
 
-    var isCLickable : Boolean = true
+    var isCLickable: Boolean = true
     var mListRef: List<Office>? = null
     var mFilteredList: List<Office>? = null
 
@@ -38,11 +33,11 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
         val item = getItem(position)
         setAnimations(holder)
         holder.bind(
-                OfficeListItemListener {
-                    office -> if (this.isCLickable){
-                    (context as MainActivity).findNavController(R.id.myNavHostFragment).navigate(CompanyFragmentDirections.actionCompanyFragmentToOfficeFragment(office))
-                }
-                },item)
+                OfficeListItemListener { office ->
+                    if (this.isCLickable) {
+                        (context as MainActivity).findNavController(R.id.myNavHostFragment).navigate(CompanyFragmentDirections.actionCompanyFragmentToOfficeFragment(office))
+                    }
+                }, item)
     }
 
     private fun setAnimations(holder: ViewHolder) {
@@ -55,15 +50,15 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
         binding.cardContainer.animation = anim
     }
 
-    fun deleteItem(position: Int){
-        val o : Office = this.currentList.get(position)
-        val dialog : AlertDialog = AlertDialog.Builder(context)
+    fun deleteItem(position: Int) {
+        val o: Office = this.currentList.get(position)
+        val dialog: AlertDialog = AlertDialog.Builder(context)
                 .setMessage("delete office: ${o.address.street}")
-                .setPositiveButton(R.string.delete, DialogInterface.OnClickListener{ _, _ ->
+                .setPositiveButton(R.string.delete, DialogInterface.OnClickListener { _, _ ->
                     companyViewModel.removeOffice(o.officeId)
                 })
                 .setNegativeButton(R.string.cancel,
-                        DialogInterface.OnClickListener{ _, _ ->
+                        DialogInterface.OnClickListener { _, _ ->
                             companyViewModel.getOffices()
                         })
                 .setOnCancelListener {
@@ -75,9 +70,9 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
     }
 
 
-    class ViewHolder private constructor(val binding : OfficelistItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding: OfficelistItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(clickListener: OfficeListItemListener,item: Office) {
+        fun bind(clickListener: OfficeListItemListener, item: Office) {
             binding.office = item
             binding.clickListener = clickListener
             binding.streetHouseNumber.text = item.streetHouseNumberString()
@@ -86,16 +81,16 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
             binding.executePendingBindings()
         }
 
-        companion object{
+        companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = OfficelistItemBinding.inflate(layoutInflater,parent,false)
+                val binding = OfficelistItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
     }
 
-    class OfficeListDiffCallBack : DiffUtil.ItemCallback<Office>(){
+    class OfficeListDiffCallBack : DiffUtil.ItemCallback<Office>() {
         override fun areItemsTheSame(oldItem: Office, newItem: Office): Boolean {
             return oldItem.officeId == newItem.officeId
         }
@@ -106,8 +101,8 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
 
     }
 
-    class OfficeListItemListener (val clickListener: (office : Office) -> Unit) {
-        fun onClick(v : View, o : Office) {
+    class OfficeListItemListener(val clickListener: (office: Office) -> Unit) {
+        fun onClick(v: View, o: Office) {
             clickListener(o)
         }
     }
@@ -122,10 +117,10 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
 
                     mFilteredList = mListRef?.sortedWith(
                             compareBy({ it.address.street }
-                                    ,{ it.address.houseNumber}
-                                    ,{ it.address.postalCode}
-                                    ,{ it.address.town}
-                                    ,{ it.address.country}
+                                    , { it.address.houseNumber }
+                                    , { it.address.postalCode }
+                                    , { it.address.town }
+                                    , { it.address.country }
                             ))
                 } else {
                     mListRef?.let {
@@ -144,10 +139,10 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
                 val filterResults = FilterResults()
                 filterResults.values = mFilteredList?.sortedWith(
                         compareBy({ it.address.street }
-                                ,{ it.address.houseNumber}
-                                ,{ it.address.postalCode}
-                                ,{ it.address.town}
-                                ,{ it.address.country}
+                                , { it.address.houseNumber }
+                                , { it.address.postalCode }
+                                , { it.address.town }
+                                , { it.address.country }
                         ))
                 return filterResults
             }
@@ -159,5 +154,6 @@ class OfficeListAdapter (val context : Context,val companyViewModel: CompanyView
                 mFilteredList = filterResults.values as List<Office>?
                 submitList(mFilteredList)
             }
-        }    }
+        }
+    }
 }

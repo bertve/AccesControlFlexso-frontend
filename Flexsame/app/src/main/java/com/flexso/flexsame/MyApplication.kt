@@ -9,7 +9,7 @@ import org.koin.core.logger.Level
 
 
 class MyApplication : Application() {
-    override fun onCreate(){
+    override fun onCreate() {
         super.onCreate()
 
         startKoin {

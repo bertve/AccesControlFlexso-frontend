@@ -1,46 +1,52 @@
 package com.flexso.flexsame.ui.wallet
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.flexso.flexsame.models.Office
 import com.flexso.flexsame.models.RoleName
 import com.flexso.flexsame.models.User
 import com.flexso.flexsame.repos.KeyRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
-class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
+class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
     //user
     private lateinit var user: User
 
     //coroutines
     private val viewModelJob = SupervisorJob()
-    private val viewModelScope = CoroutineScope( viewModelJob + Dispatchers.Main)
+    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     //offices
-    var offices : MutableLiveData<List<Office>> = keyRepository.offices
-    var _filteredOffices : MutableLiveData<List<Office>> = MutableLiveData()
-    val filteredOffices : LiveData<List<Office>> = _filteredOffices
+    var offices: MutableLiveData<List<Office>> = keyRepository.offices
+    var _filteredOffices: MutableLiveData<List<Office>> = MutableLiveData()
+    val filteredOffices: LiveData<List<Office>> = _filteredOffices
 
-    fun filterOffices(filter : String?){
-        val sortedList : List<Office> = offices.value!!.sortedWith(
-            compareBy({ it.company.name }
-                ,{ it.address.country}
-                ,{ it.address.town}
-                ,{ it.address.postalCode}
-                ,{ it.address.street }
-                ,{ it.address.houseNumber}
+    fun filterOffices(filter: String?) {
+        val sortedList: List<Office> = offices.value!!.sortedWith(
+                compareBy({ it.company.name }
+                        , { it.address.country }
+                        , { it.address.town }
+                        , { it.address.postalCode }
+                        , { it.address.street }
+                        , { it.address.houseNumber }
                 ))
-        if( filter == null || filter.trim() == "" || filter.trim() == "All") {
+        if (filter == null || filter.trim() == "" || filter.trim() == "All") {
             this._filteredOffices.value = sortedList
 
-        }else{
+        } else {
             this._filteredOffices.value = sortedList.filter {
                 it.company.name == filter
 
             }
         }
     }
+
     private suspend fun initOffices() {
-            keyRepository.getOffices(user.userId)
+        keyRepository.getOffices(user.userId)
     }
 
     override fun onCleared() {
@@ -49,17 +55,17 @@ class WalletViewModel(private val keyRepository : KeyRepository) : ViewModel() {
     }
 
 
-    fun  setUser(current : User) {
+    fun setUser(current: User) {
         this.user = current
-        if(user.roles.any { r -> r.roleName == RoleName.ROLE_ADMIN }){
+        if (user.roles.any { r -> r.roleName == RoleName.ROLE_ADMIN }) {
             viewModelScope.launch {
                 initAdminOffices()
             }
-        }else if(user.roles.any {r -> r.roleName == RoleName.ROLE_COMPANY }){
+        } else if (user.roles.any { r -> r.roleName == RoleName.ROLE_COMPANY }) {
             viewModelScope.launch {
                 initCompanyOffices()
             }
-        }else{
+        } else {
             viewModelScope.launch {
                 initOffices()
             }

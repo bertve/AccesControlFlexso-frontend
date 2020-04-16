@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.flexso.flexsame.utils.Utilities
 
-class HostCardEmulatorService: HostApduService(){
+class HostCardEmulatorService : HostApduService() {
     override fun onDeactivated(reason: Int) {
         Log.d(TAG, "Deactivated: " + reason)
     }
@@ -28,7 +28,7 @@ class HostCardEmulatorService: HostApduService(){
             return Utilities.hexStringToByteArray(INS_NOT_SUPPORTED)
         }
 
-        if (hexCommandApdu.substring(10, 24) == AID)  {
+        if (hexCommandApdu.substring(10, 24) == AID) {
             return Utilities.hexStringToByteArray(STATUS_SUCCESS)
         } else {
             return Utilities.hexStringToByteArray(STATUS_FAILED)

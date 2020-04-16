@@ -10,10 +10,13 @@ import retrofit2.http.*
 interface AdminService {
     @GET("users/companies")
     fun getCompanyUsers(): Deferred<List<User>>
+
     @GET("offices")
-    fun getAllOffices():Deferred<List<Office>>
+    fun getAllOffices(): Deferred<List<Office>>
+
     @DELETE("users/{id}")
-    fun deleteCompany(  @Path("id") id:Long): Deferred<Boolean>
+    fun deleteCompany(@Path("id") id: Long): Deferred<Boolean>
+
     @POST("auth/company/signup")
     fun addCompany(@Body singUpRequestCompany: SignUpRequestCompany): Deferred<ApiResponse>
 
