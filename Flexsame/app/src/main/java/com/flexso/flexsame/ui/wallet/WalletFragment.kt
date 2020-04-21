@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -25,7 +27,7 @@ class WalletFragment : Fragment() {
     val viewModel: WalletViewModel by viewModel()
     lateinit var binding: WalletFragmentBinding
     lateinit var spinner: Spinner
-
+    lateinit var animToLeft : Animation
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -34,9 +36,20 @@ class WalletFragment : Fragment() {
 
         setupViewModel()
         setupCurrentUserAndOffice()
+        setupUI()
         setupRecyclerView()
         setupSpinner()
         return binding.root
+    }
+
+    private fun setupUI() {
+        this.animToLeft = AnimationUtils.loadAnimation(context, R.anim.slide_in_right)
+        binding.currentSelectedOffice.animation = animToLeft
+        binding.street.animation = animToLeft
+        binding.street.animation = animToLeft
+        binding.postalCodeCity.animation = animToLeft
+        binding.country.animation = animToLeft
+        binding.avatar.animation = animToLeft
     }
 
     private fun setupCurrentUserAndOffice() {
@@ -77,9 +90,16 @@ class WalletFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+
         val adapter = WalletAdapter(context!!, WalletItemListener { office ->
             viewModel.setCurrentOffice(office)
             binding.office = office
+            binding.currentSelectedOffice.startAnimation(animToLeft)
+            binding.street.startAnimation(animToLeft)
+            binding.street.startAnimation(animToLeft)
+            binding.postalCodeCity.startAnimation(animToLeft)
+            binding.country.startAnimation(animToLeft)
+            binding.avatar.startAnimation(animToLeft)
         })
 
         binding.walletList.adapter = adapter

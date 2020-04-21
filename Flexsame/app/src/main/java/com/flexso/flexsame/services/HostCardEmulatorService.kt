@@ -12,8 +12,12 @@ class HostCardEmulatorService : HostApduService() {
         Log.i("apdu", "Deactivated: " + reason)
     }
 
+
     override fun processCommandApdu(commandApdu: ByteArray?, extras: Bundle?): ByteArray {
         Log.i("apdu","apdu_process")
+        return "YEET".toByteArray().plus(Utilities.hexStringToByteArray(STATUS_SUCCESS))
+
+        /*
         if (commandApdu == null) {
             Log.i("apdu", "apdu null")
             return Utilities.hexStringToByteArray(STATUS_FAILED)
@@ -47,6 +51,8 @@ class HostCardEmulatorService : HostApduService() {
         } else {
             return Utilities.hexStringToByteArray(STATUS_FAILED)
         }
+        */
+
 
     }
 
@@ -55,7 +61,7 @@ class HostCardEmulatorService : HostApduService() {
         val STATUS_FAILED = "6F00"
         val CLA_NOT_SUPPORTED = "6E00"
         val INS_NOT_SUPPORTED = "6D00"
-        val AID = "F222222222"
+        val AID = "F0060504030201"
         val SELECT_INS = "A4"
         val DEFAULT_CLA = "00"
         val MIN_APDU_LENGTH = 12

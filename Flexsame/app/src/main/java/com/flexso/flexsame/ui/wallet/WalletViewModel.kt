@@ -1,5 +1,6 @@
 package com.flexso.flexsame.ui.wallet
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -84,6 +85,7 @@ class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
     }
 
     fun setCurrentOffice(office: Office) {
+        Log.i("current_office",office.toString())
         this.selectedOffice = office
         //make key...
     }

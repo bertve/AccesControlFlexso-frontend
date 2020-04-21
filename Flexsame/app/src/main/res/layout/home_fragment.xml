@@ -29,10 +29,12 @@
 
         <ImageView
             android:id="@+id/logo_flexso"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="350dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:contentDescription="logo flexso"
-            android:src="@drawable/full_logo"
+            android:src="@drawable/ic_flexsame_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

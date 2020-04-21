@@ -12,6 +12,8 @@
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" />
+    <uses-feature android:name="android.hardware.nfc.hce"
+        android:required="true" />
 
     <application
         android:name="com.flexso.flexsame.MyApplication"
@@ -29,7 +31,6 @@
             android:permission="android.permission.BIND_NFC_SERVICE">
             <intent-filter>
                 <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
-                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <meta-data
