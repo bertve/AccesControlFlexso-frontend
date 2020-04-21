@@ -3,9 +3,7 @@ package com.flexso.flexsame.ui.wallet
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.flexso.flexsame.models.Office
-import com.flexso.flexsame.models.RoleName
-import com.flexso.flexsame.models.User
+import com.flexso.flexsame.models.*
 import com.flexso.flexsame.repos.KeyRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +11,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
+    //current selected office
+    var selectedOffice : Office
+            = Office(0L, Company(0L,""),
+            Address("Select office","","before you","try","accessing the gate"))
+
     //user
     private lateinit var user: User
 
@@ -78,6 +81,11 @@ class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
 
     private suspend fun initAdminOffices() {
         keyRepository.getAllOffices()
+    }
+
+    fun setCurrentOffice(office: Office) {
+        this.selectedOffice = office
+        //make key...
     }
 
 

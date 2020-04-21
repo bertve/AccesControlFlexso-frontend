@@ -5,9 +5,9 @@ import com.airbnb.lottie.LottieAnimationView
 import com.flexso.flexsame.R
 import com.flexso.flexsame.models.Office
 
-class WalletItemListener(val clickListener: (itemId: Long) -> Unit) {
+class WalletItemListener(val clickListener: (office : Office) -> Unit) {
     fun onClick(v: View, o: Office) {
-        clickListener(o.officeId)
+        clickListener(o)
         val key = v.findViewById<LottieAnimationView>(R.id.key_img)
         key.playAnimation()
     }

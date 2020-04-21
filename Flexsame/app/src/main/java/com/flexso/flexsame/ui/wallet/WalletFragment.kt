@@ -12,7 +12,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.flexso.flexsame.R
+import com.flexso.flexsame.databinding.OfficeFragmentBindingImpl
 import com.flexso.flexsame.databinding.WalletFragmentBinding
+import com.flexso.flexsame.models.Address
+import com.flexso.flexsame.models.Company
+import com.flexso.flexsame.models.Office
 import com.flexso.flexsame.utils.DefaultItemDecorator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -29,9 +33,16 @@ class WalletFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.wallet_fragment, container, false)
 
         setupViewModel()
+        setupCurrentUserAndOffice()
         setupRecyclerView()
         setupSpinner()
         return binding.root
+    }
+
+    private fun setupCurrentUserAndOffice() {
+        val args = WalletFragmentArgs.fromBundle(arguments!!)
+        viewModel.setUser(args.currentUser)
+        binding.office = viewModel.selectedOffice
     }
 
     private fun setupSpinner() {
@@ -66,8 +77,9 @@ class WalletFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        val adapter = WalletAdapter(context!!, WalletItemListener { officeId ->
-            Toast.makeText(context, "pushed officeId: ${officeId}", Toast.LENGTH_LONG).show()
+        val adapter = WalletAdapter(context!!, WalletItemListener { office ->
+            viewModel.setCurrentOffice(office)
+            binding.office = office
         })
 
         binding.walletList.adapter = adapter
@@ -85,9 +97,6 @@ class WalletFragment : Fragment() {
     private fun setupViewModel() {
         binding.lifecycleOwner = this
         binding.walletViewModel = viewModel
-        val args = WalletFragmentArgs.fromBundle(arguments!!)
-
-        viewModel.setUser(args.currentUser)
     }
 
 
