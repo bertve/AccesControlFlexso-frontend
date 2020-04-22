@@ -142,10 +142,8 @@ class OfficeFragment : Fragment() {
         viewModel.authorizedPersons.observe(
                 viewLifecycleOwner,
                 Observer {
-                    if (adapter.mListRef == null) {
-                        adapter.mListRef = it
-                    }
-                    adapter.submitList(it)
+                    adapter.mListRef = it
+                    adapter.submitList(it.sortedBy { it.lastName })
                 }
         )
 
@@ -162,10 +160,8 @@ class OfficeFragment : Fragment() {
 
         viewModel.unAuthorizedPersons.observe(
                 viewLifecycleOwner, Observer {
-            if (unAuthorizedPersonListAdapter.mListRef == null) {
                 unAuthorizedPersonListAdapter.mListRef = it
-            }
-            unAuthorizedPersonListAdapter.submitList(it)
+                unAuthorizedPersonListAdapter.submitList(it.sortedBy { it.lastName })
         }
 
         )
@@ -209,6 +205,7 @@ class OfficeFragment : Fragment() {
 
     private fun switchFab() {
         fab.isExpanded = !fab.isExpanded
+        binding.filter.visibility = if(fab.isExpanded) View.GONE else View.VISIBLE
         (binding.authorizedPersonList.adapter as AuthorizedPersonListAdapter).isCLickable = !fab.isExpanded
     }
 

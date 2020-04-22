@@ -165,10 +165,8 @@ class CompanyFragment : Fragment(), Validator.ValidationListener {
         viewModel.offices.observe(
                 viewLifecycleOwner,
                 Observer {
-                    if (adapter.mListRef == null) {
-                        adapter.mListRef = it
-                    }
-                    adapter.submitList(it)
+                    adapter.mListRef = it
+                    adapter.submitList(it.sortedBy { it.streetHouseNumberString() })
                 }
         )
 

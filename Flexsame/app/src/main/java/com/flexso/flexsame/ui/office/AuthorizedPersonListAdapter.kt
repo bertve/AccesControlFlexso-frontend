@@ -111,11 +111,7 @@ class AuthorizedPersonListAdapter(val context: Context, val officeViewModel: Off
                 val charString = charSequence.toString()
 
                 if (charString.isEmpty()) {
-
-                    mFilteredList = mListRef?.sortedWith(
-                            compareBy({ it.lastName },
-                                    { it.firstName }
-                            ))
+                    mFilteredList = mListRef
                 } else {
                     mListRef?.let {
                         val filteredList = arrayListOf<User>()
@@ -131,10 +127,7 @@ class AuthorizedPersonListAdapter(val context: Context, val officeViewModel: Off
                     }
                 }
                 val filterResults = FilterResults()
-                filterResults.values = mFilteredList?.sortedWith(
-                        compareBy({ it.lastName },
-                                { it.firstName }
-                        ))
+                filterResults.values = mFilteredList?.sortedBy { it.lastName }
                 return filterResults
             }
 

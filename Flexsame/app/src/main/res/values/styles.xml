@@ -23,15 +23,12 @@
     </style>
 
 
-
     <style name="myFab" parent="@style/Widget.MaterialComponents.FloatingActionButton">
         <item name="android:color">@color/colorPrimary</item>
     </style>
     <style name="OpenSansTextViewStyle" parent="android:Widget.Material.TextView">
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
-
-
 
     <style name="OpenSansTitleStyle" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:fontFamily">@font/open_sans</item>
@@ -57,10 +54,7 @@
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:fontFamily">@font/open_sans</item>
         <item name="android:textStyle">bold</item>
-
+        <item name="android:textSize">18sp</item>
     </style>
-
-
-
 
 </resources>

@@ -100,6 +100,7 @@ class CompanyListAdapter(val context: Context, val adminViewModel: AdminViewMode
             return oldItem == newItem
         }
 
+
     }
 
     class CompanyListItemListener(val clickListener: (user: User) -> Unit) {
@@ -115,9 +116,7 @@ class CompanyListAdapter(val context: Context, val adminViewModel: AdminViewMode
                 val charString = charSequence.toString()
 
                 if (charString.isEmpty()) {
-                    mFilteredList = mListRef?.sortedWith(
-                            compareBy({ it.company!!.name }
-                            ))
+                    mFilteredList = mListRef
                 } else {
                     mListRef?.let {
                         val filteredList = arrayListOf<User>()
@@ -133,9 +132,9 @@ class CompanyListAdapter(val context: Context, val adminViewModel: AdminViewMode
                     }
                 }
                 val filterResults = FilterResults()
-                filterResults.values = mFilteredList?.sortedWith(
-                        compareBy({ it.company!!.name }
-                        ))
+                filterResults.values = mFilteredList?.sortedBy {
+                    it.company!!.name
+                }
                 return filterResults
             }
 

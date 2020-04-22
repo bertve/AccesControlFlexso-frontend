@@ -171,11 +171,8 @@ class AdminFragment : Fragment(), Validator.ValidationListener {
         viewModel.users.observe(
                 viewLifecycleOwner,
                 Observer {
-                    Log.i("bug", it.toString())
-                    if (adapter.mListRef == null) {
-                        adapter.mListRef = it
-                    }
-                    adapter.submitList(it)
+                    adapter.mListRef = it
+                    adapter.submitList(it.sortedBy { it.company!!.name })
                 }
         )
 

@@ -44,7 +44,6 @@ class AdminViewModel(private val adminRepository: AdminRepository) : ViewModel()
             adminRepository.getCompanyUsers()
             _users = adminRepository._users
         }
-
     }
 
     fun addCompany(signUpRequestCompany: SignUpRequestCompany) {

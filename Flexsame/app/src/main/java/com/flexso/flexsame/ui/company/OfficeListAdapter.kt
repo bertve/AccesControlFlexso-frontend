@@ -115,13 +115,7 @@ class OfficeListAdapter(val context: Context, val companyViewModel: CompanyViewM
 
                 if (charString.isEmpty()) {
 
-                    mFilteredList = mListRef?.sortedWith(
-                            compareBy({ it.address.street }
-                                    , { it.address.houseNumber }
-                                    , { it.address.postalCode }
-                                    , { it.address.town }
-                                    , { it.address.country }
-                            ))
+                    mFilteredList = mListRef
                 } else {
                     mListRef?.let {
                         val filteredList = arrayListOf<Office>()
@@ -137,13 +131,9 @@ class OfficeListAdapter(val context: Context, val companyViewModel: CompanyViewM
                     }
                 }
                 val filterResults = FilterResults()
-                filterResults.values = mFilteredList?.sortedWith(
-                        compareBy({ it.address.street }
-                                , { it.address.houseNumber }
-                                , { it.address.postalCode }
-                                , { it.address.town }
-                                , { it.address.country }
-                        ))
+                filterResults.values = mFilteredList?.sortedBy {
+                    it.streetHouseNumberString()
+                }
                 return filterResults
             }
 
