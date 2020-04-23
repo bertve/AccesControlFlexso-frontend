@@ -66,8 +66,9 @@ class LoginActivity : AppCompatActivity() {
                 .build()
         if (goldfinger.canAuthenticate() && !loginEmail.isNullOrEmpty() && !loginPassword.isNullOrEmpty() && settingsFingerprint && onStartUpConnection) {
             params = Goldfinger.PromptParams.Builder(this)
-                    .title("fingerprint authentication")
-                    .description("quick login for " + loginEmail)
+                    .title("Fingerprint authentication")
+                    .description("Quick login for " + loginEmail)
+
                     .negativeButtonText("Other account")
                     .build()
 

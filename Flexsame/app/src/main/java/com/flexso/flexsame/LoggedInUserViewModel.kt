@@ -1,5 +1,7 @@
 package com.flexso.flexsame
 
+import android.net.ConnectivityManager
+import android.net.Network
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class LoggedInUserViewModel(private val loggedInUserRepository: LoggedInUserRepository) : ViewModel() {
+class LoggedInUserViewModel(private val loggedInUserRepository: LoggedInUserRepository,private val connectivityManager: ConnectivityManager) : ViewModel() {
     var email: String = ""
     var token: String = ""
     var password: String = ""
@@ -52,9 +54,25 @@ class LoggedInUserViewModel(private val loggedInUserRepository: LoggedInUserRepo
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
+    //connection
+    private val _connection = MutableLiveData<Boolean>()
+
+    val connection: LiveData<Boolean>
+        get() = _connection
+
+    fun checkConnectivity() {
+        val networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onLost(network: Network?) {
+                _connection.postValue(false)
+            }
+
+            override fun onAvailable(network: Network?) {
+                _connection.postValue(true)
+            }
+        }
+        val onStartUpConnection = connectivityManager.activeNetworkInfo?.isConnectedOrConnecting == true
+        _connection.postValue(onStartUpConnection)
+        connectivityManager.registerDefaultNetworkCallback(networkCallback)
     }
 
 

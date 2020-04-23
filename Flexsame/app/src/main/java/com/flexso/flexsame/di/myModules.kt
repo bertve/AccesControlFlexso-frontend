@@ -98,9 +98,9 @@ val myModule: Module = module {
     viewModel { HomeViewModel(get()) }
     viewModel { TestNFCViewModel() }
     viewModel { WalletViewModel(get()) }
-    viewModel { LoginViewModel(get(), get()) }
+    viewModel { LoginViewModel(get(),get()) }
     viewModel { RegisterViewModel(get()) }
-    viewModel { LoggedInUserViewModel(get()) }
+    viewModel { LoggedInUserViewModel(get(),get()) }
     viewModel { SettingsViewModel() }
     viewModel { AdminViewModel(get()) }
     viewModel { CompanyViewModel(get()) }

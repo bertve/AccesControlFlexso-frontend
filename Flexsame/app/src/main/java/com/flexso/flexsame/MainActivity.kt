@@ -1,16 +1,20 @@
 package com.flexso.flexsame
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -41,6 +45,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        loggedInUserViewModel.checkConnectivity()
         setupNavigation()
         setLoggedInUser()
         setupListeners()
@@ -64,10 +69,47 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
 
         loggedInUserViewModel.currentUserSucces.observe(this, Observer {
-            if (!it) {
-                logout()
+            //no succes (token expired | no conn)
+            if(!it){
+                //token expired
+                if (checkConnection().value!!) {
+                    Log.i("bug","token expired")
+                    logout()
+                }
+                else {
+                    //no connection
+                    val builder = AlertDialog.Builder(this)
+                            .apply {
+                                setMessage("There is no connection!\n" +
+                                        "Please turn ON device connection\n" +
+                                        "or log out." )
+
+                                setNegativeButton(R.string.logout, DialogInterface.OnClickListener { _, _ ->
+                                    Log.i("bug","negativeButton actived")
+                                    logout()
+                                })
+                                setCancelable(false)
+                                setOnDismissListener {
+                                    setLoggedInUser()
+                                }
+                            }
+                    val dialog = builder.create()
+                    dialog.show()
+                    loggedInUserViewModel.connection.observe(this, Observer {
+                        if (it){
+                            Log.i("bug","diss")
+                            dialog.dismiss()
+                        }
+                    })
+                }
             }
         })
+
+
+    }
+
+    fun checkConnection(): LiveData<Boolean> {
+        return loggedInUserViewModel.connection
     }
 
     override fun onResume() {
@@ -75,7 +117,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         loggedInUserViewModel.getCurrentUser()
     }
 
-    private fun setLoggedInUser() {
+    fun setLoggedInUser() {
         val intent: Intent = intent
         val token = intent.getStringExtra("token").orEmpty()
         val email = intent.getStringExtra("email").orEmpty()
@@ -172,28 +214,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun logout() {
-        val sharedPreferences = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
+        setSharedPreferencesGoldfinger()
+        deleteLoginFromSharedPreferences()
         val login = Intent(this, LoginActivity::class.java)
         login.putExtra("message", "Succesfully logged out")
+        startActivity(login)
+        finish()
+    }
 
-        if (user.userId != -1L) {
-            sharedPreferences.edit()
-                    .putString("goldfinger_email", user.email)
-                    .putString("goldfinger_password", user.password)
-                    .commit()
-        }
+    private fun deleteLoginFromSharedPreferences() {
+        val sharedPreferences = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
         sharedPreferences.edit()
                 .remove("LOGIN_EMAIL")
                 .remove("LOGIN_TOKEN")
                 .remove("LOGIN_PASSWORD")
                 .commit()
-
-        startActivity(login)
-        finish()
     }
 
-    override fun onStop() {
-        super.onStop()
+    private fun setSharedPreferencesGoldfinger() {
         val sharedPreferences = getSharedPreferences("PREFERENCES", android.content.Context.MODE_PRIVATE)
         if (user.userId != -1L) {
             sharedPreferences.edit()
@@ -202,4 +240,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commit()
         }
     }
+
+    override fun onStop() {
+        super.onStop()
+        setSharedPreferencesGoldfinger()
+    }
+
 }

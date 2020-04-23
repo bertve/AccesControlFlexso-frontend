@@ -69,13 +69,14 @@ class RegisterActivity : AppCompatActivity(), Validator.ValidationListener {
 
         //observes if request was succesfull
         viewModel.apiResponse.observe(this, Observer {
-            if (it.success && it.message != "") {
+            if (it.success) {
                 var login = Intent(this,
                         LoginActivity::class.java)
                 login.putExtra("email", binding.email.text.toString())
                 login.putExtra("password", binding.password.text.toString())
-                login.putExtra("message", it.message)
                 startActivity(login)
+            }else{
+                Toast.makeText(this,"Registration failed",Toast.LENGTH_SHORT)
             }
         })
 
