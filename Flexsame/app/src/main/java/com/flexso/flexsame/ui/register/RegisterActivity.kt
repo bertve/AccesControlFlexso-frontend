@@ -32,7 +32,7 @@ class RegisterActivity : AppCompatActivity(), Validator.ValidationListener {
     @Email(message = "Must be an email address")
     private lateinit var email: EditText
     @NotEmpty(message = "Password is required")
-    @Password(min = 6, scheme = Password.Scheme.ALPHA)
+    @Password(min = 6)
     private lateinit var password: EditText
     @ConfirmPassword
     private lateinit var password_confirm: EditText
