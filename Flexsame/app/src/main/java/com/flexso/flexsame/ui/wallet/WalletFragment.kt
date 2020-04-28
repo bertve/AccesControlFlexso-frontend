@@ -39,7 +39,20 @@ class WalletFragment : Fragment() {
         setupUI()
         setupRecyclerView()
         setupSpinner()
+        setupObservers()
         return binding.root
+    }
+
+    private fun setupObservers() {
+        viewModel.selectedOffice.observe(viewLifecycleOwner, Observer {
+            binding.office = it
+            binding.currentSelectedOffice.startAnimation(animToLeft)
+            binding.street.startAnimation(animToLeft)
+            binding.street.startAnimation(animToLeft)
+            binding.postalCodeCity.startAnimation(animToLeft)
+            binding.country.startAnimation(animToLeft)
+            binding.avatar.startAnimation(animToLeft)
+        })
     }
 
     private fun setupUI() {
@@ -55,7 +68,7 @@ class WalletFragment : Fragment() {
     private fun setupCurrentUserAndOffice() {
         val args = WalletFragmentArgs.fromBundle(arguments!!)
         viewModel.setUser(args.currentUser)
-        binding.office = viewModel.selectedOffice
+        binding.office = viewModel.selectedOffice.value
     }
 
     private fun setupSpinner() {
@@ -93,13 +106,6 @@ class WalletFragment : Fragment() {
 
         val adapter = WalletAdapter(context!!, WalletItemListener { office ->
             viewModel.setCurrentOffice(office)
-            binding.office = office
-            binding.currentSelectedOffice.startAnimation(animToLeft)
-            binding.street.startAnimation(animToLeft)
-            binding.street.startAnimation(animToLeft)
-            binding.postalCodeCity.startAnimation(animToLeft)
-            binding.country.startAnimation(animToLeft)
-            binding.avatar.startAnimation(animToLeft)
         })
 
         binding.walletList.adapter = adapter
@@ -118,6 +124,4 @@ class WalletFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.walletViewModel = viewModel
     }
-
-
 }

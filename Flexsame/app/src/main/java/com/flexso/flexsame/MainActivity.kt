@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -47,9 +48,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         loggedInUserViewModel.checkConnectivity()
+        setDeviceIdInCurrentKey()
         setupNavigation()
         setLoggedInUser()
         setupListeners()
+    }
+
+    private fun setDeviceIdInCurrentKey() {
+        CurrentKey.deviceId = Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
     }
 
     private fun setupListeners() {

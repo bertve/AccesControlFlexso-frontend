@@ -11,6 +11,5 @@ class WalletItemListener(val clickListener: (office : Office) -> Unit) {
         clickListener(o)
         val key = v.findViewById<LottieAnimationView>(R.id.key_img)
         key.playAnimation()
-        CurrentKey.officeId = o.officeId
     }
 }

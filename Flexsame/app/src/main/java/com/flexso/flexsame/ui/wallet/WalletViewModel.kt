@@ -6,16 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.flexso.flexsame.models.*
 import com.flexso.flexsame.repos.KeyRepository
+import com.flexso.flexsame.services.CurrentKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
+
     //current selected office
-    var selectedOffice : Office
-            = Office(0L, Company(0L,""),
-            Address("Select office","","before you","try","accessing the gate"))
+   private var _selectedOffice : MutableLiveData<Office> = MutableLiveData()
+   val selectedOffice : LiveData<Office> get() = _selectedOffice
 
     //user
     private lateinit var user: User
@@ -64,14 +65,17 @@ class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
         if (user.roles.any { r -> r.roleName == RoleName.ROLE_ADMIN }) {
             viewModelScope.launch {
                 initAdminOffices()
+                initSelectedOffice()
             }
         } else if (user.roles.any { r -> r.roleName == RoleName.ROLE_COMPANY }) {
             viewModelScope.launch {
                 initCompanyOffices()
+                initSelectedOffice()
             }
         } else {
             viewModelScope.launch {
                 initOffices()
+                initSelectedOffice()
             }
         }
     }
@@ -86,9 +90,22 @@ class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
 
     fun setCurrentOffice(office: Office) {
         Log.i("current_office",office.toString())
-        this.selectedOffice = office
-        //make key...
+        this._selectedOffice.value = office
+        CurrentKey.officeId = office.officeId
+    }
+    private fun initSelectedOffice(){
+        if (CurrentKey.officeId != -1L){
+
+            var o : Office? = offices.value!!.find { o -> o.officeId == CurrentKey.officeId }
+            if (o != null){
+                this._selectedOffice.postValue(o)
+            }
+        }
     }
 
+    init {
+        this._selectedOffice.value = Office(0L, Company(0L,""),
+                Address("Select office","","before you","try","accessing the gate"))
+    }
 
 }
