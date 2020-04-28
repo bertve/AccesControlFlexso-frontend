@@ -24,6 +24,7 @@ import androidx.navigation.ui.NavigationUI
 import com.flexso.flexsame.databinding.ActivityMainBinding
 import com.flexso.flexsame.models.RoleName
 import com.flexso.flexsame.models.User
+import com.flexso.flexsame.services.CurrentKey
 import com.flexso.flexsame.ui.dialogs.LogoutDialog
 import com.flexso.flexsame.ui.home.HomeFragmentDirections
 import com.flexso.flexsame.ui.login.LoginActivity
@@ -65,6 +66,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     RoleName.ROLE_ADMIN -> R.menu.navdrawer_admin
                 }
                 navView.inflateMenu(menu)
+                //set currentkey userid
+                CurrentKey.userId = it.userId
             }
         })
 
