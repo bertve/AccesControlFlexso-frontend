@@ -202,10 +202,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.walletFragment -> {
                 navController.navigate(HomeFragmentDirections.actionHomeFragmentToWalletFragment(user))
             }
-            R.id.testNFCFragment -> {
-                navController.navigate(R.id.action_homeFragment_to_testNFCFragment)
-
-            }
             R.id.accountFragment -> {
                 navController.navigate(R.id.accountFragment)
             }

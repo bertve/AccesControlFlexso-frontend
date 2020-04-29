@@ -13,7 +13,6 @@ import com.flexso.flexsame.ui.login.LoginViewModel
 import com.flexso.flexsame.ui.office.OfficeViewModel
 import com.flexso.flexsame.ui.register.RegisterViewModel
 import com.flexso.flexsame.ui.settings.SettingsViewModel
-import com.flexso.flexsame.ui.testNFC.TestNFCViewModel
 import com.flexso.flexsame.ui.wallet.WalletViewModel
 import com.flexso.flexsame.utils.BASE_URL
 import com.google.gson.GsonBuilder
@@ -96,7 +95,6 @@ val myModule: Module = module {
 
     //viewmodels
     viewModel { HomeViewModel(get()) }
-    viewModel { TestNFCViewModel() }
     viewModel { WalletViewModel(get()) }
     viewModel { LoginViewModel(get(),get()) }
     viewModel { RegisterViewModel(get()) }

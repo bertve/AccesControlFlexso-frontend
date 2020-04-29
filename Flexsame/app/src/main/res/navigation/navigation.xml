@@ -24,13 +24,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_homeFragment_to_testNFCFragment"
-            app:destination="@id/testNFCFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
             android:id="@+id/action_homeFragment_to_setttingsFragment"
             app:destination="@id/settingsFragment" />
         <action
@@ -41,19 +34,11 @@
             app:destination="@id/companyFragment" />
     </fragment>
     <fragment
-        android:id="@+id/testNFCFragment"
-        android:name="com.flexso.flexsame.ui.testNFC.TestNFCFragment"
-        android:label="TestNFC"
-        tools:layout="@layout/test_nfc_fragment" />
-    <fragment
         android:id="@+id/accountFragment"
         android:name="com.flexso.flexsame.ui.account.AccountFragment"
         android:label="Account"
         tools:layout="@layout/account_fragment" />
-    <activity
-        android:id="@+id/receiver"
-        android:name="com.flexso.flexsame.ui.testNFC.ReceiverActivity"
-        android:label="Receiver" />
+
     <fragment
         android:id="@+id/walletFragment"
         android:name="com.flexso.flexsame.ui.wallet.WalletFragment"
