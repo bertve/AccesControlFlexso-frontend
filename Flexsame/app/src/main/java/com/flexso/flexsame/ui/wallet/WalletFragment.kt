@@ -19,6 +19,7 @@ import com.flexso.flexsame.databinding.WalletFragmentBinding
 import com.flexso.flexsame.models.Address
 import com.flexso.flexsame.models.Company
 import com.flexso.flexsame.models.Office
+import com.flexso.flexsame.services.CurrentKey
 import com.flexso.flexsame.utils.DefaultItemDecorator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -52,6 +53,12 @@ class WalletFragment : Fragment() {
             binding.postalCodeCity.startAnimation(animToLeft)
             binding.country.startAnimation(animToLeft)
             binding.avatar.startAnimation(animToLeft)
+        })
+
+        viewModel.keyToken.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                CurrentKey.currentKeyToken = it
+            }
         })
     }
 

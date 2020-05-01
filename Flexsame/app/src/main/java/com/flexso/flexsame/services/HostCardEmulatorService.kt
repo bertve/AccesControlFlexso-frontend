@@ -10,19 +10,18 @@ import java.nio.ByteBuffer
 class HostCardEmulatorService : HostApduService() {
 
     override fun onDeactivated(reason: Int) {
-        Log.d(TAG, "Deactivated: " + reason)
+        Log.i(TAG, "Deactivated: " + reason)
     }
 
     override fun processCommandApdu(commandApdu: ByteArray?, extras: Bundle?): ByteArray {
-        Log.d(TAG, "APDU process command")
+        Log.i(TAG, "APDU process command:")
 
         if (commandApdu == null) {
             return ByteArrayHexUtil.hexStringToByteArray(STATUS_FAILED)
         }
-        Log.i(TAG, commandApdu.toString())
 
         val hexCommandApdu = ByteArrayHexUtil.toHex(commandApdu)
-
+        Log.i(TAG, hexCommandApdu)
 
         if (hexCommandApdu.length < MIN_APDU_LENGTH) {
             return ByteArrayHexUtil.hexStringToByteArray(STATUS_FAILED)
@@ -37,20 +36,26 @@ class HostCardEmulatorService : HostApduService() {
         }
 
         if (hexCommandApdu.substring(10, 24) == AID) {
-            // we wont return success 90 00, we respond with our uid
-            // return ByteArrayHexUtil.hexStringToByteArray(STATUS_SUCCESS)
-            //val res =  CurrentKey.userId.toString().toByteArray().plus(ByteArrayHexUtil.hexStringToByteArray(STATUS_SUCCESS))
             var currentUserId = CurrentKey.userId.toString()
             var currentOfficeId = CurrentKey.officeId.toString()
+            var currentDeviceId = CurrentKey.deviceId
+            var currentKeyToken = CurrentKey.currentKeyToken
 
             val res =  currentUserId.toByteArray()
                     .plus(";".toByteArray())
                     .plus(currentOfficeId.toByteArray())
+                    .plus(";".toByteArray())
+                    .plus(currentDeviceId.toByteArray())
+                    .plus(";".toByteArray())
+                    .plus(currentKeyToken.toByteArray())
                     .plus(ByteArrayHexUtil.hexStringToByteArray(STATUS_SUCCESS))
 
-            Log.i(TAG, "userId = $currentUserId ; officeId = $currentOfficeId")
+            Log.i(TAG, "SENDING RESPONSE APDU:")
+            Log.i(TAG, "userId = $currentUserId ; officeId = $currentOfficeId; deviceId = $currentDeviceId;" +
+                    " token = $currentKeyToken")
             return res
         } else {
+            Log.i(TAG, "FAILED RESPONSE APDU")
             return ByteArrayHexUtil.hexStringToByteArray(STATUS_FAILED)
         }
     }

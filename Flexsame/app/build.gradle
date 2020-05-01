@@ -109,4 +109,5 @@ dependencies {
     implementation 'co.infinum:goldfinger:2.0.0'
     implementation 'co.infinum:goldfinger-rx:2.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
 }

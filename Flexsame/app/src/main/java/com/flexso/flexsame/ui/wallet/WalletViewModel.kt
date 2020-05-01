@@ -14,6 +14,10 @@ import kotlinx.coroutines.launch
 
 class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
 
+    //keyToken
+    private var _keyToken : MutableLiveData<String> = keyRepository.keyToken
+    val keyToken : LiveData<String> get() = _keyToken
+
     //current selected office
    private var _selectedOffice : MutableLiveData<Office> = MutableLiveData()
    val selectedOffice : LiveData<Office> get() = _selectedOffice
@@ -92,7 +96,15 @@ class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
         Log.i("current_office",office.toString())
         this._selectedOffice.value = office
         CurrentKey.officeId = office.officeId
+        this.generateKey()
     }
+
+    private fun generateKey() {
+        viewModelScope.launch {
+            keyRepository.generateKey()
+        }
+    }
+
     private fun initSelectedOffice(){
         if (CurrentKey.officeId != -1L){
 
@@ -107,5 +119,4 @@ class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
         this._selectedOffice.value = Office(0L, Company(0L,""),
                 Address("Select office","","before you","try","accessing the gate"))
     }
-
 }
