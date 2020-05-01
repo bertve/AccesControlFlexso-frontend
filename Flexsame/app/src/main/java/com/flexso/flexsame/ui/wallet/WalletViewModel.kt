@@ -106,7 +106,7 @@ class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
     }
 
     private fun initSelectedOffice(){
-        if (CurrentKey.officeId != -1L){
+        if (CurrentKey.officeId != -1L && !CurrentKey.currentKeyToken.isNullOrEmpty()){
 
             var o : Office? = offices.value!!.find { o -> o.officeId == CurrentKey.officeId }
             if (o != null){
