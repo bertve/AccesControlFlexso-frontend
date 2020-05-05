@@ -4,25 +4,48 @@ this repository contains the frontend of an internship project. It's a wallet ap
 ### Prerequisites
 
 * NFC support
-* Android Beam
 
 ## Built With
 
 * [Gradle](https://gradle.org//) - Dependency Management
 
 ## Features
+USER
 - Login 
-- View menu of multiple office buildings you've got acces to
-- Acces to multiple office buildings 
+- Register
+- Wallet
+- Update account
+- Fingerprint authentication
+- Settings
+
+COMPANY
+- USER features (no register)
+- Update company
+- CRUD offices
+- De/authorize users
+
+ADMIN
+- COMPANY features (no register)
+- CRUD companies
+
+## Demo
+
+* [Watch here](https://www.youtube.com/watch?v=2uZ_ksTwxjc&feature=share)
 
 ## Screenshots
 
-[<img src="/readme/Wallabag%20Reading%20List.png" align="left"
+USER
+
+[<img src="/readme/user/login.png" align="left"
 width="200"
-    hspace="10" vspace="10">](/readme/Wallabag%20Reading%20List.png)
-[<img src="/readme/Wallabag%20Article%20View.png" align="center"
+    hspace="10" vspace="10">](/readme/user/login.png)
+[<img src="/readme/user/register.png" align="center"
 width="200"
-    hspace="10" vspace="10">](/readme/Wallabag%20Article%20View.png)
+    hspace="10" vspace="10">](/readme/user/register.png)
+    
+COMPANY
+
+ADMIN
 
 ## Permissions
 
@@ -39,4 +62,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* [nfc-kotlin](https://github.com/jetruby/nfc-kotlin-example)
+* [Example HCE with PN532 module](https://github.com/Lexycon/android-pn532-hce)
