@@ -63,6 +63,7 @@ width="200"
 [<img src="/readme/user/settings.png" align="left"
 width="200"
     hspace="10" vspace="10">](/readme/user/settings.png)
+    
      
 COMPANY
 
@@ -97,6 +98,7 @@ width="200"
 [<img src="/readme/company/edit_office_address.png" align="left"
 width="200"
     hspace="10" vspace="10">](/readme/company/edit_office_address.png)
+    
  
 ADMIN
 
