@@ -13,6 +13,7 @@ this repository contains the frontend of an internship project. It's a wallet ap
 * [Gradle](https://gradle.org//) - Dependency Management
 
 ## Features
+
 USER
 - Login 
 - Register
@@ -68,10 +69,6 @@ ADMIN
 
 * [Bert Van Eeckhoutte](https://github.com/bertve)
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
 ## Acknowledgments
 
 ### Exampe code
@@ -84,3 +81,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 - [Saripaar - Form validation](https://github.com/ragunathjawahar/android-saripaar)
 - [Lottie - Animation](https://github.com/airbnb/lottie-android)
 - [Gson - JSON serialization/deserialization](https://github.com/google/gson)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
