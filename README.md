@@ -34,7 +34,7 @@ ADMIN
 
 ## Screenshots
 
-- USER
+- USER\
 
 [<img src="/readme/user/login.png" align="left"
 width="200"
@@ -56,17 +56,17 @@ width="200"
 width="200"
     hspace="10" vspace="10">](/readme/user/wallet.png)
 
-[<img src="/readme/user/account_update.png" align="center"
+[<img src="/readme/user/account_update.png" align="left"
 width="200"
     hspace="10" vspace="10">](/readme/user/account_update.png)
      
-- COMPANY
+- COMPANY\
 
 [<img src="/readme/company/nav_company.png" align="left"
 width="200"
     hspace="10" vspace="10">](/readme/company/nav_company.png)
     
-[<img src="/readme/company/office_list.png" align="center"
+[<img src="/readme/company/office_list.png" align="left"
 width="200"
     hspace="10" vspace="10">](/readme/company/office_list.png)
     
@@ -94,7 +94,7 @@ width="200"
 width="200"
     hspace="10" vspace="10">](/readme/company/edit_office_address.png)
     
-- ADMIN
+- ADMIN\
 
 [<img src="/readme/admin/nav_admin.png" align="left"
 width="200"
