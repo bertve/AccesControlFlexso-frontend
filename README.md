@@ -16,11 +16,13 @@ USER
 - Wallet
 - Update account
 - Fingerprint authentication
+
 COMPANY
 - USER features (no register)
 - Update company
 - CRUD offices
 - De/authorize users
+
 ADMIN
 - COMPANY features (no register)
 - CRUD companies
