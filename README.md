@@ -27,6 +27,10 @@ ADMIN
 - COMPANY features (no register)
 - CRUD companies
 
+## demo
+
+* [Watch here](https://www.youtube.com/watch?v=2uZ_ksTwxjc&feature=share)
+
 ## Screenshots
 
 [<img src="/readme/Wallabag%20Reading%20List.png" align="left"
