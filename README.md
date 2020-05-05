@@ -53,7 +53,7 @@ ADMIN
 
 | | | 
 |:-------------------------:|:-------------------------:|
-|<img width="200" src="/readme/admin/nav_admin.png"> |  <img width="200" alt="" src="/readme/admin/company_list.pn">|
+|<img width="200" src="/readme/admin/nav_admin.png"> |  <img width="200" alt="" src="/readme/admin/company_list.png">|
 |<img width="200" alt="" src="/readme/admin/company_list_add.png">  |  <img width="200" alt="" src="/readme/admin/company_list_delete.png">|
 
 ## Permissions
