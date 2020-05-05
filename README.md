@@ -34,7 +34,7 @@ ADMIN
 
 ## Screenshots
 
-USER
+- USER
 
 [<img src="/readme/user/login.png" align="left"
 width="200"
@@ -60,7 +60,7 @@ width="200"
 width="200"
     hspace="10" vspace="10">](/readme/user/account_update.png)
      
-COMPANY
+- COMPANY
 
 [<img src="/readme/company/nav_company.png" align="left"
 width="200"
@@ -94,8 +94,7 @@ width="200"
 width="200"
     hspace="10" vspace="10">](/readme/company/edit_office_address.png)
     
- 
-ADMIN
+- ADMIN
 
 [<img src="/readme/admin/nav_admin.png" align="left"
 width="200"
