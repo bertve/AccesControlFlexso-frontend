@@ -35,85 +35,26 @@ ADMIN
 ## Screenshots
 
 - USER
-<br/>
 
-[<img src="/readme/user/login.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/user/login.png)
-    
-[<img src="/readme/user/register.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/user/register.png)
-    
-[<img src="/readme/user/home.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/user/home.png)
-
-[<img src="/readme/user/nav_user.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/user/nav_user.png)
-
-[<img src="/readme/user/wallet.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/user/wallet.png)
-
-[<img src="/readme/user/account_update.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/user/account_update.png)
+| | | |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|<img width="200" src="/readme/user/login.png"> |  <img width="200" alt="" src="/readme/user/register.png">|<img width="200" alt="" src="/readme/user/home.png">|
+|<img width="200" alt="" src="/readme/user/nav_user.png">  |  <img width="200" alt="" src="/readme/user/wallet.png">|<img width="200" alt="" src="/readme/user/account_update.png">|
      
 - COMPANY
-<br/>
 
-[<img src="/readme/company/nav_company.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/company/nav_company.png)
-    
-[<img src="/readme/company/office_list.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/company/office_list.png)
-    
-[<img src="/readme/company/office_list_add.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/company/office_list_add.png)
-
-[<img src="/readme/company/office_list_delete.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/company/office_list_delete.png)
-    
-[<img src="/readme/company/authorized_person_list.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/company/authorized_person_list.png)
-    
-[<img src="/readme/company/authorized_person_list_add.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/company/authorized_person_list_add.png)
-    
-[<img src="/readme/company/authorized_person_list_delete.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/company/authorized_person_list_delete.png)
-    
-[<img src="/readme/company/edit_office_address.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/company/edit_office_address.png)
+| | | |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|<img width="200" src="/readme/company/nav_company.png"> |  <img width="200" alt="" src="/readme/company/office_list.png">|<img width="200" alt="" src="/readme/company/office_list_add.png">|
+|<img width="200" alt="" src="/readme/company/office_list_delete.png">  |  <img width="200" alt="" src="/readme/company/authorized_person_list.png">|<img width="200" alt="" src="/readme/company/authorized_person_list_add.png">|
+|<img width="200" alt="" src="/readme/company/authorized_person_list_delete.png">  |  <img width="200" alt="" src="/readme/company/edit_office_address.png">|<img width="200" alt="" src="/readme/company/edit_company_name.png">|
     
 - ADMIN
-<br/>
 
-[<img src="/readme/admin/nav_admin.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/admin/nav_admin.png)
-
-[<img src="/readme/admin/company_list.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/admin/company_list.png)
-
-[<img src="/readme/admin/company_list_add.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/admin/company_list_add.png)
-    
-[<img src="/readme/admin/company_list_delete.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/admin/company_list_delete.png)
+| | | 
+|:-------------------------:|:-------------------------:|
+|<img width="200" src="/readme/admin/nav_admin.png"> |  <img width="200" alt="" src="/readme/admin/company_list.pn">|
+|<img width="200" alt="" src="/readme/admin/company_list_add.png">  |  <img width="200" alt="" src="/readme/admin/company_list_delete.png">|
 
 ## Permissions
 
