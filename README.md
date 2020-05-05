@@ -59,11 +59,6 @@ width="200"
 [<img src="/readme/user/account_update.png" align="center"
 width="200"
     hspace="10" vspace="10">](/readme/user/account_update.png)
- 
-[<img src="/readme/user/settings.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/user/settings.png)
-    
      
 COMPANY
 
