@@ -4,16 +4,26 @@ this repository contains the frontend of an internship project. It's a wallet ap
 ### Prerequisites
 
 * NFC support
-* Android Beam
 
 ## Built With
 
 * [Gradle](https://gradle.org//) - Dependency Management
 
 ## Features
+USER
 - Login 
-- View menu of multiple office buildings you've got acces to
-- Acces to multiple office buildings 
+- Register
+- Wallet
+- Update account
+- Fingerprint authentication
+COMPANY
+- USER features (no register)
+- Update company
+- CRUD offices
+- De/authorize users
+ADMIN
+- COMPANY features (no register)
+- CRUD companies
 
 ## Screenshots
 
@@ -39,4 +49,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* [nfc-kotlin](https://github.com/jetruby/nfc-kotlin-example)
+* [Example HCE with PN532 module](https://github.com/Lexycon/android-pn532-hce)
