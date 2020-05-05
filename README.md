@@ -1,7 +1,10 @@
 # AccesControlFlexso-frontend
+<p align="center">
+     <img align="center" width="400" src="/readme/flexsame_logo.svg">
+</p>
 this repository contains the frontend of an internship project. It's a wallet app that should replace RFID cards.
 
-### Prerequisites
+## Prerequisites
 
 * NFC support
 
@@ -65,17 +68,19 @@ ADMIN
 
 * [Bert Van Eeckhoutte](https://github.com/bertve)
 
-## Libraries
-
-- [Goldfinger - Fingerprint authentication](https://github.com/infinum/Android-Goldfinger)
-- [Saripaar - Form validation] (https://github.com/ragunathjawahar/android-saripaar)
-- [Lottie - Animation] (https://github.com/airbnb/lottie-android)
-- [Gson - JSON serialization/deserialization] (https://github.com/google/gson)
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
+### Exampe code
+
 * [Example HCE with PN532 module](https://github.com/Lexycon/android-pn532-hce)
+
+### Libraries
+
+- [Goldfinger - Fingerprint authentication](https://github.com/infinum/Android-Goldfinger)
+- [Saripaar - Form validation] (https://github.com/ragunathjawahar/android-saripaar)
+- [Lottie - Animation] (https://github.com/airbnb/lottie-android)
+- [Gson - JSON serialization/deserialization] (https://github.com/google/gson)
