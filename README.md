@@ -16,6 +16,7 @@ USER
 - Wallet
 - Update account
 - Fingerprint authentication
+- Settings
 
 COMPANY
 - USER features (no register)
