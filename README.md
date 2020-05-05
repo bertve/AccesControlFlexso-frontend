@@ -81,6 +81,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ### Libraries
 
 - [Goldfinger - Fingerprint authentication](https://github.com/infinum/Android-Goldfinger)
-- [Saripaar - Form validation] (https://github.com/ragunathjawahar/android-saripaar)
-- [Lottie - Animation] (https://github.com/airbnb/lottie-android)
-- [Gson - JSON serialization/deserialization] (https://github.com/google/gson)
+- [Saripaar - Form validation](https://github.com/ragunathjawahar/android-saripaar)
+- [Lottie - Animation](https://github.com/airbnb/lottie-android)
+- [Gson - JSON serialization/deserialization](https://github.com/google/gson)
