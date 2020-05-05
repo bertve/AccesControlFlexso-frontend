@@ -38,14 +38,14 @@ ADMIN
 
 ## Screenshots
 
-- USER
+USER
 
 | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|
 |<img width="200" src="/readme/user/login.png"> |  <img width="200" alt="" src="/readme/user/register.png">|<img width="200" alt="" src="/readme/user/home.png">|
 |<img width="200" alt="" src="/readme/user/nav_user.png">  |  <img width="200" alt="" src="/readme/user/wallet.png">|<img width="200" alt="" src="/readme/user/account_update.png">|
      
-- COMPANY
+COMPANY
 
 | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|
@@ -53,7 +53,7 @@ ADMIN
 |<img width="200" alt="" src="/readme/company/office_list_delete.png">  |  <img width="200" alt="" src="/readme/company/authorized_person_list.png">|<img width="200" alt="" src="/readme/company/authorized_person_list_add.png">|
 |<img width="200" alt="" src="/readme/company/authorized_person_list_delete.png">  |  <img width="200" alt="" src="/readme/company/edit_office_address.png">|<img width="200" alt="" src="/readme/company/edit_company_name.png">|
     
-- ADMIN
+ADMIN
 
 | | | 
 |:-------------------------:|:-------------------------:|
