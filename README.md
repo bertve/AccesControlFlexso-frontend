@@ -27,7 +27,7 @@ ADMIN
 - COMPANY features (no register)
 - CRUD companies
 
-## demo
+## Demo
 
 * [Watch here](https://www.youtube.com/watch?v=2uZ_ksTwxjc&feature=share)
 
