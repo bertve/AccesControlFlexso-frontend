@@ -30,7 +30,7 @@ ADMIN
 
 ## Demo
 
-* [Watch here](https://www.youtube.com/watch?v=2uZ_ksTwxjc&feature=share)
+[![Watch here](http://img.youtube.com/vi/2uZ_ksTwxjc/0.jpg)](http://www.youtube.com/watch?v=2uZ_ksTwxjc&feature=share)
 
 ## Screenshots
 
