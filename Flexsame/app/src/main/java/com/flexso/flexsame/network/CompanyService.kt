@@ -36,4 +36,5 @@ interface CompanyService {
 
     @GET("offices/{officeId}/unAuthorizedPersons")
     fun getUnAuthorizedPersons(@Path("officeId") officeId: Long): Deferred<List<User>>
+
 }

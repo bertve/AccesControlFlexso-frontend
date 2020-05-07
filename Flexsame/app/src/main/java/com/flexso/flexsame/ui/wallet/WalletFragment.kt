@@ -55,11 +55,6 @@ class WalletFragment : Fragment() {
             binding.avatar.startAnimation(animToLeft)
         })
 
-        viewModel.keyToken.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                CurrentKey.currentKeyToken = it
-            }
-        })
     }
 
     private fun setupUI() {

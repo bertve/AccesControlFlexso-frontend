@@ -37,13 +37,10 @@ class HostCardEmulatorService : HostApduService() {
 
         if (hexCommandApdu.substring(10, 24) == AID) {
             var currentUserId = CurrentKey.userId.toString()
-            var currentOfficeId = CurrentKey.officeId.toString()
             var currentDeviceId = CurrentKey.deviceId
             var currentKeyToken = CurrentKey.currentKeyToken
 
             val res =  currentUserId.toByteArray()
-                    .plus(";".toByteArray())
-                    .plus(currentOfficeId.toByteArray())
                     .plus(";".toByteArray())
                     .plus(currentDeviceId.toByteArray())
                     .plus(";".toByteArray())
@@ -51,7 +48,7 @@ class HostCardEmulatorService : HostApduService() {
                     .plus(ByteArrayHexUtil.hexStringToByteArray(STATUS_SUCCESS))
 
             Log.i(TAG, "SENDING RESPONSE APDU:")
-            Log.i(TAG, "userId = $currentUserId ; officeId = $currentOfficeId; deviceId = $currentDeviceId;" +
+            Log.i(TAG, "userId = $currentUserId ; deviceId = $currentDeviceId;" +
                     " token = $currentKeyToken")
             return res
         } else {

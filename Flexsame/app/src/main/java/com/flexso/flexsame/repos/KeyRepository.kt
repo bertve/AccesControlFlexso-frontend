@@ -11,7 +11,7 @@ import com.flexso.flexsame.services.CurrentKey
 
 class KeyRepository(private val keyService: KeyService, private val adminService: AdminService, private val companyService: CompanyService) {
     var offices = MutableLiveData<List<Office>>()
-    var keyToken = MutableLiveData<String>()
+    var persistPublickeySucces = MutableLiveData<Boolean>()
 
     suspend fun getOffices(userId: Long) {
         var getPropertiesDeffered = keyService.getOffices(userId)
@@ -46,15 +46,15 @@ class KeyRepository(private val keyService: KeyService, private val adminService
         }
     }
 
-    suspend fun generateKey() {
-        var getPropertiesDeffered = keyService.generateKey(KeyRequest(CurrentKey.userId,CurrentKey.officeId,CurrentKey.deviceId))
-        Log.i("bug",CurrentKey.deviceId)
+    suspend fun persistPublicKey() {
+        var getPropertiesDeffered = keyService.persistPublicKey(CurrentKey.currentKeyRequest!!)
+        Log.i("api",CurrentKey.currentKeyRequest!!.toString())
         try {
             var res = getPropertiesDeffered.await()
-            Log.i("generated_token", res.accessToken)
-            keyToken.postValue(res.accessToken)
+            Log.i("api", res.toString())
+            persistPublickeySucces.postValue(res)
         } catch (e: Exception) {
-            Log.i("generated_token", e.message ?: "no message but something went wrong with generatekey request")
+            Log.i("api", e.message ?: "no message but something went wrong with persist key request")
         }
     }
 }

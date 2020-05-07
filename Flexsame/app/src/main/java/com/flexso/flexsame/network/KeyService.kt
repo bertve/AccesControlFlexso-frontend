@@ -21,7 +21,7 @@ interface KeyService {
     @PUT("users")
     fun updateUser(@Body updateAccountRequest: UpdateAccountRequest): Deferred<User>
 
-    @POST("gate/genKey")
-    fun generateKey(@Body keyRequest: KeyRequest): Deferred<JwtAuthenticationResponse>
+    @POST("gate/persistKey")
+    fun persistPublicKey(@Body keyRequest: KeyRequest): Deferred<Boolean>
 
 }

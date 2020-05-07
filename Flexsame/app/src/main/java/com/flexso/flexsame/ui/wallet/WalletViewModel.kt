@@ -1,6 +1,8 @@
 package com.flexso.flexsame.ui.wallet
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,10 +15,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
-
-    //keyToken
-    private var _keyToken : MutableLiveData<String> = keyRepository.keyToken
-    val keyToken : LiveData<String> get() = _keyToken
 
     //current selected office
    private var _selectedOffice : MutableLiveData<Office> = MutableLiveData()
@@ -95,15 +93,15 @@ class WalletViewModel(private val keyRepository: KeyRepository) : ViewModel() {
     fun setCurrentOffice(office: Office) {
         Log.i("current_office",office.toString())
         this._selectedOffice.value = office
-        CurrentKey.officeId = office.officeId
-        this.generateKey()
-    }
 
-    private fun generateKey() {
+        CurrentKey.officeId = office.officeId
+        CurrentKey.generateToken()
         viewModelScope.launch {
-            keyRepository.generateKey()
+            keyRepository.persistPublicKey()
         }
     }
+
+
 
     private fun initSelectedOffice(){
         if (CurrentKey.officeId != -1L && CurrentKey.currentKeyToken.isNotEmpty()){
